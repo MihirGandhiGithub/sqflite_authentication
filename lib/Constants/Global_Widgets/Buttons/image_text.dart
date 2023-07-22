@@ -30,8 +30,8 @@ class HomePageBoxContainer extends StatelessWidget {
           ),
         ],
       ),
-      height: 500.h,
-      width: 400.w,
+      // height: 500.h,
+      // width: 400.w,
       child: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -53,7 +53,7 @@ class HomePageBoxContainer extends StatelessWidget {
                   message: buttonText,
                   child: Text(
                     buttonText,
-                    maxLines: 3,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
                     style: TextStyle(

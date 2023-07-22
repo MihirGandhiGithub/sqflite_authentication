@@ -7,6 +7,7 @@ import '../../../Constants/Global_Widgets/Buttons/gradient_text.dart';
 import '../../../Constants/Global_Widgets/Buttons/simple_text.dart';
 import '../../../Constants/Global_Widgets/Result_Text/singalerow_oneboxtext.dart';
 import '../../../Constants/Global_Widgets/Row/three_content.dart';
+import 'compare_spinning.dart';
 
 class HomeSpinningCalculator extends StatefulWidget {
   const HomeSpinningCalculator({Key? key}) : super(key: key);
@@ -193,14 +194,14 @@ class _HomeSpinningCalculatorState extends State<HomeSpinningCalculator>
                     //Compare Button
                     GlobalButtonGradientText(
                       onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => Home_Compare_Ginning_Calculator(
-                        //       for_or_reverse: true,
-                        //     ),
-                        //   ),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => compare_spinning(
+                              forOrReverse: true,
+                            ),
+                          ),
+                        );
                       },
                       buttontext: 'Compare',
                       height: globalSingalComareButtonHeight,
@@ -356,14 +357,14 @@ class _HomeSpinningCalculatorState extends State<HomeSpinningCalculator>
                     //Compare Button
                     GlobalButtonGradientText(
                       onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => Home_Compare_Ginning_Calculator(
-                        //       for_or_reverse: true,
-                        //     ),
-                        //   ),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => compare_spinning(
+                              forOrReverse: false,
+                            ),
+                          ),
+                        );
                       },
                       buttontext: 'Compare',
                       height: globalSingalComareButtonHeight,

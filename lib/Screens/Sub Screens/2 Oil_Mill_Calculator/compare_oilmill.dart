@@ -499,7 +499,6 @@ class _HomeCompareOilMillCalculatorState
   void initState() {
     _isForwardGinning = widget.forOrReverse;
     compare_forward_calulateMix = widget.compareForwardCalculatemix;
-    compare_reverse_calulateMix = widget.compareReverseCalculatemix;
 
     // _isFirstButtonSelected1 = widget.for_or_reverse;
     // setState(() {

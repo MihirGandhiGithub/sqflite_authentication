@@ -7,6 +7,7 @@ import '../../../Constants/Global_Widgets/Buttons/gradient_text.dart';
 import '../../../Constants/Global_Widgets/Buttons/simple_text.dart';
 import '../../../Constants/Global_Widgets/Result_Text/bigresult_text.dart';
 import '../../../Constants/Global_Widgets/Row/three_content.dart';
+import 'compare_export.dart';
 
 class HomeExportCalculation extends StatefulWidget {
   const HomeExportCalculation({Key? key}) : super(key: key);
@@ -125,15 +126,16 @@ class _HomeExportCalculationState extends State<HomeExportCalculation>
                     //Compare Button
                     GlobalButtonGradientText(
                       onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) =>
-                        //         Home_Compare_Oil_Mill_Calculator(
-                        //           for_or_reverse: true,
-                        //         ),
-                        //   ),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                Home_Compare_export_Calculator(
+                              forOrReverse: true,
+                              compareReverseCalculateUSD: calulateLB,
+                            ),
+                          ),
+                        );
                       },
                       buttontext: 'Compare',
                       height: globalSingalComareButtonHeight,
@@ -243,15 +245,16 @@ class _HomeExportCalculationState extends State<HomeExportCalculation>
                     //Compare Button
                     GlobalButtonGradientText(
                       onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) =>
-                        //         Home_Compare_Oil_Mill_Calculator(
-                        //           for_or_reverse: true,
-                        //         ),
-                        //   ),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                Home_Compare_export_Calculator(
+                              forOrReverse: false,
+                              compareReverseCalculateUSD: calulateLB,
+                            ),
+                          ),
+                        );
                       },
                       buttontext: 'Compare',
                       height: globalSingalComareButtonHeight,

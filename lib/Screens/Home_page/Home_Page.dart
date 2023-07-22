@@ -181,11 +181,13 @@ class _HomePageState extends State<HomePage> {
             SizedBox(height: 50.h),
             Expanded(
               child: Container(
-                padding: EdgeInsets.only(left: 40.w, right: 40.w),
+                padding: EdgeInsets.only(left: 50.w, right: 50.w),
                 child: GridView.count(
+                  physics: BouncingScrollPhysics(),
+                  childAspectRatio: (400.sp / 500.sp),
                   crossAxisCount: 3,
-                  crossAxisSpacing: 8.0,
-                  mainAxisSpacing: 8.0,
+                  crossAxisSpacing: 70.sp,
+                  mainAxisSpacing: 40.h,
                   children: [
                     HomePageBoxContainer(
                       onPressed: () {
@@ -270,7 +272,7 @@ class _HomePageState extends State<HomePage> {
                                     StapleConversationChart()));
                       },
                       imageAsset: 'assets/staple_logo.png',
-                      buttonText: 'Staple Conversation Chart',
+                      buttonText: 'Staple Conversation',
                     ),
                     HomePageBoxContainer(
                       onPressed: () {},

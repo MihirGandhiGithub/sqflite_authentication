@@ -9,16 +9,17 @@ import '../../../Constants/Global_Widgets/Buttons/simple_text.dart';
 import '../../../Constants/Global_Widgets/Result_Text/bigresult_text.dart';
 import '../../../Globaly Accesible/Row  widget with 2 items.dart';
 
-class compare_spinning extends StatefulWidget {
+class Home_Compare_Ice_Parity extends StatefulWidget {
   final bool forOrReverse;
-  const compare_spinning({Key? key, required this.forOrReverse})
+  const Home_Compare_Ice_Parity({Key? key, required this.forOrReverse})
       : super(key: key);
 
   @override
-  State<compare_spinning> createState() => _compare_spinningState();
+  State<Home_Compare_Ice_Parity> createState() =>
+      _Home_Compare_Ice_ParityState();
 }
 
-class _compare_spinningState extends State<compare_spinning>
+class _Home_Compare_Ice_ParityState extends State<Home_Compare_Ice_Parity>
     with SingleTickerProviderStateMixin {
   ScreenshotController screenshotController = ScreenshotController();
   late bool _isForwardGinning;
@@ -337,9 +338,9 @@ class _compare_spinningState extends State<compare_spinning>
         controller: screenshotController,
         child: Scaffold(
             appBar: GlobalCustomAppBar(
-              sliderText1: 'Loss Yarn',
-              sliderText2: 'Profit Yarn',
-              appbarText: 'Spinning Compare Calculator',
+              sliderText1: 'Physical Cotton',
+              sliderText2: 'MCX',
+              appbarText: 'ICE Compare Calculator',
               isFirstButtonSelected: _isForwardGinning,
               onButtonPressed: (bool isFirstButton) {
                 setState(() {
@@ -375,7 +376,7 @@ class _compare_spinningState extends State<compare_spinning>
                           // Kappas
 
                           GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Yarn Count',
+                              title: 'MCX Future Rate',
                               controller1: inputkapas1,
                               subtitle: 'Kappas',
                               height: 0,
@@ -388,17 +389,9 @@ class _compare_spinningState extends State<compare_spinning>
                                 _updateValuesForCalculator2();
                               }),
 
-                          GlobalRowCompareWidget2StreamBuilderWithAnswer(
-                            result1: answer1,
-                            result2: answer2,
-                            subtext1: '₹',
-                            subtext2: '₹',
-                            title1: 'Cotton Rate',
-                            title2: 'Cotton Rate',
-                          ),
                           // Expense
                           GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Yield',
+                              title: 'ICE Future Rate',
                               controller1: inputexpense1,
                               subtitle: 'nothing',
                               height: 0,
@@ -413,56 +406,7 @@ class _compare_spinningState extends State<compare_spinning>
 
                           // Cotton Seed
                           GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Waste Recovery',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-
-                          GlobalRowCompareWidget2StreamBuilderWithAnswer(
-                            result1: answer1,
-                            result2: answer2,
-                            subtext1: '₹',
-                            subtext2: '₹',
-                            title1: 'Material Coast',
-                            title2: 'Material Coast',
-                          ),
-
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Conversation Coast',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Commission',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Other Expense',
+                              title: 'Exchange Rate',
                               controller1: inputkapasia1,
                               subtitle: 'Cotton Seed',
                               height: 0,
@@ -481,44 +425,8 @@ class _compare_spinningState extends State<compare_spinning>
                             result2: answer2,
                             subtext1: '₹',
                             subtext2: '₹',
-                            title1: 'Yarn Coast',
-                            title2: 'Yarn Coast',
-                          ),
-
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Yarn Rate',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Loss',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-
-                          GlobalRowCompareWidget2StreamBuilderWithAnswer(
-                            result1: answer1,
-                            result2: answer2,
-                            subtext1: '₹',
-                            subtext2: '₹',
-                            title1: 'Cotton Coast',
-                            title2: 'Cotton Coast',
+                            title1: 'Cents/LB',
+                            title2: 'Cents/LB',
                           ),
 
                           GlobalRowCompareWidget2Button(
@@ -589,10 +497,9 @@ class _compare_spinningState extends State<compare_spinning>
                           ),
 
                           //Content Of Calculator
-                          // Kappas
 
                           GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Yarn Count',
+                              title: 'Cotton Rate',
                               controller1: inputkapas1,
                               subtitle: 'Kappas',
                               height: 0,
@@ -605,17 +512,9 @@ class _compare_spinningState extends State<compare_spinning>
                                 _updateValuesForCalculator2();
                               }),
 
-                          GlobalRowCompareWidget2StreamBuilderWithAnswer(
-                            result1: answer1,
-                            result2: answer2,
-                            subtext1: '₹',
-                            subtext2: '₹',
-                            title1: 'Cotton Rate',
-                            title2: 'Cotton Rate',
-                          ),
                           // Expense
                           GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Yield',
+                              title: 'ICE Future Rate',
                               controller1: inputexpense1,
                               subtitle: 'nothing',
                               height: 0,
@@ -630,56 +529,7 @@ class _compare_spinningState extends State<compare_spinning>
 
                           // Cotton Seed
                           GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Waste Recovery',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-
-                          GlobalRowCompareWidget2StreamBuilderWithAnswer(
-                            result1: answer1,
-                            result2: answer2,
-                            subtext1: '₹',
-                            subtext2: '₹',
-                            title1: 'Material Coast',
-                            title2: 'Material Coast',
-                          ),
-
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Conversation Coast',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Commission',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Other Expense',
+                              title: 'Exchange Rate',
                               controller1: inputkapasia1,
                               subtitle: 'Cotton Seed',
                               height: 0,
@@ -698,97 +548,63 @@ class _compare_spinningState extends State<compare_spinning>
                             result2: answer2,
                             subtext1: '₹',
                             subtext2: '₹',
-                            title1: 'Yarn Coast',
-                            title2: 'Yarn Coast',
-                          ),
-
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Yarn Rate',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Loss',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-
-                          GlobalRowCompareWidget2StreamBuilderWithAnswer(
-                            result1: answer1,
-                            result2: answer2,
-                            subtext1: '₹',
-                            subtext2: '₹',
-                            title1: 'Cotton Coast',
-                            title2: 'Cotton Coast',
+                            title1: 'Cents/LB',
+                            title2: 'Cents/LB',
                           ),
 
                           GlobalRowCompareWidget2Button(
                             onpressed1: () {
-                              inputkapas1.clear();
-                              inputexpense1.clear();
-                              inputkapasia1.clear();
-                              inpututaro1.clear();
-                              inputghati1.clear();
-                              answer1 = 0;
+                              reverseinputkapas1.clear();
+                              reverseinputexpense1.clear();
+                              reverseinputkapasia1.clear();
+                              reverseinpututaro1.clear();
+                              reverseinputghati1.clear();
+                              reverseanswer1 = 0;
                               // result_output_difference.add(0);
                               // focusnodekapas1.requestFocus();
                             },
                             onpressed2: () {
-                              inputkapas2.clear();
-                              inputexpense2.clear();
-                              inputkapasia2.clear();
-                              inpututaro2.clear();
-                              inputghati2.clear();
-                              answer2 = 0;
+                              reverseinputkapas2.clear();
+                              reverseinputexpense2.clear();
+                              reverseinputkapasia2.clear();
+                              reverseinpututaro2.clear();
+                              reverseinputghati2.clear();
+                              reverseanswer2 = 0;
                               // result_output_difference.add(0);
                               // focusnodekapas2.requestFocus();
                             },
                             text1: 'RESET 1',
                             text2: 'RESET 2',
                           ),
-                          //
-                          // // Khandi Diffrnce or Stram result
+
+                          // Khandi Diffrnce or Stram result
                           SizedBox(height: 20.h),
                           GlobalResultBuilderForResults(
                             substreamtext: 'Parity',
                             streamtitletext: 'Cents/LB Difference',
-                            result: diff,
+                            result: reversediff,
                           ),
 
-                          SizedBox(height: 20.h),
+                          SizedBox(
+                            height: 20.h,
+                          ),
 
-                          // Rseet All Button
+                          // Reset All Button
                           GlobalButtonSimpleText(
                             onPressed: () {
-                              inputkapas1.clear();
-                              inputexpense1.clear();
-                              inputkapasia1.clear();
-                              inpututaro1.clear();
-                              inputghati1.clear();
-                              inputkapas2.clear();
-                              inputexpense2.clear();
-                              inputkapasia2.clear();
-                              inpututaro2.clear();
-                              inputghati2.clear();
-                              diff = 0;
-                              answer1 = 0;
-                              answer2 = 0;
+                              reverseinputkapas1.clear();
+                              reverseinputexpense1.clear();
+                              reverseinputkapasia1.clear();
+                              reverseinpututaro1.clear();
+                              reverseinputghati1.clear();
+                              reverseinputkapas2.clear();
+                              reverseinputexpense2.clear();
+                              reverseinputkapasia2.clear();
+                              reverseinpututaro2.clear();
+                              reverseinputghati2.clear();
+                              reversediff = 0;
+                              reverseanswer1 = 0;
+                              reverseanswer2 = 0;
                             },
                             buttontext: 'Reset All',
                             height: globalSingalResetButtonHeight,
