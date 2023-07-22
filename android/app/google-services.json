@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "625365097680",
+    "project_id": "textile-calculator-80988",
+    "storage_bucket": "textile-calculator-80988.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625365097680:android:cf1a2a60cc8dd3e9a012d5",
+        "android_client_info": {
+          "package_name": "mg.kingtechnology.in.kt1_textile_calculation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "625365097680-d6pf7625k7dg0jqscsabeucsq242ugrs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mg.kingtechnology.in.kt1_textile_calculation",
+            "certificate_hash": "4f717023ca711a8beeed22ba5f197dadd06f05d0"
+          }
+        },
+        {
+          "client_id": "625365097680-ot3blvb6ubfcnua534bo3p63c6dbsqft.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mg.kingtechnology.in.kt1_textile_calculation",
+            "certificate_hash": "307ba79b22ff9ed6c4969e41f1bff555119132f4"
+          }
+        },
+        {
+          "client_id": "625365097680-2o9pikudt3i7s9gmrtl5teutn21f9g0i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASm9FD7i4h_2JzizLY_k4xfEmXMecU6H8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "625365097680-2o9pikudt3i7s9gmrtl5teutn21f9g0i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "625365097680-2bdde456duti773chqff1bt4g8cqdeog.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "mg.kingtechnology.in.kt1TextileCalculation.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
