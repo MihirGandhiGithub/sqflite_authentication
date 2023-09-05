@@ -101,7 +101,7 @@ class _AdvertiseDetailState extends State<AdvertiseDetail> {
     return Scaffold(
       appBar: const AppbarWithText(
         appbarText: 'Advertiser Detail',
-        centerTitle: false,
+        centerTitle: false, isBackButton: false,
       ),
       body: userData != null
           ? ListView(

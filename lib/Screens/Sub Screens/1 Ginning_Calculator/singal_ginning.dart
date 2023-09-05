@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kt1_textile_calculation/Constants/Global_Widgets/Switch/switch_with_two_text.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Constants/Global_Variables/Sizes/global_sizes.dart';
 import '../../../Constants/Global_Widgets/Appbar/appbar_slider.dart';
@@ -63,29 +64,48 @@ class _HomeSingalGinningCalculatorState
     with SingleTickerProviderStateMixin {
   ScreenshotController screenshotController = ScreenshotController();
   @override
+  Future setPageName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('last_screen', 'ginning_screen');
+  }
+
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setPageName();
+  }
+
+  @override
   Widget build(BuildContext context) {
     bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
-    return DefaultTabController(
-      initialIndex: 0,
-      length: 2,
-      child: Screenshot(
-        controller: screenshotController,
-        child: Scaffold(
-            appBar: const AppBarWithSlider(
-              titleText: 'Ginning Calculator',
-              sliderText1: 'Forward Ginning',
-              sliderText2: 'Reverse Ginning',
-            ),
-            body: const TabBarView(
-              children: [
-                GinningForward(),
-                GinningReverse(),
-              ],
-            ),
-            floatingActionButton: FloatingButton(
-              screenshotController: screenshotController,
-              isVisible: keyboardIsOpened,
-            )),
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacementNamed(context, '/home_screen');
+        return Future.value(false); // Allow popping the screen
+      },
+      child: DefaultTabController(
+        initialIndex: 0,
+        length: 2,
+        child: Screenshot(
+          controller: screenshotController,
+          child: Scaffold(
+              appBar: const AppBarWithSlider(
+                titleText: 'Ginning Calculator',
+                sliderText1: 'Forward',
+                sliderText2: 'Reverse',
+                isBackButton: true,
+              ),
+              body: const TabBarView(
+                children: [
+                  GinningForward(),
+                  GinningReverse(),
+                ],
+              ),
+              floatingActionButton: FloatingButton(
+                screenshotController: screenshotController,
+                isVisible: keyboardIsOpened,
+              )),
+        ),
       ),
     );
   }
@@ -160,18 +180,8 @@ class _GinningForwardState extends State<GinningForward> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       children: [
-        SwitchWithTwoText(
-            frontText: '₹/20kg',
-            backText: '₹/Quintal',
-            onChange: (bool value) {
-              // This is called when the user toggles the switch.
-              setState(() {
-                isQuintal = value;
-              });
-            },
-            switchValue: isQuintal,
-            bigText: true),
         isQuintal
             ? ListView(
                 shrinkWrap: true,
@@ -431,6 +441,17 @@ class _GinningForwardState extends State<GinningForward> {
                   ),
                 ],
               ),
+        SwitchWithTwoText(
+            frontText: '₹/20kg',
+            backText: '₹/Quintal',
+            onChange: (bool value) {
+              // This is called when the user toggles the switch.
+              setState(() {
+                isQuintal = value;
+              });
+            },
+            switchValue: isQuintal,
+            bigText: true),
       ],
     );
   }
@@ -511,17 +532,6 @@ class _GinningReverseState extends State<GinningReverse> {
     return ListView(
       physics: const BouncingScrollPhysics(),
       children: [
-        SwitchWithTwoText(
-            frontText: '₹/20kg',
-            backText: '₹/Quintal',
-            onChange: (bool value) {
-              // This is called when the user toggles the switch.
-              setState(() {
-                isQuintal = value;
-              });
-            },
-            switchValue: isQuintal,
-            bigText: true),
         isQuintal
             ? ListView(
                 shrinkWrap: true,
@@ -608,7 +618,7 @@ class _GinningReverseState extends State<GinningReverse> {
                   //Maund Result
                   GlobalResultBuilderForResults(
                     substreamtext: '₹/Maund',
-                    streamtitletext: 'Cotton Rate in Maund',
+                    streamtitletext: 'Kapas Coast',
                     result: reverseQuintalanswerMaund,
                   ),
 
@@ -735,7 +745,7 @@ class _GinningReverseState extends State<GinningReverse> {
                   //Maund Result
                   GlobalResultBuilderForResults(
                     substreamtext: '₹/Maund',
-                    streamtitletext: 'Cotton Rate in Maund',
+                    streamtitletext: 'Kapas Coast',
                     result: reverseanswerMaund,
                   ),
 
@@ -775,6 +785,17 @@ class _GinningReverseState extends State<GinningReverse> {
                   ),
                 ],
               ),
+        SwitchWithTwoText(
+            frontText: '₹/20kg',
+            backText: '₹/Quintal',
+            onChange: (bool value) {
+              // This is called when the user toggles the switch.
+              setState(() {
+                isQuintal = value;
+              });
+            },
+            switchValue: isQuintal,
+            bigText: true),
       ],
     );
   }

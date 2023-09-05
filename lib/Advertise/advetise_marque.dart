@@ -34,13 +34,8 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-            decoration: BoxDecoration(
-              border: Border.all(width: 2, color: Colors.grey),
-            ),
-            margin: EdgeInsets.only(
-                left: 10.sp, right: 10.sp, top: 20.sp, bottom: 20.sp),
-            height: 450.sp,
+        SizedBox(
+            height: 400.h,
             child: widget.imageList.isNotEmpty
                 ? CarouselSlider.builder(
                     carouselController: widget.carouselController,
@@ -66,9 +61,19 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
                             ),
                           );
                         },
-                        child: Image.network(
-                          widget.imageList[index],
-                          fit: BoxFit.fill,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+
+                          // padding: EdgeInsets.all(5.sp),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(5),
+                            child: Image.network(
+                              widget.imageList[index],
+                              fit: BoxFit.fill,
+                            ),
+                          ),
                         ),
                       );
                     },

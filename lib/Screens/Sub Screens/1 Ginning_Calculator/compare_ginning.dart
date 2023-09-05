@@ -8,7 +8,7 @@ import '../../../Constants/Global_Widgets/Buttons/floating_share.dart';
 import '../../../Constants/Global_Widgets/Buttons/simple_text.dart';
 import '../../../Constants/Global_Widgets/Result_Text/bigresult_text.dart';
 import '../../../Constants/Global_Widgets/Switch/switch_with_two_text.dart';
-import '../../../Globaly Accesible/row_with_2_item.dart';
+import '../../../Constants/Global_Widgets/row_with_2_item.dart';
 
 bool? isQuintal;
 bool? reverseisQuintal;
@@ -51,8 +51,9 @@ class _CompareGinningCaculatorState extends State<CompareGinningCaculator>
         child: Scaffold(
             appBar: const AppBarWithSlider(
               titleText: 'Ginning Compare',
-              sliderText1: 'Forward Ginning',
-              sliderText2: 'Reverse Ginning',
+              sliderText1: 'Forward',
+              sliderText2: 'Reverse',
+              isBackButton: false,
             ),
             body: const TabBarView(
               children: [
@@ -269,17 +270,6 @@ class _ForwardGinningState extends State<ForwardGinning> {
     return ListView(
       physics: const BouncingScrollPhysics(),
       children: [
-        SwitchWithTwoText(
-            frontText: '₹/20kg',
-            backText: '₹/Quintal',
-            onChange: (bool value) {
-              // This is called when the user toggles the switch.
-              setState(() {
-                isQuintal = value;
-              });
-            },
-            switchValue: isQuintal!,
-            bigText: true),
         isQuintal!
             ? ListView(
                 shrinkWrap: true,
@@ -754,6 +744,17 @@ class _ForwardGinningState extends State<ForwardGinning> {
                   ),
                 ],
               ),
+        SwitchWithTwoText(
+            frontText: '₹/20kg',
+            backText: '₹/Quintal',
+            onChange: (bool value) {
+              // This is called when the user toggles the switch.
+              setState(() {
+                isQuintal = value;
+              });
+            },
+            switchValue: isQuintal!,
+            bigText: true),
       ],
     );
   }
@@ -984,17 +985,6 @@ class _ReverseGinningState extends State<ReverseGinning> {
     return ListView(
       physics: const BouncingScrollPhysics(),
       children: [
-        SwitchWithTwoText(
-            frontText: '₹/20kg',
-            backText: '₹/Quintal',
-            onChange: (bool value) {
-              // This is called when the user toggles the switch.
-              setState(() {
-                reverseisQuintal = value;
-              });
-            },
-            switchValue: reverseisQuintal!,
-            bigText: true),
         reverseisQuintal!
             ? ListView(
                 shrinkWrap: true,
@@ -1192,7 +1182,7 @@ class _ReverseGinningState extends State<ReverseGinning> {
 
                   GlobalResultBuilderForResults(
                     substreamtext: '₹/Maund',
-                    streamtitletext: 'Candy Maund Difference',
+                    streamtitletext: 'Kapas Difference',
                     result: quintalReversediffMaund,
                   ),
 
@@ -1432,7 +1422,7 @@ class _ReverseGinningState extends State<ReverseGinning> {
 
                   GlobalResultBuilderForResults(
                     substreamtext: '₹/Maund',
-                    streamtitletext: 'Candy Maund Difference',
+                    streamtitletext: 'Kapas Difference',
                     result: reversediffMaund,
                   ),
 
@@ -1477,6 +1467,17 @@ class _ReverseGinningState extends State<ReverseGinning> {
                   ),
                 ],
               ),
+        SwitchWithTwoText(
+            frontText: '₹/20kg',
+            backText: '₹/Quintal',
+            onChange: (bool value) {
+              // This is called when the user toggles the switch.
+              setState(() {
+                reverseisQuintal = value;
+              });
+            },
+            switchValue: reverseisQuintal!,
+            bigText: true),
       ],
     );
   }

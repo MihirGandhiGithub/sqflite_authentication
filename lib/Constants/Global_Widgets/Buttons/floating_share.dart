@@ -46,7 +46,10 @@ class FloatingButton extends StatelessWidget {
               }
             },
             backgroundColor: Colors.blue,
-            child: const Icon(Icons.share),
+            child: const Icon(
+              Icons.share,
+              color: Colors.white,
+            ),
           );
   }
 }

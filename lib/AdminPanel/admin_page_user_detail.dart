@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../Constants/Global_Widgets/Appbar/appbar_with_text.dart';
+import 'package:kt1_textile_calculation/Constants/Global_Widgets/Appbar/appbar_with_action.dart';
+enum SampleItem { itemOne, itemTwo }
 
 class AdminPageUserDetail extends StatefulWidget {
   final String uid;
@@ -209,9 +209,34 @@ class _AdminPageUserDetailState extends State<AdminPageUserDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppbarWithText(
+      appBar: AppbarWithAction(
         appbarText: 'User Detail',
-        centerTitle: false,
+        appbarIcon: Icons.more_vert,
+        appbarIconOnPress: () {
+          // Show the popup menu
+          showMenu(
+            context: context,
+            position: const RelativeRect.fromLTRB(100, 100, 0, 0),
+            items: <PopupMenuEntry<SampleItem>>[
+              const PopupMenuItem<SampleItem>(
+                value: SampleItem.itemOne,
+                child: Text('Add Field'),
+              ),
+              const PopupMenuItem<SampleItem>(
+                value: SampleItem.itemTwo,
+                child: Text('Remove Field'),
+              ),
+            ],
+          ).then((value) {
+            // Handle the selection
+            if (value == SampleItem.itemOne) {
+              _showAddFieldDialog();
+            } else if (value == SampleItem.itemTwo) {
+              _showRemoveDialog();
+            }
+          });
+        },
+        centerTitle: true,
       ),
       body:
           isLoading // Check isLoading to decide whether to show progress or user data
@@ -227,45 +252,6 @@ class _AdminPageUserDetailState extends State<AdminPageUserDetail> {
                         Expanded(
                           child: ListView(
                             children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: 10.sp, right: 10.sp, bottom: 50.sp),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    ElevatedButton.icon(
-                                      onPressed: _showAddFieldDialog,
-                                      icon: Icon(
-                                        Icons.add,
-                                        size: 50.sp,
-                                      ),
-                                      label: Text(
-                                        'Add Field',
-                                        style: TextStyle(fontSize: 50.sp),
-                                      ),
-                                    ),
-                                    ElevatedButton.icon(
-                                      onPressed: _showRemoveDialog,
-                                      icon: Icon(
-                                        Icons.remove,
-                                        size: 50.sp,
-                                      ),
-                                      label: Text(
-                                        'Remove Field',
-                                        style: TextStyle(fontSize: 50.sp),
-                                      ),
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: _updateUserData,
-                                      child: Text(
-                                        'Update Data',
-                                        style: TextStyle(fontSize: 50.sp),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
                               ListView.builder(
                                 shrinkWrap: true,
                                 physics: const BouncingScrollPhysics(),
@@ -277,11 +263,9 @@ class _AdminPageUserDetailState extends State<AdminPageUserDetail> {
                                       userData![fieldName].toString();
 
                                   return Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 10.sp, bottom: 30.sp),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0),
                                     child: TextFormField(
-                                      style: TextStyle(
-                                          fontSize: 60.sp, color: Colors.black),
                                       initialValue: fieldValue,
                                       onChanged: (value) {
                                         setState(() {
@@ -295,6 +279,15 @@ class _AdminPageUserDetailState extends State<AdminPageUserDetail> {
                                 },
                                 itemCount: userData!
                                     .length, // Add 1 for the additional row
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ElevatedButton(
+                                  onPressed: _updateUserData,
+                                  child: Text(
+                                    'Update Data',
+                                  ),
+                                ),
                               ),
                             ],
                           ),

@@ -41,14 +41,18 @@ class _SCCExpanstionListState extends State<SCCExpanstionList> {
             width: 350.w,
             child: Text(
               widget.one,
-              style: TextStyle(fontSize: 70.sp, color: Colors.black),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 50.sp, color: Colors.black),
             ),
           ),
           SizedBox(
             width: 350.w,
             child: Text(
               widget.two,
-              style: TextStyle(fontSize: 70.sp, color: Colors.black),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 50.sp, color: Colors.black),
             ),
           ),
           Container(
@@ -56,12 +60,16 @@ class _SCCExpanstionListState extends State<SCCExpanstionList> {
             width: 300.w,
             child: Text(
               widget.three,
-              style: TextStyle(fontSize: 70.sp, color: Colors.black),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 50.sp, color: Colors.black),
             ),
           ),
           Text(
             widget.four,
-            style: TextStyle(fontSize: 70.sp, color: Colors.black),
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 50.sp, color: Colors.black),
           ),
         ],
       ),
@@ -110,6 +118,7 @@ class _SSCExpanstionListWith5FieldState
             // width: 350.w,
             child: Text(
               widget.one,
+              maxLines: 3,
               style: TextStyle(fontSize: 60.sp, color: Colors.black),
             ),
           ),
@@ -117,19 +126,23 @@ class _SSCExpanstionListWith5FieldState
             // width: 350.w,
             child: Text(
               widget.two,
+              maxLines: 3,
               style: TextStyle(fontSize: 55.sp, color: Colors.black),
             ),
           ),
           Text(
             widget.three,
+            maxLines: 3,
             style: TextStyle(fontSize: 60.sp, color: Colors.black),
           ),
           Text(
             widget.four,
+            maxLines: 3,
             style: TextStyle(fontSize: 60.sp, color: Colors.black),
           ),
           Text(
             widget.five,
+            maxLines: 3,
             style: TextStyle(fontSize: 60.sp, color: Colors.black),
           ),
         ],

@@ -22,18 +22,20 @@ class SwitchWithTwoText extends StatelessWidget {
       children: [
         Text(
           frontText,
+          maxLines: 3,
           style:
               TextStyle(color: Colors.black, fontSize: bigText ? 60.sp : 40.sp),
         ),
         Switch(
             // This bool value toggles the switch.
             value: switchValue,
-            // overlayColor: overlayColor,
-            // trackColor: trackColor,
+            activeColor: Colors.blue,
+            inactiveTrackColor: Colors.white,
             thumbColor: const MaterialStatePropertyAll<Color>(Colors.black),
             onChanged: onChange),
         Text(
           backText,
+          maxLines: 3,
           style:
               TextStyle(color: Colors.black, fontSize: bigText ? 60.sp : 40.sp),
         ),

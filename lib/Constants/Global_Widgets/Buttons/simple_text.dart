@@ -32,7 +32,7 @@ class GlobalButtonSimpleText extends StatelessWidget {
           textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
-          style: TextStyle(fontSize: 60.sp),
+          style: TextStyle(fontSize: 60.sp, color: Colors.white),
         ),
       ),
     );

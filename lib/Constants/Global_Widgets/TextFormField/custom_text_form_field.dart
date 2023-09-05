@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../Global_Variables/Screen Util Size.dart';
 import '../../Global_Variables/Sizes/global_sizes.dart';
 import '../../Global_Variables/colors/colors.dart';
 
-class TextFormFieldWidget extends StatelessWidget {
+class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final String? errorText;
   final String labelText;
   final bool obscureText;
-  final ValueChanged<String> onChanged;
+  final ValueChanged onChanged;
   final Widget icon;
   final bool isLastField;
   final bool numberKeyboard;
   final bool enabled;
 
-  const TextFormFieldWidget({
+  const CustomTextFormField({
     Key? key,
     required this.controller,
     this.errorText,
@@ -40,10 +41,14 @@ class TextFormFieldWidget extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(bottom: textFormFieldMarginBottom),
       child: TextFormField(
+        // maxLines: 1,
+
         controller: controller,
         enabled: enabled,
         style: TextStyle(
-            fontSize: textFormFieldFontSize, color: textFormFieldFontColor),
+            // overflow: TextOverflow.ellipsis,
+            fontSize: textFormFieldFontSize,
+            color: textFormFieldFontColor),
         cursorColor: textFormFieldCursorColor,
         cursorHeight: textFormFieldCursorHeight,
         obscureText: obscureText,
@@ -61,9 +66,8 @@ class TextFormFieldWidget extends StatelessWidget {
           ),
           labelText: labelText,
           errorText: errorText, // Pass the errorText directly
-          errorStyle: TextStyle(
-              fontSize: textFormFieldErrorFontSize,
-              color: textFormFieldErrorTextColor),
+          errorStyle:
+              TextStyle(fontSize: text40sp, color: textFormFieldErrorTextColor),
           errorMaxLines: 1,
           errorBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.red, width: 2.0),

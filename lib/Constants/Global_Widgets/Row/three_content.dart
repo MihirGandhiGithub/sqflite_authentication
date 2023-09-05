@@ -1,4 +1,5 @@
 // with onchaged method
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,84 +24,91 @@ class GlobalRowWidgetWithOnchanged extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: 20.h),
+    return Padding(
+      padding: EdgeInsets.only(top: 5.0, left: 150.w),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        // crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           //Title
-          Container(
-            width: 450.w,
-            margin: EdgeInsets.only(left: 80.w),
+          SizedBox(
+            width: 500.w,
             child: Tooltip(
               message: title,
               child: Text(
                 title,
-                maxLines: 1,
+                maxLines: 3,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
-                  fontSize: 45.sp,
+                  // fontSize: 45.sp,
                 ),
               ),
             ),
           ),
 
           //Text field
-          Row(
-            children: [
-              SizedBox(
-                height: 120.h,
-                width: 500.w,
-                child: TextField(
-                  textAlign: TextAlign.left,
-                  controller: controller,
-                  onChanged: onchaned,
-                  cursorColor: Colors.black,
-                  // cursorHeight: 60.sp,
-                  style: TextStyle(fontSize: 60.sp, color: Colors.black),
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors
-                        .grey[200], // Set your desired background color here
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                          70.sp), // Set the circular border radius here
-                      borderSide: BorderSide(
-                        color: Colors.black,
-                        width: 5.sp,
+          Expanded(
+            child: SizedBox(
+              width: 800.w,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 120.h,
+                    width: 430.w,
+                    child: TextField(
+                      textAlign: TextAlign.left,
+                      controller: controller,
+                      onChanged: onchaned,
+                      cursorColor: Colors.black,
+                      // cursorHeight: 60.sp,
+                      style: const TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors
+                            .white, // Set your desired background color here
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              10), // Set the circular border radius here
+                          borderSide: const BorderSide(
+                            color: Colors.black,
+                            width: 1,
+                          ),
+                        ),
+                        contentPadding: EdgeInsets.only(left: 30.sp),
+                      ),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(9),
+                      ],
+                      textInputAction: TextInputAction.next,
+                      onEditingComplete: () =>
+                          FocusScope.of(context).nextFocus(),
+                    ),
+                  ),
+
+                  SizedBox(
+                    width: 10.w,
+                  ),
+                  //sub text
+                  SizedBox(
+                    width: 350.w,
+                    child: Tooltip(
+                      message: subtitle,
+                      child: Text(
+                        subtitle,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: Colors.black, fontSize: 45.sp),
                       ),
                     ),
-                    contentPadding: EdgeInsets.only(left: 30.sp),
                   ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(7),
-                  ],
-                  textInputAction: TextInputAction.next,
-                  onEditingComplete: () => FocusScope.of(context).nextFocus(),
-                ),
+                ],
               ),
-
-              SizedBox(
-                width: 20.sp,
-              ),
-              //sub text
-              SizedBox(
-                width: 230.w,
-                child: Tooltip(
-                  message: subtitle,
-                  child: Text(
-                    subtitle,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 30.sp, color: Colors.black),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ],
       ),

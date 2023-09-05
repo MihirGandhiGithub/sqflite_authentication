@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kt1_textile_calculation/Constants/Global_Widgets/Text/CustomText.dart';
 
 class AppbarWithAction extends StatelessWidget implements PreferredSizeWidget {
   final bool centerTitle;
@@ -14,7 +15,7 @@ class AppbarWithAction extends StatelessWidget implements PreferredSizeWidget {
       required this.appbarIconOnPress,
       required this.centerTitle});
   @override
-  Size get preferredSize => Size.fromHeight(180.sp);
+  Size get preferredSize => Size.fromHeight(180.h);
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -28,13 +29,17 @@ class AppbarWithAction extends StatelessWidget implements PreferredSizeWidget {
             onPressed: appbarIconOnPress)
       ],
       centerTitle: centerTitle,
-      title: Text(appbarText,
-          style: TextStyle(fontSize: 80.sp, color: Colors.white)),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(30),
-        ),
+      title: CustomText(
+        text: appbarText,
+        color: Colors.white,
+        maxLine: 1,
+        bold: false,
       ),
+      // shape: const RoundedRectangleBorder(
+      //   borderRadius: BorderRadius.vertical(
+      //     bottom: Radius.circular(30),
+      //   ),
+      // ),
       backgroundColor: Colors.blue,
       elevation: 2,
     );

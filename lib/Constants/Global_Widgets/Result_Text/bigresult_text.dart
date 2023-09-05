@@ -24,19 +24,22 @@ class GlobalResultBuilderForResults extends StatelessWidget {
           color: Colors.black,
           width: 1.0,
         ),
-        color: Colors.grey[200],
+        color: Colors.white,
         borderRadius: BorderRadius.circular(50.sp),
       ),
       child: Row(
         children: [
-          Text(
-            streamtitletext,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-                fontSize: 40.sp,
-                fontWeight: FontWeight.bold,
-                color: Colors.black),
+          Tooltip(
+            message: streamtitletext,
+            child: Text(
+              streamtitletext,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  // fontSize: 40.sp,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
           ),
           SizedBox(
             width: 40.w,
@@ -44,7 +47,7 @@ class GlobalResultBuilderForResults extends StatelessWidget {
           Expanded(
             child: Container(
               alignment: Alignment.center,
-              height: 120.h,
+              // height: 120.h,
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
@@ -53,22 +56,25 @@ class GlobalResultBuilderForResults extends StatelessWidget {
                 color: Colors.grey[100],
                 borderRadius: BorderRadius.circular(40.sp),
               ),
-              child: Tooltip(
-                message: '$result' ' $substreamtext',
-                child: GradientText(
-                  '$result' ' $substreamtext',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 55.sp,
-                    fontWeight: FontWeight.bold,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Tooltip(
+                  message: '$result' ' $substreamtext',
+                  child: GradientText(
+                    '$result' ' $substreamtext',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 55.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    colors: const [
+                      Colors.black,
+                      // Colors.teal,
+                      Colors.red,
+                    ],
                   ),
-                  colors: const [
-                    Colors.black,
-                    Colors.teal,
-                    Colors.red,
-                  ],
                 ),
               ),
             ),

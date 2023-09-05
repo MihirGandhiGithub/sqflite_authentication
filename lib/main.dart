@@ -1,24 +1,32 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kt1_textile_calculation/Screens/Home_page/home_page.dart';
 import 'package:kt1_textile_calculation/Screens/Splash%20Screen/splashscreen.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter/services.dart';
+import 'AdminPanel/admin_panel_home_page.dart';
+import 'Screens/Authentication/Login Screen/login_page.dart';
+import 'Screens/Authentication/Login Screen/update_userdetail.dart';
+import 'Screens/Authentication/Register Screen/register_page.dart';
+import 'Screens/Sub Screens/1 Ginning_Calculator/singal_ginning.dart';
+import 'Screens/Sub Screens/2 Dabit_Note/cotton_dabit_note.dart';
+import 'Screens/Sub Screens/3 Exports_Calculation/singal_export.dart';
+import 'Screens/Sub Screens/4 Oil_Mill_Calculator/singal_oilmill.dart';
+import 'Screens/Sub Screens/5 Spinning_Calculator/singal_spinning.dart';
+import 'Screens/Sub Screens/6 Conversation_Calculation/home_singal_conversation_calculator.dart';
+import 'Screens/Sub Screens/7 Staple Conversation Chart/staple_conversation_chart.dart';
+import 'Screens/Sub Screens/8 Conversation Factor/conversation_factor.dart';
+import 'Screens/Sub Screens/9 Cotton Quality/cotton_quality_chart.dart';
+import 'Screens/User_Profile/profile.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  requestPermissions();
 
-  runApp(const MyApp());
-}
-
-void requestPermissions() async {
-  PermissionStatus status = await Permission.storage.request();
-  if (status.isGranted) {
-    // Permission granted, you can now access or store the image
-  } else {
-    // Permission denied
-  }
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((value) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -36,16 +44,40 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           // restorationScopeId: 'roots',
+          theme: ThemeData(
+            // colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
+            useMaterial3: true,
+            appBarTheme: const AppBarTheme(
+              iconTheme: IconThemeData(color: Colors.white),
+              foregroundColor: Colors.white, //<-- SEE HERE
+            ),
+          ),
           debugShowCheckedModeBanner: false,
           title: 'Textile Calculator',
-          // You can use the library anywhere in the app even in theme
-          // theme: ThemeData(
-          //   textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
-          // ),
-          home: child,
+
+          initialRoute: '/splash_screen',
+          routes: {
+            '/splash_screen': (context) => const SplashScreen(),
+            '/login_screen': (context) => const LoginPage(),
+            '/register_screen': (context) => const RegisterScreen(),
+            '/home_screen': (context) => const HomePage(),
+            '/adminPanel_home': (context) => const AdminPanelHome(),
+            '/AddDetail_screen': (context) => const AddDetailPage(),
+            '/profile_screen': (context) => const Profile(),
+            '/ginning_screen': (context) => const HomeSingalGinningCalculator(),
+            '/spinning_screen': (context) => const HomeSpinningCalculator(),
+            '/oilmill_screen': (context) => const HomeSingalOilMillCalculator(),
+            '/export_screen': (context) => const HomeExportCalculation(),
+            '/dabitnote_screen': (context) => const HomeDabietCalculation(),
+            '/conversation_screen': (context) =>
+                const HomeSingalConversationCalulator(),
+            '/stapleconvert_screen': (context) =>
+                const StapleConversationChart(),
+            '/cottonfactor_screen': (context) => const ConversationFactor(),
+            '/cottonqulity_screen': (context) => const CottonQualityChart(),
+          },
         );
       },
-      child: const SplashScreen(),
     );
   }
 }

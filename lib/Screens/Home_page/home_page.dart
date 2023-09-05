@@ -1,25 +1,16 @@
 import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/widgets.dart';
 import 'package:new_version_plus/new_version_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../Advertise/advetise_marque.dart';
+import '../../Constants/Global_Variables/variables/variables.dart';
 import '../../Constants/Global_Widgets/Appbar/appbar_with_action.dart';
-import '../../Constants/Global_Widgets/Buttons/image_text.dart';
-import '../../Constants/Global_Widgets/navigate_page_with_animation.dart';
-import '../Sub Screens/1 Ginning_Calculator/singal_ginning.dart';
-import '../Sub Screens/2 Oil_Mill_Calculator/singal_oilmill.dart';
-import '../Sub Screens/3 Spinning_Calculator/singal_spinning.dart';
-import '../Sub Screens/4 Exports_Calculation/singal_export.dart';
-import '../Sub Screens/5 Conversation_Calculation/home_singal_conversation_calculator.dart';
-import '../Sub Screens/6 ICE_Parity_Chart/ice_parity_chart.dart';
-import '../Sub Screens/7 Staple Conversation Chart/staple_conversation_chart.dart';
-import '../Sub Screens/8 Conversation Factor/conversation_factor.dart';
-import '../Sub Screens/9 Cotton Quality/cotton_quality_chart.dart';
-import '../User_Profile/profile.dart';
+import '../../Constants/Global_Widgets/Text/CustomText.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -28,89 +19,54 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String release = "";
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
+  //Check Application New Version Is Avalible Or Not
+  NewVersionPlus newVersion = NewVersionPlus();
+  bool isImageLoading = false;
+  //For Image Slider (Advertise Slider)
+  int _currentImageIndex = 0;
   final List<String> imageList = [];
   final List<String> documentid = [];
-  // Method to load image URLs from Firestore based on the index key
 
-  Future<void> loadImageUrlsFromFirestore() async {
+// Load image URLs from Firestore
+  Future<void> _loadImageUrlsFromFirestore() async {
     try {
-      final QuerySnapshot snapshot = await FirebaseFirestore.instance
-          .collection('advertise link')
-          .get(); // Get the documents from the 'advertise link' collection
+      final QuerySnapshot snapshot =
+          await FirebaseFirestore.instance.collection('advertise link').get();
 
-      // Clear the lists before updating them with new data
-      imageList.clear();
-      documentid.clear();
+      // Use a Map to temporarily store the data
+      final Map<int, String> tempImageMap = {};
+      final Map<int, String> tempDocumentIdMap = {};
 
-      // Update the imageList with the URLs from the Firestore documents
       for (final doc in snapshot.docs) {
         final uid = doc.id;
-        final index = doc['index']; // Get the index from the 'index' field
-        final link = doc[
-            'advertise_link']; // Get the image link from the 'advertise_link' field
+        final index = doc['index'];
+        final link = doc['advertise_link'];
         final int? indexInt = int.tryParse(index);
 
         if (indexInt != null && indexInt >= 0) {
-          // Make sure the imageList has enough elements to store the links
-          if (indexInt >= imageList.length) {
-            for (int i = imageList.length; i <= indexInt; i++) {
-              imageList.add('');
-              documentid.add('');
-            }
-          }
           setState(() {
-            imageList[indexInt] = link;
-            documentid[indexInt] = uid;
+            tempImageMap[indexInt] = link;
+            tempDocumentIdMap[indexInt] = uid;
           });
-          // Update the link and uid at the given index
         }
       }
 
-      // Print all data of imageList
-      // print('All data of imageList:');
-      for (int i = 0; i < imageList.length; i++) {
-        // print('Index $i: ${imageList[i]}');
-      }
+      // Clear the existing lists and add the data from the maps
+      // imageList.clear();
+      // documentid.clear();
+      imageList.addAll(List.generate(
+          tempImageMap.length, (index) => tempImageMap[index] ?? ''));
+      documentid.addAll(List.generate(
+          tempDocumentIdMap.length, (index) => tempDocumentIdMap[index] ?? ''));
     } catch (e) {
       // Handle any errors that may occur during the fetch process
       // print('Error fetching image URLs: $e');
     }
   }
 
-  String userName = '';
-  String eEmail = '';
-  String contactnumber = '';
-
-  int _currentImageIndex = 0;
-  @override
-  void initState() {
-    super.initState();
-    loadUserName();
-    checkForUpdates();
-    // Call the method to load image URLs from Firestore
-    loadImageUrlsFromFirestore();
-  }
-
   final CarouselController _controller = CarouselController();
 
-  Future<void> loadUserName() async {
-    User? user = _auth.currentUser;
-    _firestore.collection('users').doc(user!.uid).get().then((value) {
-      setState(() {
-        userName = value.data()!['name'].toString();
-        eEmail = value.data()!['email'].toString();
-        contactnumber = value.data()!['contactNumber'].toString();
-
-        // print(userName);
-      });
-    });
-  }
-
-  Future<void> checkForUpdates() async {
+  Future<void> _checkUpdate() async {
     final VersionStatus? versionStatus = await newVersion.getVersionStatus();
     if (versionStatus!.canUpdate) {
       showDialog(
@@ -120,23 +76,30 @@ class _HomePageState extends State<HomePage> {
           return WillPopScope(
             onWillPop: () async => false,
             child: AlertDialog(
-              title: Text(
-                'New Update Available',
-                style: TextStyle(color: Colors.black, fontSize: 50.sp),
+              title: const CustomText(
+                text: 'New Update Available',
+                color: Colors.black,
+                maxLine: 1,
+                bold: false,
               ),
-              content: Text(
-                'A new version of the app is available. Please update to the latest version.',
-                style: TextStyle(color: Colors.black, fontSize: 40.sp),
+              content: const CustomText(
+                text:
+                    'A new version of the app is available. Please update to the latest version.',
+                color: Colors.black,
+                maxLine: 2,
+                bold: false,
               ),
               actions: [
                 ElevatedButton(
-                  child: Text(
-                    'Update',
-                    style: (TextStyle(color: Colors.white, fontSize: 40.sp)),
+                  child: const CustomText(
+                    text: 'Update',
+                    color: Colors.black,
+                    maxLine: 1,
+                    bold: false,
                   ),
                   onPressed: () {
                     // Launch the Play Store URL to open the app page
-                    _launchAppStoreUrl();
+                    _launchAppUrl();
                   },
                 ),
               ],
@@ -147,7 +110,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<void> _launchAppStoreUrl() async {
+  Future<void> _launchAppUrl() async {
     const String packageName = 'mg.kingtechnology.in.kt1_textile_calculation';
     final Uri playStoreUrl = Uri.https(
         'play.google.com', '/store/apps/details', {'id': packageName});
@@ -165,7 +128,22 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  NewVersionPlus newVersion = NewVersionPlus();
+  @override
+  Future setPageName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    //Check the update of application from playstore
+    _checkUpdate();
+    // Call the method to load image URLs from Firestore
+    _loadImageUrlsFromFirestore();
+    setPageName();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -173,121 +151,112 @@ class _HomePageState extends State<HomePage> {
           appbarText: 'Textile Calculator',
           appbarIcon: Icons.settings,
           appbarIconOnPress: () =>
-              CustomNavigator().navigateToPage(context, const Profile()),
+              Navigator.of(context).pushNamed('/profile_screen'),
           centerTitle: true,
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              // Image Advertise
-              CarouselSliderWidget(
-                imageList: imageList,
-                carouselController: _controller,
-                currentImageIndex: _currentImageIndex,
-                onPageChangedCallback: onPageChangedCallback,
-                doumentid: documentid,
-                name: userName,
-                email: eEmail,
-                contact: contactnumber,
+        body: Column(
+          children: [
+            // Image Advertise
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(width: 2, color: Colors.black),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: CarouselSliderWidget(
+                  imageList: imageList,
+                  carouselController: _controller,
+                  currentImageIndex: _currentImageIndex,
+                  onPageChangedCallback: onPageChangedCallback,
+                  doumentid: documentid,
+                  name: UserData.userName,
+                  email: UserData.userEmail,
+                  contact: UserData.userPhoneNumber,
+                ),
               ),
+            ),
 
-              //  Start Main Content
-              Container(
-                alignment: Alignment.center,
-                child: Text(
-                  'Welcome $userName'.toUpperCase(),
-                  style: TextStyle(fontSize: 60.sp, color: Colors.black),
-                ),
+            // Welcome Text
+            CustomText(
+              text: 'Welcome ${UserData.userName}'.toUpperCase(),
+              color: Colors.black,
+              maxLine: 1,
+              bold: false,
+            ),
+
+            // Space Between Text And Box
+            const SizedBox(height: 10),
+
+            Expanded(
+              child: ListView.builder(
+                itemCount: liked.likedItems.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return CustomListTile(
+                    // Pass the index to CustomListTile
+                    index: index,
+                    name: liked.likedItems[index]['Name'],
+                    imageUrl: liked.likedItems[index]['imageUrl'],
+                    isLiked: false,
+                    onPreesed: () => Navigator.of(context).pushReplacementNamed(
+                        '/${liked.likedItems[index]['navigatePage']}'),
+
+                    showLikeIcon: index != 0,
+                  );
+                },
               ),
-              SizedBox(height: 50.h),
-              Container(
-                padding: EdgeInsets.only(left: 80.sp, right: 80.sp),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        HomePageBoxContainer(
-                          onPressed: () => CustomNavigator().navigateToPage(
-                              context, const HomeSingalGinningCalculator()),
-                          imageAsset: 'assets/ginning_logo.png',
-                          buttonText: 'Ginning Calculator',
-                        ),
-                        HomePageBoxContainer(
-                          onPressed: () => CustomNavigator().navigateToPage(
-                              context, const HomeSingalOilMillCalculator()),
-                          imageAsset: 'assets/oilmill_logo.png',
-                          buttonText: 'Oil Mill Calculator',
-                        ),
-                        HomePageBoxContainer(
-                          onPressed: () => CustomNavigator().navigateToPage(
-                              context, const HomeSpinningCalculator()),
-                          imageAsset: 'assets/spinning_logo.png',
-                          buttonText: 'Spinning Calculator',
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 30.sp,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        HomePageBoxContainer(
-                          onPressed: () => CustomNavigator().navigateToPage(
-                              context, const HomeExportCalculation()),
-                          imageAsset: 'assets/export_logo.png',
-                          buttonText: 'Exports Calculation',
-                        ),
-                        HomePageBoxContainer(
-                          onPressed: () => CustomNavigator().navigateToPage(
-                              context, const HomeSingalConversationCalulator()),
-                          imageAsset: 'assets/conversation_logo.png',
-                          buttonText: 'Conversation',
-                        ),
-                        HomePageBoxContainer(
-                          onPressed: () => CustomNavigator().navigateToPage(
-                              context, const HomeICEParityChart()),
-                          imageAsset: 'assets/ICEparity_logo.png',
-                          buttonText: 'ICE Parity Chart',
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 30.sp,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        HomePageBoxContainer(
-                          onPressed: () => CustomNavigator().navigateToPage(
-                              context, const StapleConversationChart()),
-                          imageAsset: 'assets/staple_logo.png',
-                          buttonText: 'Staple Conversation',
-                        ),
-                        HomePageBoxContainer(
-                          onPressed: () => CustomNavigator().navigateToPage(
-                              context, const ConversationFactor()),
-                          imageAsset: 'assets/cottonfactor.png',
-                          buttonText: 'Coversation Factor',
-                        ),
-                        HomePageBoxContainer(
-                          onPressed: () => CustomNavigator().navigateToPage(
-                              context, const CottonQualityChart()),
-                          imageAsset: 'assets/cotton_quality.png',
-                          buttonText: 'Cotton Quality',
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 50.sp,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            )
+          ],
         ));
+  }
+}
+
+class CustomListTile extends StatelessWidget {
+  final int index; // Add index parameter
+  final Function() onPreesed;
+  final String name;
+  final String imageUrl;
+  final bool isLiked;
+
+  final bool showLikeIcon;
+
+  CustomListTile({
+    required this.index, // Accept index parameter
+    required this.name,
+    required this.imageUrl,
+    required this.isLiked,
+    required this.onPreesed,
+    required this.showLikeIcon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        onTap: onPreesed,
+        contentPadding: const EdgeInsets.all(10),
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(color: Colors.blue, width: 0.4),
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        tileColor: Colors.white,
+        leading: SizedBox(
+          height: 50,
+          width: 60,
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage(imageUrl),
+              ),
+            ),
+          ),
+        ),
+        title: Text(
+          name,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
   }
 }
