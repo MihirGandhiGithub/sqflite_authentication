@@ -21,7 +21,8 @@ class GlobalButtonGradientText extends StatelessWidget {
       margin: EdgeInsets.fromLTRB(300.w, 0, 300.w, 0),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromRGBO(35, 35, 35, 0.9),
+          // backgroundColor: const Color.fromRGBO(0, 13, 255, 1.0),
+          backgroundColor: Colors.blue,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(40.sp),
           ),
@@ -34,9 +35,12 @@ class GlobalButtonGradientText extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 60.sp),
           colors: const [
-            Colors.blue,
-            Colors.red,
-            Colors.teal,
+            Colors.white,
+            Colors.white,
+            Colors.white,
+            // Colors.blue,
+            // Colors.red,
+            // Colors.teal,
           ],
         ),
       ),

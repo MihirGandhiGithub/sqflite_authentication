@@ -8,6 +8,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   requestPermissions();
+
   runApp(const MyApp());
 }
 
@@ -38,9 +39,9 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Textile Calculator',
           // You can use the library anywhere in the app even in theme
-          theme: ThemeData(
-            textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
-          ),
+          // theme: ThemeData(
+          //   textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
+          // ),
           home: child,
         );
       },

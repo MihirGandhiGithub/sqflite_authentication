@@ -2,802 +2,437 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:screenshot/screenshot.dart';
 
-import '../../../Constants/Global_Variables/Sizes/Sizes.dart';
-import '../../../Constants/Global_Widgets/Appbar/appbar_slider.dart';
+import '../../../Constants/Global_Variables/Sizes/global_sizes.dart';
+
+import '../../../Constants/Global_Widgets/Appbar/appbar_with_text.dart';
 import '../../../Constants/Global_Widgets/Buttons/floating_share.dart';
 import '../../../Constants/Global_Widgets/Buttons/simple_text.dart';
 import '../../../Constants/Global_Widgets/Result_Text/bigresult_text.dart';
-import '../../../Globaly Accesible/Row  widget with 2 items.dart';
+import '../../../Globaly Accesible/row_with_2_item.dart';
 
-class compare_spinning extends StatefulWidget {
+class CompareSpinning extends StatefulWidget {
   final bool forOrReverse;
-  const compare_spinning({Key? key, required this.forOrReverse})
+  const CompareSpinning({Key? key, required this.forOrReverse})
       : super(key: key);
 
   @override
-  State<compare_spinning> createState() => _compare_spinningState();
+  State<CompareSpinning> createState() => _CompareSpinningState();
 }
 
-class _compare_spinningState extends State<compare_spinning>
+class _CompareSpinningState extends State<CompareSpinning>
     with SingleTickerProviderStateMixin {
   ScreenshotController screenshotController = ScreenshotController();
-  late bool _isForwardGinning;
 
-  // for calculator 1
-  final inputkapas1 = TextEditingController();
-  final inputexpense1 = TextEditingController();
-  final inputkapasia1 = TextEditingController();
-  final inpututaro1 = TextEditingController();
-  final inputghati1 = TextEditingController();
+  bool isNagative = false;
 
-  //for calculator 2
-  final inputkapas2 = TextEditingController();
-  final inputexpense2 = TextEditingController();
-  final inputkapasia2 = TextEditingController();
-  final inpututaro2 = TextEditingController();
-  final inputghati2 = TextEditingController();
+  bool isNagative2 = false;
+  //For Calculator 1 Answer
+  static double answerCottonRate = 0;
+  static double ansMatrialCoast = 0;
+  static double ansYarnCoast = 0;
+  static double ansProfitLoss = 0;
 
-  double answer1 = 0;
-  double dubanswer1 = 0;
-  double answer2 = 0;
-  double dubanswer2 = 0;
-  double diff = 0;
-  double dubdiff = 0;
+  //For Calulator 2 Answer
+  static double answerCottonRate2 = 0;
+  static double ansMatrialCoast2 = 0;
+  static double ansYarnCoast2 = 0;
+  static double ansProfitLoss2 = 0;
 
-  void _updateValuesForCalculator1() {
-    double storeInputKapas1 = double.tryParse(inputkapas1.text) ?? 0;
-    double storeInputExpense1 = double.tryParse(inputexpense1.text) ?? 0;
-    double storeInputKapasia1 = double.tryParse(inputkapasia1.text) ?? 0;
-    double storeInputUtaro1 = double.tryParse(inpututaro1.text) ?? 0;
-    double storeInputGhati1 = double.tryParse(inputghati1.text) ?? 0;
-    double sum1 = (storeInputKapas1 + storeInputExpense1);
+  double diffCottonRate = 0;
+  double diffMaterialCoast = 0;
+  double diffYarnCoast = 0;
+  double diffProfitLoss = 0;
 
-    if (storeInputKapas1 != 0 &&
-        storeInputExpense1 != 0 &&
-        storeInputKapasia1 != 0 &&
-        storeInputUtaro1 != 0 &&
-        storeInputGhati1 != 0) {
-      double a = sum1 * 100;
-      double b = 100 - storeInputUtaro1 - storeInputGhati1;
-      double c = storeInputKapasia1 * b;
-      double d = a - c;
-      double e = d / storeInputUtaro1;
-      double f = e * 17.78;
+  //Calculator 1
+  final yarnCount = TextEditingController();
+  final cottonRate = TextEditingController();
+  final yield = TextEditingController();
+  final wasteRecovery = TextEditingController();
+  final conversationCoast = TextEditingController();
+  final commission = TextEditingController();
+  final otherExpense = TextEditingController();
+  final yarnRate = TextEditingController();
 
-      setState(() {
-        dubanswer1 = f;
-        answer1 = double.parse(f.toStringAsFixed(2));
-        dubdiff = dubanswer1 - dubanswer2;
-        diff = double.parse(dubdiff.toStringAsFixed(2)).abs();
-      });
-    } else if (storeInputKapas1 != 0 &&
-        storeInputExpense1 != 0 &&
-        storeInputKapasia1 != 0 &&
-        storeInputUtaro1 != 0 &&
-        storeInputGhati1 == 0) {
-      double a = sum1 * 100;
-      double b = 100 - storeInputUtaro1;
-      double c = storeInputKapasia1 * b;
-      double d = a - c;
-      double e = d / storeInputUtaro1;
-      double f = e * 17.78;
+  //Calculator 2
+  final yarnCount2 = TextEditingController();
+  final cottonRate2 = TextEditingController();
+  final yield2 = TextEditingController();
+  final wasteRecovery2 = TextEditingController();
+  final conversationCoast2 = TextEditingController();
+  final commission2 = TextEditingController();
+  final otherExpense2 = TextEditingController();
+  final yarnRate2 = TextEditingController();
 
-      setState(() {
-        answer1 = double.parse(f.toStringAsFixed(2));
-        dubanswer1 = f;
-        dubdiff = dubanswer1 - dubanswer2;
-        diff = double.parse(dubdiff.toStringAsFixed(2)).abs();
-      });
-    } else if (sum1 != 0 &&
-        storeInputKapasia1 == 0 &&
-        storeInputUtaro1 == 0 &&
-        storeInputGhati1 == 0) {
-      setState(() {
-        answer1 = double.parse(sum1.toStringAsFixed(2));
-      });
-    } else if (sum1 != 0 &&
-        storeInputKapasia1 != 0 &&
-        storeInputUtaro1 == 0 &&
-        storeInputGhati1 == 0) {
-      setState(() {
-        double temp = sum1 * 0.35;
-        answer1 = double.parse(temp.toStringAsFixed(2));
-      });
-    }
+  void _cottonRate() {
+    double storeYarnCount = double.tryParse(yarnCount.text) ?? 0;
+    double storecottonRate = double.tryParse(cottonRate.text) ?? 0;
+    double storeYeild = double.tryParse(yield.text) ?? 0;
+    double storeWasteRecovery = double.tryParse(wasteRecovery.text) ?? 0;
+    double storeConversationCoast =
+        double.tryParse(conversationCoast.text) ?? 0;
+    double storeCommission = double.tryParse(commission.text) ?? 0;
+    double storeOtherExpense = double.tryParse(otherExpense.text) ?? 0;
+    double storeYarnRate = double.tryParse(yarnRate.text) ?? 0;
+
+    double a = storecottonRate / 355.60; //160.29
+    double b = a / storeYeild * 100; //242.86
+    double c = b - storeWasteRecovery; //182.86
+    double d = storeYarnCount * storeConversationCoast; //60
+    double e = c + d; //242.86
+    double f = c * storeCommission / 100; //1.82
+    double h = e + f; //244.68
+    double i = h + storeOtherExpense; //249.68
+    double j = i - storeYarnRate;
+
+    // double g=
+
+    // double e = (c * storeWasteRecovery * storeCommission) / 100; //1.82
+    // double f = e + b; //244.68
+    // double g = f + storeOtherExpense; //249.68
+    // double h = g - storeYarnRate;
+
+    setState(() {
+      answerCottonRate = double.parse(a.toStringAsFixed(2));
+      ansMatrialCoast = double.parse(c.toStringAsFixed(2));
+      ansYarnCoast = double.parse(i.toStringAsFixed(2));
+      ansProfitLoss = double.parse(j.toStringAsFixed(2));
+
+      double temp = answerCottonRate - answerCottonRate2;
+      diffCottonRate = double.parse(temp.toStringAsFixed(2));
+
+      double temp2 = ansMatrialCoast - ansMatrialCoast2;
+      diffMaterialCoast = double.parse(temp2.toStringAsFixed(2));
+
+      double temp3 = ansYarnCoast - ansYarnCoast2;
+      diffYarnCoast = double.parse(temp3.toStringAsFixed(2));
+
+      double temp4 = ansProfitLoss - ansProfitLoss2;
+      diffProfitLoss = double.parse(temp4.toStringAsFixed(2));
+    });
   }
 
-  void _updateValuesForCalculator2() {
-    double storeInputKapas2 = double.tryParse(inputkapas2.text) ?? 0;
-    double storeInputExpense2 = double.tryParse(inputexpense2.text) ?? 0;
-    double storeInputKapasia2 = double.tryParse(inputkapasia2.text) ?? 0;
-    double storeInputUtaro2 = double.tryParse(inpututaro2.text) ?? 0;
-    double storeInputGhati2 = double.tryParse(inputghati2.text) ?? 0;
-    double sum2 = (storeInputKapas2 + storeInputExpense2);
+  void _cottonRate2() {
+    double storeYarnCount = double.tryParse(yarnCount2.text) ?? 0;
+    double storecottonRate = double.tryParse(cottonRate2.text) ?? 0;
+    double storeYeild = double.tryParse(yield2.text) ?? 0;
+    double storeWasteRecovery = double.tryParse(wasteRecovery2.text) ?? 0;
+    double storeConversationCoast =
+        double.tryParse(conversationCoast2.text) ?? 0;
+    double storeCommission = double.tryParse(commission2.text) ?? 0;
+    double storeOtherExpense = double.tryParse(otherExpense2.text) ?? 0;
+    double storeYarnRate = double.tryParse(yarnRate2.text) ?? 0;
 
-    if (storeInputKapas2 != 0 &&
-        storeInputExpense2 != 0 &&
-        storeInputKapasia2 != 0 &&
-        storeInputUtaro2 != 0 &&
-        storeInputGhati2 != 0) {
-      double a = sum2 * 100;
-      double b = 100 - storeInputUtaro2 - storeInputGhati2;
-      double c = storeInputKapasia2 * b;
-      double d = a - c;
-      double e = d / storeInputUtaro2;
-      double f = e * 17.78;
+    double a = storecottonRate / 355.60; //160.29
+    double b = a / storeYeild * 100; //242.86
+    double c = b - storeWasteRecovery; //182.86
+    double d = storeYarnCount * storeConversationCoast; //60
+    double e = c + d; //242.86
+    double f = c * storeCommission / 100; //1.82
+    double h = e + f; //244.68
+    double i = h + storeOtherExpense; //249.68
+    double j = i - storeYarnRate;
 
-      setState(() {
-        answer2 = double.parse(f.toStringAsFixed(2));
-        dubanswer2 = f;
-        dubdiff = dubanswer1 - dubanswer2;
-        diff = double.parse(dubdiff.toStringAsFixed(2)).abs();
-      });
-    } else if (storeInputKapas2 != 0 &&
-        storeInputExpense2 != 0 &&
-        storeInputKapasia2 != 0 &&
-        storeInputUtaro2 != 0 &&
-        storeInputGhati2 == 0) {
-      double a = sum2 * 100;
-      double b = 100 - storeInputUtaro2;
-      double c = storeInputKapasia2 * b;
-      double d = a - c;
-      double e = d / storeInputUtaro2;
-      double f = e * 17.78;
+    setState(() {
+      answerCottonRate2 = double.parse(a.toStringAsFixed(2));
+      ansMatrialCoast2 = double.parse(c.toStringAsFixed(2));
+      ansYarnCoast2 = double.parse(i.toStringAsFixed(2));
+      ansProfitLoss2 = double.parse(j.toStringAsFixed(2));
 
-      setState(() {
-        answer2 = double.parse(f.toStringAsFixed(2));
-        dubanswer2 = f;
-        dubdiff = dubanswer1 - dubanswer2;
-        diff = double.parse(dubdiff.toStringAsFixed(2)).abs();
-      });
-    } else if (sum2 != 0 &&
-        storeInputKapasia2 == 0 &&
-        storeInputUtaro2 == 0 &&
-        storeInputGhati2 == 0) {
-      setState(() {
-        answer2 = double.parse(sum2.toStringAsFixed(2));
-      });
-    } else if (sum2 != 0 &&
-        storeInputKapasia2 != 0 &&
-        storeInputUtaro2 == 0 &&
-        storeInputGhati2 == 0) {
-      setState(() {
-        double temp = sum2 * 0.35;
-        answer2 = double.parse(temp.toStringAsFixed(2));
-      });
-    }
-  }
+      double temp = answerCottonRate - answerCottonRate2;
+      diffCottonRate = double.parse(temp.toStringAsFixed(2));
 
-  // for calculator 1
-  final reverseinputkapas1 = TextEditingController();
-  final reverseinputexpense1 = TextEditingController();
-  final reverseinputkapasia1 = TextEditingController();
-  final reverseinpututaro1 = TextEditingController();
-  final reverseinputghati1 = TextEditingController();
+      double temp2 = ansMatrialCoast - ansMatrialCoast2;
+      diffMaterialCoast = double.parse(temp2.toStringAsFixed(2));
 
-  //for calculator 2
-  final reverseinputkapas2 = TextEditingController();
-  final reverseinputexpense2 = TextEditingController();
-  final reverseinputkapasia2 = TextEditingController();
-  final reverseinpututaro2 = TextEditingController();
-  final reverseinputghati2 = TextEditingController();
+      double temp3 = ansYarnCoast - ansYarnCoast2;
+      diffYarnCoast = double.parse(temp3.toStringAsFixed(2));
 
-  double reverseanswer1 = 0;
-  double reversedubanswer1 = 0;
-  double reverseanswer2 = 0;
-  double reversedubanswer2 = 0;
-  double reversediff = 0;
-  double reversedubdiff = 0;
-
-  void _reverseUpdateValuesForCalculator1() {
-    double storeInputKapas1 = double.tryParse(reverseinputkapas1.text) ?? 0;
-    double storeInputExpense1 = double.tryParse(reverseinputexpense1.text) ?? 0;
-    double storeInputKapasia1 = double.tryParse(reverseinputkapasia1.text) ?? 0;
-    double storeInputUtaro1 = double.tryParse(reverseinpututaro1.text) ?? 0;
-    double storeInputGhati1 = double.tryParse(reverseinputghati1.text) ?? 0;
-    double sum1 = (storeInputKapas1 + storeInputExpense1);
-
-    if (storeInputKapas1 != 0 &&
-        storeInputExpense1 != 0 &&
-        storeInputKapasia1 != 0 &&
-        storeInputUtaro1 != 0 &&
-        storeInputGhati1 != 0) {
-      double a1 = (storeInputKapas1 * 0.2812 / 5);
-      double a2 = a1 * storeInputUtaro1;
-      double a3 = 100 - storeInputUtaro1 - storeInputGhati1;
-      double a4 = a3 * storeInputKapasia1;
-      double a5 = a4 + a2;
-      double a6 = a5 / 100;
-      double f = a6 - storeInputExpense1;
-
-      setState(() {
-        reversedubanswer1 = f;
-        reverseanswer1 = double.parse(f.toStringAsFixed(2));
-        reversedubdiff = reversedubanswer1 - reversedubanswer2;
-        reversediff = double.parse(reversedubdiff.toStringAsFixed(2)).abs();
-      });
-    } else if (storeInputKapas1 != 0 &&
-        storeInputExpense1 != 0 &&
-        storeInputKapasia1 != 0 &&
-        storeInputUtaro1 != 0 &&
-        storeInputGhati1 == 0) {
-      double a1 = (storeInputKapas1 * 0.2812 / 5);
-      double a2 = a1 * storeInputUtaro1;
-      double a3 = 100 - storeInputUtaro1;
-      double a4 = a3 * storeInputKapasia1;
-      double a5 = a4 + a2;
-      double a6 = a5 / 100;
-      double f = a6 - storeInputExpense1;
-
-      setState(() {
-        reverseanswer1 = double.parse(f.toStringAsFixed(2));
-        reversedubanswer1 = f;
-        reversedubdiff = reversedubanswer1 - reversedubanswer2;
-        reversediff = double.parse(reversedubdiff.toStringAsFixed(2)).abs();
-      });
-    } else if (sum1 != 0 &&
-        storeInputKapasia1 == 0 &&
-        storeInputUtaro1 == 0 &&
-        storeInputGhati1 == 0) {
-      setState(() {
-        reverseanswer1 = double.parse(sum1.toStringAsFixed(2));
-      });
-    } else if (sum1 != 0 &&
-        storeInputKapasia1 != 0 &&
-        storeInputUtaro1 == 0 &&
-        storeInputGhati1 == 0) {
-      setState(() {
-        double temp = sum1 * 0.35;
-        reverseanswer1 = double.parse(temp.toStringAsFixed(2));
-      });
-    }
-  }
-
-  void _reverseUpdateValuesForCalculator2() {
-    double storeInputKapas2 = double.tryParse(reverseinputkapas2.text) ?? 0;
-    double storeInputExpense2 = double.tryParse(reverseinputexpense2.text) ?? 0;
-    double storeInputKapasia2 = double.tryParse(reverseinputkapasia2.text) ?? 0;
-    double storeInputUtaro2 = double.tryParse(reverseinpututaro2.text) ?? 0;
-    double storeInputGhati2 = double.tryParse(reverseinputghati2.text) ?? 0;
-    double sum2 = (storeInputKapas2 + storeInputExpense2);
-
-    if (storeInputKapas2 != 0 &&
-        storeInputExpense2 != 0 &&
-        storeInputKapasia2 != 0 &&
-        storeInputUtaro2 != 0 &&
-        storeInputGhati2 != 0) {
-      double a1 = (storeInputKapas2 * 0.2812 / 5);
-      double a2 = a1 * storeInputUtaro2;
-      double a3 = 100 - storeInputUtaro2 - storeInputGhati2;
-      double a4 = a3 * storeInputKapasia2;
-      double a5 = a4 + a2;
-      double a6 = a5 / 100;
-      double f = a6 - storeInputExpense2;
-
-      setState(() {
-        reverseanswer2 = double.parse(f.toStringAsFixed(2));
-        reversedubanswer2 = f;
-        reversedubdiff = reversedubanswer1 - reversedubanswer2;
-        reversediff = double.parse(reversedubdiff.toStringAsFixed(2)).abs();
-      });
-    } else if (storeInputKapas2 != 0 &&
-        storeInputExpense2 != 0 &&
-        storeInputKapasia2 != 0 &&
-        storeInputUtaro2 != 0 &&
-        storeInputGhati2 == 0) {
-      double a1 = (storeInputKapas2 * 0.2812 / 5);
-      double a2 = a1 * storeInputUtaro2;
-      double a3 = 100 - storeInputUtaro2;
-      double a4 = a3 * storeInputKapasia2;
-      double a5 = a4 + a2;
-      double a6 = a5 / 100;
-      double f = a6 - storeInputExpense2;
-
-      setState(() {
-        reverseanswer2 = double.parse(f.toStringAsFixed(2));
-        reversedubanswer2 = f;
-        reversedubdiff = reversedubanswer1 - reversedubanswer2;
-        reversediff = double.parse(reversedubdiff.toStringAsFixed(2)).abs();
-      });
-    } else if (sum2 != 0 &&
-        storeInputKapasia2 == 0 &&
-        storeInputUtaro2 == 0 &&
-        storeInputGhati2 == 0) {
-      setState(() {
-        reverseanswer2 = double.parse(sum2.toStringAsFixed(2));
-      });
-    } else if (sum2 != 0 &&
-        storeInputKapasia2 != 0 &&
-        storeInputUtaro2 == 0 &&
-        storeInputGhati2 == 0) {
-      setState(() {
-        double temp = sum2 * 0.35;
-        reverseanswer2 = double.parse(temp.toStringAsFixed(2));
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    _isForwardGinning = widget.forOrReverse;
-    // _isFirstButtonSelected1 = widget.for_or_reverse;
-    // setState(() {
-    //   if (_isFirstButtonSelected1) {
-    //     _isForwardGinning = true;
-    //   } else {
-    //     _isForwardGinning = false;
-    //   }
-    // });
-    super.initState();
+      double temp4 = ansProfitLoss - ansProfitLoss2;
+      diffProfitLoss = double.parse(temp4.toStringAsFixed(2));
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
     return Screenshot(
         controller: screenshotController,
         child: Scaffold(
-            appBar: GlobalCustomAppBar(
-              sliderText1: 'Loss Yarn',
-              sliderText2: 'Profit Yarn',
-              appbarText: 'Spinning Compare Calculator',
-              isFirstButtonSelected: _isForwardGinning,
-              onButtonPressed: (bool isFirstButton) {
-                setState(() {
-                  _isForwardGinning = isFirstButton;
-                });
-              },
+            appBar: const AppbarWithText(
+              appbarText: 'Spinning Compare',
+              centerTitle: false,
             ),
-            body: GestureDetector(
-                onHorizontalDragEnd: (DragEndDetails details) {
-                  if (details.primaryVelocity! > 0) {
-                    // Swiped from left to right
+            body: ListView(
+              physics: const BouncingScrollPhysics(),
+              children: [
+                //Heading of Calculator
+                const GlobalRowCompareWidget2TEXT(
+                  title1: 'Calc1',
+                  title2: 'Calc2',
+                ),
+
+                //Content Of Calculator
+
+                // Yarn Count
+                GlobalRowCompareWidget2textfielsWithOnchanges(
+                    title: 'Yarn Count',
+                    controller1: yarnCount,
+                    subtitle: 'Count',
+                    height: 0,
+                    width: 0,
+                    controller2: yarnCount2,
+                    onchaned1: (string) {
+                      _cottonRate();
+                    },
+                    onchane2: (string) {
+                      _cottonRate2();
+                    }),
+
+                //Cotton Rate
+                GlobalRowCompareWidget2textfielsWithOnchanges(
+                    title: 'Cotton Rate',
+                    controller1: cottonRate,
+                    subtitle: '₹/Candy',
+                    height: 0,
+                    width: 0,
+                    controller2: cottonRate2,
+                    onchaned1: (string) {
+                      _cottonRate();
+                    },
+                    onchane2: (string) {
+                      _cottonRate2();
+                    }),
+
+                //Answer Cotton Rate
+                GlobalRowCompareWidget2StreamBuilderWithAnswer(
+                  result1: answerCottonRate,
+                  result2: answerCottonRate2,
+                  subtext1: '₹/Kg',
+                  subtext2: '₹/Kg',
+                  title1: 'Cotton Rate',
+                  title2: 'Cotton Rate',
+                ),
+
+                //Yeild
+                GlobalRowCompareWidget2textfielsWithOnchanges(
+                    title: 'Yield',
+                    controller1: yield,
+                    subtitle: '%',
+                    height: 0,
+                    width: 0,
+                    controller2: yield2,
+                    onchaned1: (string) {
+                      _cottonRate();
+                    },
+                    onchane2: (string) {
+                      _cottonRate2();
+                    }),
+
+                //Waste Recovery
+                GlobalRowCompareWidget2textfielsWithOnchanges(
+                    title: 'Waste Recovery',
+                    controller1: wasteRecovery,
+                    subtitle: '₹/Kg',
+                    height: 0,
+                    width: 0,
+                    controller2: wasteRecovery2,
+                    onchaned1: (string) {
+                      _cottonRate();
+                    },
+                    onchane2: (string) {
+                      _cottonRate2();
+                    }),
+
+                //answer waste recovery
+                GlobalRowCompareWidget2StreamBuilderWithAnswer(
+                  result1: ansMatrialCoast,
+                  result2: ansMatrialCoast2,
+                  subtext1: '₹/Kg',
+                  subtext2: '₹/Kg',
+                  title1: 'Material Coast',
+                  title2: 'Material Coast',
+                ),
+
+                GlobalRowCompareWidget2textfielsWithOnchanges(
+                    title: 'Coversion Coast',
+                    controller1: conversationCoast,
+                    subtitle: '₹/Kg/Count',
+                    height: 0,
+                    width: 0,
+                    controller2: conversationCoast2,
+                    onchaned1: (string) {
+                      _cottonRate();
+                    },
+                    onchane2: (string) {
+                      _cottonRate2();
+                    }),
+                GlobalRowCompareWidget2textfielsWithOnchanges(
+                    title: 'Commission',
+                    controller1: commission,
+                    subtitle: '%',
+                    height: 0,
+                    width: 0,
+                    controller2: commission2,
+                    onchaned1: (string) {
+                      _cottonRate();
+                    },
+                    onchane2: (string) {
+                      _cottonRate2();
+                    }),
+                GlobalRowCompareWidget2textfielsWithOnchanges(
+                    title: 'Other Expenses',
+                    controller1: otherExpense,
+                    subtitle: '₹/Kg',
+                    height: 0,
+                    width: 0,
+                    controller2: otherExpense2,
+                    onchaned1: (string) {
+                      _cottonRate();
+                    },
+                    onchane2: (string) {
+                      _cottonRate2();
+                    }),
+
+                // Final Answer
+                GlobalRowCompareWidget2StreamBuilderWithAnswer(
+                  result1: ansYarnCoast,
+                  result2: ansYarnCoast2,
+                  subtext1: '₹/Kg',
+                  subtext2: '₹/Kg',
+                  title1: 'Yarn Coast',
+                  title2: 'Yarn Coast',
+                ),
+
+                GlobalRowCompareWidget2textfielsWithOnchanges(
+                    title: 'Yarn Rate',
+                    controller1: yarnRate,
+                    subtitle: '₹/Kg',
+                    height: 0,
+                    width: 0,
+                    controller2: yarnRate2,
+                    onchaned1: (string) {
+                      _cottonRate();
+                    },
+                    onchane2: (string) {
+                      _cottonRate2();
+                    }),
+
+                GlobalRowCompareWidget2StreamBuilderWithAnswer(
+                  result1: ansProfitLoss,
+                  result2: ansProfitLoss2,
+                  subtext1: '₹/Kg',
+                  subtext2: '₹/Kg',
+                  title1: 'Profit/Loss',
+                  title2: '',
+                ),
+                // // Khandi Diffrnce or Stram result
+
+                GlobalRowCompareWidget2Button(
+                  onpressed1: () {
+                    yarnCount.clear();
+                    cottonRate.clear();
+                    yield.clear();
+                    wasteRecovery.clear();
+                    conversationCoast.clear();
+                    commission.clear();
+                    otherExpense.clear();
+                    yarnRate.clear();
                     setState(() {
-                      _isForwardGinning = true;
+                      answerCottonRate = 0;
+                      ansMatrialCoast = 0;
+                      ansYarnCoast = 0;
+                      ansProfitLoss = 0;
                     });
-                  } else if (details.primaryVelocity! < 0) {
-                    // Swiped from right to left
+                  },
+                  onpressed2: () {
+                    yarnCount2.clear();
+                    cottonRate2.clear();
+                    yield2.clear();
+                    wasteRecovery2.clear();
+                    conversationCoast2.clear();
+                    commission2.clear();
+                    otherExpense2.clear();
+                    yarnRate2.clear();
+                    //For Calulator 2 Answer
                     setState(() {
-                      _isForwardGinning = false;
+                      answerCottonRate2 = 0;
+                      ansMatrialCoast2 = 0;
+                      ansYarnCoast2 = 0;
+                      ansProfitLoss2 = 0;
                     });
-                  }
-                },
-                child: _isForwardGinning
-                    ? ListView(
-                        physics: const BouncingScrollPhysics(),
-                        children: [
-                          //Heading of Calculator
-                          const GlobalRowCompareWidget2TEXT(
-                            title1: 'Calc1 ',
-                            title2: 'Calc2 ',
-                          ),
+                  },
+                  text1: 'RESET 1',
+                  text2: 'RESET 2',
+                ),
 
-                          //Content Of Calculator
-                          // Kappas
+                //Cotton Rate Difference
+                GlobalResultBuilderForResults(
+                  substreamtext: '₹/Kg',
+                  streamtitletext: 'Cotton Rate Difference',
+                  result: diffCottonRate.abs(),
+                ),
+                GlobalResultBuilderForResults(
+                  substreamtext: '₹/Kg',
+                  streamtitletext: 'Material Coast Difference',
+                  result: diffMaterialCoast.abs(),
+                ),
+                GlobalResultBuilderForResults(
+                  substreamtext: '₹/Kg',
+                  streamtitletext: 'Yarn Coast Difference',
+                  result: diffYarnCoast.abs(),
+                ),
+                GlobalResultBuilderForResults(
+                  substreamtext: '₹/Kg',
+                  streamtitletext: 'Profit/Loss Difference',
+                  result: diffProfitLoss.abs(),
+                ),
+                //
 
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Yarn Count',
-                              controller1: inputkapas1,
-                              subtitle: 'Kappas',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapas2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
+                SizedBox(height: 20.h),
 
-                          GlobalRowCompareWidget2StreamBuilderWithAnswer(
-                            result1: answer1,
-                            result2: answer2,
-                            subtext1: '₹',
-                            subtext2: '₹',
-                            title1: 'Cotton Rate',
-                            title2: 'Cotton Rate',
-                          ),
-                          // Expense
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Yield',
-                              controller1: inputexpense1,
-                              subtitle: 'nothing',
-                              height: 0,
-                              width: 0,
-                              controller2: inputexpense2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-
-                          // Cotton Seed
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Waste Recovery',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-
-                          GlobalRowCompareWidget2StreamBuilderWithAnswer(
-                            result1: answer1,
-                            result2: answer2,
-                            subtext1: '₹',
-                            subtext2: '₹',
-                            title1: 'Material Coast',
-                            title2: 'Material Coast',
-                          ),
-
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Conversation Coast',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Commission',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Other Expense',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-
-                          // Final Answer
-                          GlobalRowCompareWidget2StreamBuilderWithAnswer(
-                            result1: answer1,
-                            result2: answer2,
-                            subtext1: '₹',
-                            subtext2: '₹',
-                            title1: 'Yarn Coast',
-                            title2: 'Yarn Coast',
-                          ),
-
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Yarn Rate',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Loss',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-
-                          GlobalRowCompareWidget2StreamBuilderWithAnswer(
-                            result1: answer1,
-                            result2: answer2,
-                            subtext1: '₹',
-                            subtext2: '₹',
-                            title1: 'Cotton Coast',
-                            title2: 'Cotton Coast',
-                          ),
-
-                          GlobalRowCompareWidget2Button(
-                            onpressed1: () {
-                              inputkapas1.clear();
-                              inputexpense1.clear();
-                              inputkapasia1.clear();
-                              inpututaro1.clear();
-                              inputghati1.clear();
-                              answer1 = 0;
-                              // result_output_difference.add(0);
-                              // focusnodekapas1.requestFocus();
-                            },
-                            onpressed2: () {
-                              inputkapas2.clear();
-                              inputexpense2.clear();
-                              inputkapasia2.clear();
-                              inpututaro2.clear();
-                              inputghati2.clear();
-                              answer2 = 0;
-                              // result_output_difference.add(0);
-                              // focusnodekapas2.requestFocus();
-                            },
-                            text1: 'RESET 1',
-                            text2: 'RESET 2',
-                          ),
-                          //
-                          // // Khandi Diffrnce or Stram result
-                          SizedBox(height: 20.h),
-                          GlobalResultBuilderForResults(
-                            substreamtext: 'Parity',
-                            streamtitletext: 'Cents/LB Difference',
-                            result: diff,
-                          ),
-
-                          SizedBox(height: 20.h),
-
-                          // Rseet All Button
-                          GlobalButtonSimpleText(
-                            onPressed: () {
-                              inputkapas1.clear();
-                              inputexpense1.clear();
-                              inputkapasia1.clear();
-                              inpututaro1.clear();
-                              inputghati1.clear();
-                              inputkapas2.clear();
-                              inputexpense2.clear();
-                              inputkapasia2.clear();
-                              inpututaro2.clear();
-                              inputghati2.clear();
-                              diff = 0;
-                              answer1 = 0;
-                              answer2 = 0;
-                            },
-                            buttontext: 'Reset All',
-                            height: globalSingalResetButtonHeight,
-                            width: globalSingalResetButtonWidth,
-                          ),
-                        ],
-                      )
-                    : ListView(
-                        physics: const BouncingScrollPhysics(),
-                        children: [
-                          //Heading of Calculator
-                          const GlobalRowCompareWidget2TEXT(
-                            title1: 'Calc1 ',
-                            title2: 'Calc2 ',
-                          ),
-
-                          //Content Of Calculator
-                          // Kappas
-
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Yarn Count',
-                              controller1: inputkapas1,
-                              subtitle: 'Kappas',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapas2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-
-                          GlobalRowCompareWidget2StreamBuilderWithAnswer(
-                            result1: answer1,
-                            result2: answer2,
-                            subtext1: '₹',
-                            subtext2: '₹',
-                            title1: 'Cotton Rate',
-                            title2: 'Cotton Rate',
-                          ),
-                          // Expense
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Yield',
-                              controller1: inputexpense1,
-                              subtitle: 'nothing',
-                              height: 0,
-                              width: 0,
-                              controller2: inputexpense2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-
-                          // Cotton Seed
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Waste Recovery',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-
-                          GlobalRowCompareWidget2StreamBuilderWithAnswer(
-                            result1: answer1,
-                            result2: answer2,
-                            subtext1: '₹',
-                            subtext2: '₹',
-                            title1: 'Material Coast',
-                            title2: 'Material Coast',
-                          ),
-
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Conversation Coast',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Commission',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Other Expense',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-
-                          // Final Answer
-                          GlobalRowCompareWidget2StreamBuilderWithAnswer(
-                            result1: answer1,
-                            result2: answer2,
-                            subtext1: '₹',
-                            subtext2: '₹',
-                            title1: 'Yarn Coast',
-                            title2: 'Yarn Coast',
-                          ),
-
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Yarn Rate',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Loss',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
-
-                          GlobalRowCompareWidget2StreamBuilderWithAnswer(
-                            result1: answer1,
-                            result2: answer2,
-                            subtext1: '₹',
-                            subtext2: '₹',
-                            title1: 'Cotton Coast',
-                            title2: 'Cotton Coast',
-                          ),
-
-                          GlobalRowCompareWidget2Button(
-                            onpressed1: () {
-                              inputkapas1.clear();
-                              inputexpense1.clear();
-                              inputkapasia1.clear();
-                              inpututaro1.clear();
-                              inputghati1.clear();
-                              answer1 = 0;
-                              // result_output_difference.add(0);
-                              // focusnodekapas1.requestFocus();
-                            },
-                            onpressed2: () {
-                              inputkapas2.clear();
-                              inputexpense2.clear();
-                              inputkapasia2.clear();
-                              inpututaro2.clear();
-                              inputghati2.clear();
-                              answer2 = 0;
-                              // result_output_difference.add(0);
-                              // focusnodekapas2.requestFocus();
-                            },
-                            text1: 'RESET 1',
-                            text2: 'RESET 2',
-                          ),
-                          //
-                          // // Khandi Diffrnce or Stram result
-                          SizedBox(height: 20.h),
-                          GlobalResultBuilderForResults(
-                            substreamtext: 'Parity',
-                            streamtitletext: 'Cents/LB Difference',
-                            result: diff,
-                          ),
-
-                          SizedBox(height: 20.h),
-
-                          // Rseet All Button
-                          GlobalButtonSimpleText(
-                            onPressed: () {
-                              inputkapas1.clear();
-                              inputexpense1.clear();
-                              inputkapasia1.clear();
-                              inpututaro1.clear();
-                              inputghati1.clear();
-                              inputkapas2.clear();
-                              inputexpense2.clear();
-                              inputkapasia2.clear();
-                              inpututaro2.clear();
-                              inputghati2.clear();
-                              diff = 0;
-                              answer1 = 0;
-                              answer2 = 0;
-                            },
-                            buttontext: 'Reset All',
-                            height: globalSingalResetButtonHeight,
-                            width: globalSingalResetButtonWidth,
-                          ),
-                        ],
-                      )),
+                // Rseet All Button
+                GlobalButtonSimpleText(
+                  onPressed: () {
+                    yarnCount.clear();
+                    cottonRate.clear();
+                    yield.clear();
+                    wasteRecovery.clear();
+                    conversationCoast.clear();
+                    commission.clear();
+                    otherExpense.clear();
+                    yarnRate.clear();
+                    yarnCount2.clear();
+                    cottonRate2.clear();
+                    yield2.clear();
+                    wasteRecovery2.clear();
+                    conversationCoast2.clear();
+                    commission2.clear();
+                    otherExpense2.clear();
+                    yarnRate2.clear();
+                    setState(() {
+                      answerCottonRate = 0;
+                      ansMatrialCoast = 0;
+                      ansYarnCoast = 0;
+                      ansProfitLoss = 0;
+                      answerCottonRate2 = 0;
+                      ansMatrialCoast2 = 0;
+                      ansYarnCoast2 = 0;
+                      ansProfitLoss2 = 0;
+                      diffCottonRate = 0;
+                      diffMaterialCoast = 0;
+                      diffYarnCoast = 0;
+                      diffProfitLoss = 0;
+                    });
+                  },
+                  buttontext: 'Reset All',
+                  height: globalSingalResetButtonHeight,
+                  width: globalSingalResetButtonWidth,
+                ),
+              ],
+            ),
             floatingActionButton: FloatingButton(
               screenshotController: screenshotController,
+              isVisible: keyboardIsOpened,
             )));
   }
 }

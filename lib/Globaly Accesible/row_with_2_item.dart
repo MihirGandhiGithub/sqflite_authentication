@@ -233,7 +233,7 @@ class GlobalRowCompareWidget2textfielsWithOnchanges extends StatelessWidget {
         children: [
           //Title
           SizedBox(
-            width: 500.w,
+            width: 420.w,
             child: Text(
               title,
               maxLines: 1,
@@ -241,7 +241,7 @@ class GlobalRowCompareWidget2textfielsWithOnchanges extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
-                fontSize: 50.sp,
+                fontSize: 45.sp,
               ),
             ),
           ),
@@ -249,7 +249,7 @@ class GlobalRowCompareWidget2textfielsWithOnchanges extends StatelessWidget {
           //Text field 1
           SizedBox(
             height: 120.h,
-            width: 400.w,
+            width: 450.w,
             child: TextField(
               textAlign: TextAlign.left,
               controller: controller1,
@@ -258,6 +258,11 @@ class GlobalRowCompareWidget2textfielsWithOnchanges extends StatelessWidget {
               // cursorHeight: 60.sp,
               style: TextStyle(fontSize: 60.sp, color: Colors.black),
               decoration: InputDecoration(
+                hintText: subtitle,
+                hintStyle: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 40.sp,
+                ),
                 filled: true,
                 fillColor:
                     Colors.grey[200], // Set your desired background color here
@@ -283,7 +288,7 @@ class GlobalRowCompareWidget2textfielsWithOnchanges extends StatelessWidget {
           //Text field 2
           SizedBox(
             height: 120.h,
-            width: 400.w,
+            width: 450.w,
             child: TextField(
               textAlign: TextAlign.left,
               controller: controller2,
@@ -292,6 +297,11 @@ class GlobalRowCompareWidget2textfielsWithOnchanges extends StatelessWidget {
               // cursorHeight: 60.sp,
               style: TextStyle(fontSize: 60.sp, color: Colors.black),
               decoration: InputDecoration(
+                hintText: subtitle,
+                hintStyle: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 40.sp,
+                ),
                 filled: true,
                 fillColor:
                     Colors.grey[200], // Set your desired background color here
@@ -337,7 +347,7 @@ class GlobalRowCompareWidget2TEXT extends StatelessWidget {
         children: [
           //Title
           Container(
-            width: 500.w,
+            width: 400.w,
           ),
 
           //Text field 1
@@ -345,7 +355,7 @@ class GlobalRowCompareWidget2TEXT extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
             alignment: Alignment.center,
             height: 120.h,
-            width: 400.w,
+            width: 450.w,
             child: Text(
               title1,
               maxLines: 1,
@@ -363,7 +373,7 @@ class GlobalRowCompareWidget2TEXT extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
             alignment: Alignment.center,
             height: 120.h,
-            width: 400.w,
+            width: 450.w,
             child: Text(
               title2,
               maxLines: 1,
@@ -405,13 +415,13 @@ class GlobalRowCompareWidget2Button extends StatelessWidget {
         children: [
           //Title
           Container(
-            width: 500.w,
+            width: 400.w,
           ),
 
           //Text field 1
           SizedBox(
             height: 120.h,
-            width: 400.w,
+            width: 450.w,
             child: Material(
               color: Colors.transparent,
               child: InkWell(
@@ -443,7 +453,7 @@ class GlobalRowCompareWidget2Button extends StatelessWidget {
           //Text field 2
           SizedBox(
             height: 120.h,
-            width: 400.w,
+            width: 450.w,
             child: Material(
               color: Colors.transparent,
               child: InkWell(
@@ -625,12 +635,12 @@ class GlobalRowCompareWidget2StreamBuilderWithAnswer extends StatelessWidget {
         children: [
           //Title
           SizedBox(
-            width: 500.w,
+            width: 420.w,
             child: Text(
               title1,
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: 60.sp,
+                  fontSize: 45.sp,
                   fontWeight: FontWeight.bold),
             ),
           ),
@@ -640,7 +650,7 @@ class GlobalRowCompareWidget2StreamBuilderWithAnswer extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
             alignment: Alignment.center,
             height: 110.h,
-            width: 400.w,
+            width: 450.w,
             decoration: BoxDecoration(
               // border: Border.all(
               //   color: Colors.black,
@@ -660,7 +670,7 @@ class GlobalRowCompareWidget2StreamBuilderWithAnswer extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 60.sp,
+                    fontSize: 45.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),
@@ -672,7 +682,7 @@ class GlobalRowCompareWidget2StreamBuilderWithAnswer extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(0.w, 0, 0, 0),
             alignment: Alignment.center,
             height: 110.h,
-            width: 400.w,
+            width: 450.w,
             decoration: BoxDecoration(
               color: Colors.grey,
               gradient: const LinearGradient(
@@ -687,7 +697,7 @@ class GlobalRowCompareWidget2StreamBuilderWithAnswer extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 60.sp,
+                    fontSize: 45.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),

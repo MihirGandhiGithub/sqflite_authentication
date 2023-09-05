@@ -16,6 +16,7 @@ class HomePageBoxContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 450.sp, width: 380.sp,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.black,
@@ -44,10 +45,14 @@ class HomePageBoxContainer extends StatelessWidget {
                 ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image(
-                  image: AssetImage(imageAsset),
-                  height: 250.h,
+                SizedBox(
+                  height: 250.sp,
+                  child: Image(
+                    image: AssetImage(imageAsset),
+                    height: 250.h,
+                  ),
                 ),
                 Tooltip(
                   message: buttonText,

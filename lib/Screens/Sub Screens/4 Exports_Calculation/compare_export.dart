@@ -2,836 +2,752 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:screenshot/screenshot.dart';
 
-import '../../../Constants/Global_Variables/Sizes/Sizes.dart';
+import '../../../Constants/Global_Variables/Sizes/global_sizes.dart';
 import '../../../Constants/Global_Widgets/Appbar/appbar_slider.dart';
 import '../../../Constants/Global_Widgets/Buttons/floating_share.dart';
 import '../../../Constants/Global_Widgets/Buttons/simple_text.dart';
 import '../../../Constants/Global_Widgets/Result_Text/bigresult_text.dart';
-import '../../../Globaly Accesible/Row  widget with 2 items.dart';
+import '../../../Constants/Global_Widgets/Switch/switch_with_two_text.dart';
+import '../../../Globaly Accesible/row_with_2_item.dart';
 
-class Home_Compare_export_Calculator extends StatefulWidget {
-  final bool forOrReverse;
+final cottonRate = TextEditingController();
+final expense = TextEditingController();
+final exchangeRate = TextEditingController();
+
+final cottonRate2 = TextEditingController();
+final expense2 = TextEditingController();
+final exchangeRate2 = TextEditingController();
+
+final exportRateCents = TextEditingController();
+final exportRateUSD = TextEditingController();
+
+double answerReverseExportCents = 0;
+double answerReverseExportUSD = 0;
+
+final exportRateCents2 = TextEditingController();
+final exportRateUSD2 = TextEditingController();
+double answerReverseExportCents2 = 0;
+double answerReverseExportUSD2 = 0;
+
+double answerExportCents = 0;
+double answerExportUSD = 0;
+double answerExportCents2 = 0;
+double answerExportUSD2 = 0;
+
+double diffAnswerForwardUSD = 0;
+double diffAnswerForwardCents = 0;
+
+double diffAnswerReverseCents = 0;
+double diffAnswerReverseUSD = 0;
+
+double realizationCents1 = 0;
+double realizationCents2 = 0;
+
+double realizationUSD1 = 0;
+double realizationUSD2 = 0;
+
+late bool compareReverseCalulateMix;
+
+class CompareExport extends StatefulWidget {
+  final int isReverse;
   final bool compareReverseCalculateUSD;
-  const Home_Compare_export_Calculator(
+  const CompareExport(
       {Key? key,
-      required this.forOrReverse,
+      required this.isReverse,
       required this.compareReverseCalculateUSD})
       : super(key: key);
 
   @override
-  State<Home_Compare_export_Calculator> createState() =>
-      _Home_Compare_export_CalculatorState();
+  State<CompareExport> createState() => _CompareExportState();
 }
 
-class _Home_Compare_export_CalculatorState
-    extends State<Home_Compare_export_Calculator>
+class _CompareExportState extends State<CompareExport>
     with SingleTickerProviderStateMixin {
-  ScreenshotController screenshotController = ScreenshotController();
-  late bool _isForwardGinning;
-
-  // for calculator 1
-  final inputkapas1 = TextEditingController();
-  final inputexpense1 = TextEditingController();
-  final inputkapasia1 = TextEditingController();
-  final inpututaro1 = TextEditingController();
-  final inputghati1 = TextEditingController();
-
-  //for calculator 2
-  final inputkapas2 = TextEditingController();
-  final inputexpense2 = TextEditingController();
-  final inputkapasia2 = TextEditingController();
-  final inpututaro2 = TextEditingController();
-  final inputghati2 = TextEditingController();
-
-  double answer1 = 0;
-  double dubanswer1 = 0;
-  double answer2 = 0;
-  double dubanswer2 = 0;
-  double diff = 0;
-  double dubdiff = 0;
-
-  void _updateValuesForCalculator1() {
-    double storeInputKapas1 = double.tryParse(inputkapas1.text) ?? 0;
-    double storeInputExpense1 = double.tryParse(inputexpense1.text) ?? 0;
-    double storeInputKapasia1 = double.tryParse(inputkapasia1.text) ?? 0;
-    double storeInputUtaro1 = double.tryParse(inpututaro1.text) ?? 0;
-    double storeInputGhati1 = double.tryParse(inputghati1.text) ?? 0;
-    double sum1 = (storeInputKapas1 + storeInputExpense1);
-
-    if (storeInputKapas1 != 0 &&
-        storeInputExpense1 != 0 &&
-        storeInputKapasia1 != 0 &&
-        storeInputUtaro1 != 0 &&
-        storeInputGhati1 != 0) {
-      double a = sum1 * 100;
-      double b = 100 - storeInputUtaro1 - storeInputGhati1;
-      double c = storeInputKapasia1 * b;
-      double d = a - c;
-      double e = d / storeInputUtaro1;
-      double f = e * 17.78;
-
-      setState(() {
-        dubanswer1 = f;
-        answer1 = double.parse(f.toStringAsFixed(2));
-        dubdiff = dubanswer1 - dubanswer2;
-        diff = double.parse(dubdiff.toStringAsFixed(2)).abs();
-      });
-    } else if (storeInputKapas1 != 0 &&
-        storeInputExpense1 != 0 &&
-        storeInputKapasia1 != 0 &&
-        storeInputUtaro1 != 0 &&
-        storeInputGhati1 == 0) {
-      double a = sum1 * 100;
-      double b = 100 - storeInputUtaro1;
-      double c = storeInputKapasia1 * b;
-      double d = a - c;
-      double e = d / storeInputUtaro1;
-      double f = e * 17.78;
-
-      setState(() {
-        answer1 = double.parse(f.toStringAsFixed(2));
-        dubanswer1 = f;
-        dubdiff = dubanswer1 - dubanswer2;
-        diff = double.parse(dubdiff.toStringAsFixed(2)).abs();
-      });
-    } else if (sum1 != 0 &&
-        storeInputKapasia1 == 0 &&
-        storeInputUtaro1 == 0 &&
-        storeInputGhati1 == 0) {
-      setState(() {
-        answer1 = double.parse(sum1.toStringAsFixed(2));
-      });
-    } else if (sum1 != 0 &&
-        storeInputKapasia1 != 0 &&
-        storeInputUtaro1 == 0 &&
-        storeInputGhati1 == 0) {
-      setState(() {
-        double temp = sum1 * 0.35;
-        answer1 = double.parse(temp.toStringAsFixed(2));
-      });
-    }
-  }
-
-  void _updateValuesForCalculator2() {
-    double storeInputKapas2 = double.tryParse(inputkapas2.text) ?? 0;
-    double storeInputExpense2 = double.tryParse(inputexpense2.text) ?? 0;
-    double storeInputKapasia2 = double.tryParse(inputkapasia2.text) ?? 0;
-    double storeInputUtaro2 = double.tryParse(inpututaro2.text) ?? 0;
-    double storeInputGhati2 = double.tryParse(inputghati2.text) ?? 0;
-    double sum2 = (storeInputKapas2 + storeInputExpense2);
-
-    if (storeInputKapas2 != 0 &&
-        storeInputExpense2 != 0 &&
-        storeInputKapasia2 != 0 &&
-        storeInputUtaro2 != 0 &&
-        storeInputGhati2 != 0) {
-      double a = sum2 * 100;
-      double b = 100 - storeInputUtaro2 - storeInputGhati2;
-      double c = storeInputKapasia2 * b;
-      double d = a - c;
-      double e = d / storeInputUtaro2;
-      double f = e * 17.78;
-
-      setState(() {
-        answer2 = double.parse(f.toStringAsFixed(2));
-        dubanswer2 = f;
-        dubdiff = dubanswer1 - dubanswer2;
-        diff = double.parse(dubdiff.toStringAsFixed(2)).abs();
-      });
-    } else if (storeInputKapas2 != 0 &&
-        storeInputExpense2 != 0 &&
-        storeInputKapasia2 != 0 &&
-        storeInputUtaro2 != 0 &&
-        storeInputGhati2 == 0) {
-      double a = sum2 * 100;
-      double b = 100 - storeInputUtaro2;
-      double c = storeInputKapasia2 * b;
-      double d = a - c;
-      double e = d / storeInputUtaro2;
-      double f = e * 17.78;
-
-      setState(() {
-        answer2 = double.parse(f.toStringAsFixed(2));
-        dubanswer2 = f;
-        dubdiff = dubanswer1 - dubanswer2;
-        diff = double.parse(dubdiff.toStringAsFixed(2)).abs();
-      });
-    } else if (sum2 != 0 &&
-        storeInputKapasia2 == 0 &&
-        storeInputUtaro2 == 0 &&
-        storeInputGhati2 == 0) {
-      setState(() {
-        answer2 = double.parse(sum2.toStringAsFixed(2));
-      });
-    } else if (sum2 != 0 &&
-        storeInputKapasia2 != 0 &&
-        storeInputUtaro2 == 0 &&
-        storeInputGhati2 == 0) {
-      setState(() {
-        double temp = sum2 * 0.35;
-        answer2 = double.parse(temp.toStringAsFixed(2));
-      });
-    }
-  }
-
-  // for calculator 1
-  final reverseinputkapas1 = TextEditingController();
-  final reverseinputexpense1 = TextEditingController();
-  final reverseinputkapasia1 = TextEditingController();
-  final reverseinpututaro1 = TextEditingController();
-  final reverseinputghati1 = TextEditingController();
-
-  //for calculator 2
-  final reverseinputkapas2 = TextEditingController();
-  final reverseinputexpense2 = TextEditingController();
-  final reverseinputkapasia2 = TextEditingController();
-  final reverseinpututaro2 = TextEditingController();
-  final reverseinputghati2 = TextEditingController();
-
-  double reverseanswer1 = 0;
-  double reversedubanswer1 = 0;
-  double reverseanswer2 = 0;
-  double reversedubanswer2 = 0;
-  double reversediff = 0;
-  double reversedubdiff = 0;
-  late bool compare_reverse_calulateMix;
-  void _reverseUpdateValuesForCalculator1() {
-    double storeInputKapas1 = double.tryParse(reverseinputkapas1.text) ?? 0;
-    double storeInputExpense1 = double.tryParse(reverseinputexpense1.text) ?? 0;
-    double storeInputKapasia1 = double.tryParse(reverseinputkapasia1.text) ?? 0;
-    double storeInputUtaro1 = double.tryParse(reverseinpututaro1.text) ?? 0;
-    double storeInputGhati1 = double.tryParse(reverseinputghati1.text) ?? 0;
-    double sum1 = (storeInputKapas1 + storeInputExpense1);
-
-    if (storeInputKapas1 != 0 &&
-        storeInputExpense1 != 0 &&
-        storeInputKapasia1 != 0 &&
-        storeInputUtaro1 != 0 &&
-        storeInputGhati1 != 0) {
-      double a1 = (storeInputKapas1 * 0.2812 / 5);
-      double a2 = a1 * storeInputUtaro1;
-      double a3 = 100 - storeInputUtaro1 - storeInputGhati1;
-      double a4 = a3 * storeInputKapasia1;
-      double a5 = a4 + a2;
-      double a6 = a5 / 100;
-      double f = a6 - storeInputExpense1;
-
-      setState(() {
-        reversedubanswer1 = f;
-        reverseanswer1 = double.parse(f.toStringAsFixed(2));
-        reversedubdiff = reversedubanswer1 - reversedubanswer2;
-        reversediff = double.parse(reversedubdiff.toStringAsFixed(2)).abs();
-      });
-    } else if (storeInputKapas1 != 0 &&
-        storeInputExpense1 != 0 &&
-        storeInputKapasia1 != 0 &&
-        storeInputUtaro1 != 0 &&
-        storeInputGhati1 == 0) {
-      double a1 = (storeInputKapas1 * 0.2812 / 5);
-      double a2 = a1 * storeInputUtaro1;
-      double a3 = 100 - storeInputUtaro1;
-      double a4 = a3 * storeInputKapasia1;
-      double a5 = a4 + a2;
-      double a6 = a5 / 100;
-      double f = a6 - storeInputExpense1;
-
-      setState(() {
-        reverseanswer1 = double.parse(f.toStringAsFixed(2));
-        reversedubanswer1 = f;
-        reversedubdiff = reversedubanswer1 - reversedubanswer2;
-        reversediff = double.parse(reversedubdiff.toStringAsFixed(2)).abs();
-      });
-    } else if (sum1 != 0 &&
-        storeInputKapasia1 == 0 &&
-        storeInputUtaro1 == 0 &&
-        storeInputGhati1 == 0) {
-      setState(() {
-        reverseanswer1 = double.parse(sum1.toStringAsFixed(2));
-      });
-    } else if (sum1 != 0 &&
-        storeInputKapasia1 != 0 &&
-        storeInputUtaro1 == 0 &&
-        storeInputGhati1 == 0) {
-      setState(() {
-        double temp = sum1 * 0.35;
-        reverseanswer1 = double.parse(temp.toStringAsFixed(2));
-      });
-    }
-  }
-
-  void _reverseUpdateValuesForCalculator2() {
-    double storeInputKapas2 = double.tryParse(reverseinputkapas2.text) ?? 0;
-    double storeInputExpense2 = double.tryParse(reverseinputexpense2.text) ?? 0;
-    double storeInputKapasia2 = double.tryParse(reverseinputkapasia2.text) ?? 0;
-    double storeInputUtaro2 = double.tryParse(reverseinpututaro2.text) ?? 0;
-    double storeInputGhati2 = double.tryParse(reverseinputghati2.text) ?? 0;
-    double sum2 = (storeInputKapas2 + storeInputExpense2);
-
-    if (storeInputKapas2 != 0 &&
-        storeInputExpense2 != 0 &&
-        storeInputKapasia2 != 0 &&
-        storeInputUtaro2 != 0 &&
-        storeInputGhati2 != 0) {
-      double a1 = (storeInputKapas2 * 0.2812 / 5);
-      double a2 = a1 * storeInputUtaro2;
-      double a3 = 100 - storeInputUtaro2 - storeInputGhati2;
-      double a4 = a3 * storeInputKapasia2;
-      double a5 = a4 + a2;
-      double a6 = a5 / 100;
-      double f = a6 - storeInputExpense2;
-
-      setState(() {
-        reverseanswer2 = double.parse(f.toStringAsFixed(2));
-        reversedubanswer2 = f;
-        reversedubdiff = reversedubanswer1 - reversedubanswer2;
-        reversediff = double.parse(reversedubdiff.toStringAsFixed(2)).abs();
-      });
-    } else if (storeInputKapas2 != 0 &&
-        storeInputExpense2 != 0 &&
-        storeInputKapasia2 != 0 &&
-        storeInputUtaro2 != 0 &&
-        storeInputGhati2 == 0) {
-      double a1 = (storeInputKapas2 * 0.2812 / 5);
-      double a2 = a1 * storeInputUtaro2;
-      double a3 = 100 - storeInputUtaro2;
-      double a4 = a3 * storeInputKapasia2;
-      double a5 = a4 + a2;
-      double a6 = a5 / 100;
-      double f = a6 - storeInputExpense2;
-
-      setState(() {
-        reverseanswer2 = double.parse(f.toStringAsFixed(2));
-        reversedubanswer2 = f;
-        reversedubdiff = reversedubanswer1 - reversedubanswer2;
-        reversediff = double.parse(reversedubdiff.toStringAsFixed(2)).abs();
-      });
-    } else if (sum2 != 0 &&
-        storeInputKapasia2 == 0 &&
-        storeInputUtaro2 == 0 &&
-        storeInputGhati2 == 0) {
-      setState(() {
-        reverseanswer2 = double.parse(sum2.toStringAsFixed(2));
-      });
-    } else if (sum2 != 0 &&
-        storeInputKapasia2 != 0 &&
-        storeInputUtaro2 == 0 &&
-        storeInputGhati2 == 0) {
-      setState(() {
-        double temp = sum2 * 0.35;
-        reverseanswer2 = double.parse(temp.toStringAsFixed(2));
-      });
-    }
-  }
-
   @override
   void initState() {
-    _isForwardGinning = widget.forOrReverse;
-    compare_reverse_calulateMix = widget.compareReverseCalculateUSD;
-    // _isFirstButtonSelected1 = widget.for_or_reverse;
-    // setState(() {
-    //   if (_isFirstButtonSelected1) {
-    //     _isForwardGinning = true;
-    //   } else {
-    //     _isForwardGinning = false;
-    //   }
-    // });
+    // TODO: implement initState
     super.initState();
+    compareReverseCalulateMix = widget.compareReverseCalculateUSD;
+  }
+
+  ScreenshotController screenshotController = ScreenshotController();
+  @override
+  Widget build(BuildContext context) {
+    bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
+    return DefaultTabController(
+      initialIndex: widget.isReverse,
+      length: 2,
+      child: Screenshot(
+        controller: screenshotController,
+        child: Scaffold(
+            appBar: const AppBarWithSlider(
+              titleText: 'Export Compare',
+              sliderText1: 'Forward Export',
+              sliderText2: 'Reverse Export',
+            ),
+            body: const TabBarView(
+              children: [
+                ExportForward(),
+                ExportReverse(),
+              ],
+            ),
+            floatingActionButton: FloatingButton(
+              screenshotController: screenshotController,
+              isVisible: keyboardIsOpened,
+            )),
+      ),
+    );
+  }
+}
+
+// Forward Export
+class ExportForward extends StatefulWidget {
+  const ExportForward({super.key});
+
+  @override
+  State<ExportForward> createState() => _ExportForwardState();
+}
+
+class _ExportForwardState extends State<ExportForward> {
+  void _exportForward() {
+    double storeCottonRate = double.tryParse(cottonRate.text) ?? 0;
+    double storeExpense = double.tryParse(expense.text) ?? 0;
+    double storeExchangeRate = double.tryParse(exchangeRate.text) ?? 0;
+
+    double sum = storeCottonRate + storeExpense;
+    double a = sum / 355.60;
+    double b = a / storeExchangeRate;
+    double c = b * 0.45359;
+    double d = c * 100;
+
+    if (storeCottonRate != 0 && storeExpense == 0 && storeExchangeRate == 0) {
+      setState(() {
+        answerExportCents = double.parse(storeCottonRate.toStringAsFixed(2));
+        answerExportUSD = double.parse(storeCottonRate.toStringAsFixed(2));
+        double temp = answerExportCents - answerExportCents2;
+        diffAnswerForwardCents = double.parse(temp.toStringAsFixed(2));
+        double temp2 = answerExportUSD - answerExportUSD2;
+        diffAnswerForwardUSD = double.parse(temp2.toStringAsFixed(2));
+      });
+    } else if (storeCottonRate != 0 &&
+        storeExpense != 0 &&
+        storeExchangeRate == 0) {
+      setState(() {
+        answerExportCents = double.parse(sum.toStringAsFixed(2));
+        answerExportUSD = double.parse(a.toStringAsFixed(2));
+        double temp = answerExportCents - answerExportCents2;
+        diffAnswerForwardCents = double.parse(temp.toStringAsFixed(2));
+        double temp2 = answerExportUSD - answerExportUSD2;
+        diffAnswerForwardUSD = double.parse(temp2.toStringAsFixed(2));
+      });
+    } else if (storeCottonRate != 0 &&
+        storeExpense != 0 &&
+        storeExchangeRate != 0) {
+      setState(() {
+        answerExportCents = double.parse(d.toStringAsFixed(2));
+        answerExportUSD = double.parse(b.toStringAsFixed(2));
+        double temp = answerExportCents - answerExportCents2;
+        diffAnswerForwardCents = double.parse(temp.toStringAsFixed(2));
+        double temp2 = answerExportUSD - answerExportUSD2;
+        diffAnswerForwardUSD = double.parse(temp2.toStringAsFixed(2));
+      });
+    }
+  }
+
+  void _exportForward2() {
+    double storeCottonRate = double.tryParse(cottonRate2.text) ?? 0;
+    double storeExpense = double.tryParse(expense2.text) ?? 0;
+    double storeExchangeRate = double.tryParse(exchangeRate2.text) ?? 0;
+
+    double sum = storeCottonRate + storeExpense;
+    double a = sum / 355.60;
+    double b = a / storeExchangeRate;
+    double c = b * 0.45359;
+    double d = c * 100;
+
+    if (storeCottonRate != 0 && storeExpense == 0 && storeExchangeRate == 0) {
+      setState(() {
+        answerExportCents2 = double.parse(storeCottonRate.toStringAsFixed(2));
+        answerExportUSD2 = double.parse(storeCottonRate.toStringAsFixed(2));
+        double temp = answerExportCents - answerExportCents2;
+        diffAnswerForwardCents = double.parse(temp.toStringAsFixed(2));
+        double temp2 = answerExportUSD - answerExportUSD2;
+        diffAnswerForwardUSD = double.parse(temp2.toStringAsFixed(2));
+      });
+    } else if (storeCottonRate != 0 &&
+        storeExpense != 0 &&
+        storeExchangeRate == 0) {
+      setState(() {
+        answerExportCents2 = double.parse(sum.toStringAsFixed(2));
+        answerExportUSD2 = double.parse(a.toStringAsFixed(2));
+        double temp = answerExportCents - answerExportCents2;
+        diffAnswerForwardCents = double.parse(temp.toStringAsFixed(2));
+        double temp2 = answerExportUSD - answerExportUSD2;
+        diffAnswerForwardUSD = double.parse(temp2.toStringAsFixed(2));
+      });
+    } else if (storeCottonRate != 0 &&
+        storeExpense != 0 &&
+        storeExchangeRate != 0) {
+      setState(() {
+        answerExportCents2 = double.parse(d.toStringAsFixed(2));
+        answerExportUSD2 = double.parse(b.toStringAsFixed(2));
+        double temp = answerExportCents - answerExportCents2;
+        diffAnswerForwardCents = double.parse(temp.toStringAsFixed(2));
+        double temp2 = answerExportUSD - answerExportUSD2;
+        diffAnswerForwardUSD = double.parse(temp2.toStringAsFixed(2));
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Screenshot(
-        controller: screenshotController,
-        child: Scaffold(
-            appBar: GlobalCustomAppBar(
-              sliderText1: 'Export Forward',
-              sliderText2: 'Reverse Export',
-              appbarText: 'Export Compare Calculator',
-              isFirstButtonSelected: _isForwardGinning,
-              onButtonPressed: (bool isFirstButton) {
-                setState(() {
-                  _isForwardGinning = isFirstButton;
-                });
-              },
-            ),
-            body: GestureDetector(
-                onHorizontalDragEnd: (DragEndDetails details) {
-                  if (details.primaryVelocity! > 0) {
-                    // Swiped from left to right
-                    setState(() {
-                      _isForwardGinning = true;
-                    });
-                  } else if (details.primaryVelocity! < 0) {
-                    // Swiped from right to left
-                    setState(() {
-                      _isForwardGinning = false;
-                    });
-                  }
-                },
-                child: _isForwardGinning
-                    ? ListView(
-                        physics: const BouncingScrollPhysics(),
-                        children: [
-                          //Heading of Calculator
-                          const GlobalRowCompareWidget2TEXT(
-                            title1: 'Calc1 ',
-                            title2: 'Calc2 ',
-                          ),
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      children: [
+        //Heading of Calculator
+        const GlobalRowCompareWidget2TEXT(
+          title1: 'Calc1 ',
+          title2: 'Calc2 ',
+        ),
 
-                          //Content Of Calculator
-                          // Kappas
+        //Content Of Calculator
+        // Kappas
 
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Cotton Rate',
-                              controller1: inputkapas1,
-                              subtitle: 'Kappas',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapas2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
+        GlobalRowCompareWidget2textfielsWithOnchanges(
+            title: 'Cotton Rate',
+            controller1: cottonRate,
+            subtitle: 'Kappas',
+            height: 0,
+            width: 0,
+            controller2: cottonRate2,
+            onchaned1: (string) {
+              _exportForward();
+            },
+            onchane2: (string) {
+              _exportForward2();
+            }),
 
-                          // Expense
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Expense',
-                              controller1: inputexpense1,
-                              subtitle: 'nothing',
-                              height: 0,
-                              width: 0,
-                              controller2: inputexpense2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
+        // Expense
+        GlobalRowCompareWidget2textfielsWithOnchanges(
+            title: 'Expenses',
+            controller1: expense,
+            subtitle: 'nothing',
+            height: 0,
+            width: 0,
+            controller2: expense2,
+            onchaned1: (string) {
+              _exportForward();
+            },
+            onchane2: (string) {
+              _exportForward2();
+            }),
 
-                          // Cotton Seed
-                          GlobalRowCompareWidget2textfielsWithOnchanges(
-                              title: 'Exchnage Rate',
-                              controller1: inputkapasia1,
-                              subtitle: 'Cotton Seed',
-                              height: 0,
-                              width: 0,
-                              controller2: inputkapasia2,
-                              onchaned1: (string) {
-                                _updateValuesForCalculator1();
-                              },
-                              onchane2: (string) {
-                                _updateValuesForCalculator2();
-                              }),
+        // Cotton Seed
+        GlobalRowCompareWidget2textfielsWithOnchanges(
+            title: 'Exchnage Rate',
+            controller1: exchangeRate,
+            subtitle: 'Cotton Seed',
+            height: 0,
+            width: 0,
+            controller2: exchangeRate2,
+            onchaned1: (string) {
+              _exportForward();
+            },
+            onchane2: (string) {
+              _exportForward2();
+            }),
 
-                          // Final Answer
-                          GlobalRowCompareWidget2StreamBuilderWithAnswer(
-                            result1: answer1,
-                            result2: answer2,
-                            subtext1: '',
-                            subtext2: '',
-                            title1: 'Export Rate',
-                            title2: 'Export Rate',
-                          ),
-                          GlobalRowCompareWidget2StreamBuilderWithAnswer(
-                            result1: answer1,
-                            result2: answer2,
-                            subtext1: '',
-                            subtext2: '',
-                            title1: 'Export Rate',
-                            title2: 'Export Rate',
-                          ),
+        // Final Answer
+        GlobalRowCompareWidget2StreamBuilderWithAnswer(
+          result1: answerExportCents,
+          result2: answerExportCents2,
+          subtext1: 'Cents/LB',
+          subtext2: 'Cents/LB',
+          title1: 'Export Rate',
+          title2: 'Export Rate',
+        ),
+        GlobalRowCompareWidget2StreamBuilderWithAnswer(
+          result1: answerExportUSD,
+          result2: answerExportUSD2,
+          subtext1: 'USD/Kg',
+          subtext2: 'USD/Kg',
+          title1: 'Export Rate',
+          title2: 'Export Rate',
+        ),
 
-                          GlobalRowCompareWidget2Button(
-                            onpressed1: () {
-                              inputkapas1.clear();
-                              inputexpense1.clear();
-                              inputkapasia1.clear();
-                              inpututaro1.clear();
-                              inputghati1.clear();
-                              answer1 = 0;
-                              // result_output_difference.add(0);
-                              // focusnodekapas1.requestFocus();
-                            },
-                            onpressed2: () {
-                              inputkapas2.clear();
-                              inputexpense2.clear();
-                              inputkapasia2.clear();
-                              inpututaro2.clear();
-                              inputghati2.clear();
-                              answer2 = 0;
-                              // result_output_difference.add(0);
-                              // focusnodekapas2.requestFocus();
-                            },
-                            text1: 'RESET 1',
-                            text2: 'RESET 2',
-                          ),
-                          //
-                          // // Khandi Diffrnce or Stram result
-                          SizedBox(height: 20.h),
-                          GlobalResultBuilderForResults(
-                            substreamtext: 'Cents/LB',
-                            streamtitletext: 'Export Rate',
-                            result: diff,
-                          ),
+        GlobalRowCompareWidget2Button(
+          onpressed1: () {
+            cottonRate.clear();
+            expense.clear();
+            exchangeRate.clear();
+            setState(() {
+              answerExportCents = 0;
+              answerExportUSD = 0;
+            });
+          },
+          onpressed2: () {
+            cottonRate2.clear();
+            expense2.clear();
+            exchangeRate2.clear();
+            setState(() {
+              answerExportCents2 = 0;
+              answerExportUSD2 = 0;
+            });
+          },
+          text1: 'RESET 1',
+          text2: 'RESET 2',
+        ),
+        //
+        // // Khandi Diffrnce or Stram result
+        SizedBox(height: 20.h),
+        GlobalResultBuilderForResults(
+          substreamtext: 'Cents/LB',
+          streamtitletext: 'Export Rate Difference',
+          result: diffAnswerForwardCents.abs(),
+        ),
 
-                          SizedBox(height: 20.h),
-                          GlobalResultBuilderForResults(
-                            substreamtext: 'Cents/LB',
-                            streamtitletext: 'Export Rate',
-                            result: diff,
-                          ),
+        SizedBox(height: 20.h),
+        GlobalResultBuilderForResults(
+          substreamtext: 'USD/Kg',
+          streamtitletext: 'Export Rate Difference',
+          result: diffAnswerForwardUSD.abs(),
+        ),
 
-                          SizedBox(height: 20.h),
-                          // Rseet All Button
-                          GlobalButtonSimpleText(
-                            onPressed: () {
-                              inputkapas1.clear();
-                              inputexpense1.clear();
-                              inputkapasia1.clear();
-                              inpututaro1.clear();
-                              inputghati1.clear();
-                              inputkapas2.clear();
-                              inputexpense2.clear();
-                              inputkapasia2.clear();
-                              inpututaro2.clear();
-                              inputghati2.clear();
-                              diff = 0;
-                              answer1 = 0;
-                              answer2 = 0;
-                            },
-                            buttontext: 'Reset All',
-                            height: globalSingalResetButtonHeight,
-                            width: globalSingalResetButtonWidth,
-                          ),
-                        ],
-                      )
-                    : Container(
-                        child: compare_reverse_calulateMix
-                            ? ListView(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'Cents/LB',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 70.sp),
-                                      ),
-                                      Switch(
-                                        // This bool value toggles the switch.
-                                        value: compare_reverse_calulateMix,
-                                        // overlayColor: overlayColor,
-                                        // trackColor: trackColor,
-                                        thumbColor:
-                                            const MaterialStatePropertyAll<
-                                                Color>(Colors.black),
-                                        onChanged: (bool value) {
-                                          // This is called when the user toggles the switch.
-                                          setState(() {
-                                            compare_reverse_calulateMix = value;
-                                          });
-                                        },
-                                      ),
-                                      Text(
-                                        'USD/Kg',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 70.sp),
-                                      ),
-                                    ],
-                                  ),
-                                  //Heading of Calculator
-                                  const GlobalRowCompareWidget2TEXT(
-                                    title1: 'Calc1 ',
-                                    title2: 'Calc2 ',
-                                  ),
+        SizedBox(height: 20.h),
+        // Rseet All Button
+        GlobalButtonSimpleText(
+          onPressed: () {
+            cottonRate.clear();
+            expense.clear();
+            exchangeRate.clear();
+            cottonRate2.clear();
+            expense2.clear();
+            exchangeRate2.clear();
+            setState(() {
+              answerExportCents = 0;
+              answerExportUSD = 0;
+              answerExportCents2 = 0;
+              answerExportUSD2 = 0;
+              diffAnswerForwardUSD = 0;
+              diffAnswerForwardCents = 0;
+            });
+          },
+          buttontext: 'Reset All',
+          height: globalSingalResetButtonHeight,
+          width: globalSingalResetButtonWidth,
+        ),
+      ],
+    );
+  }
+}
 
-                                  //Content Of Calculator
+//Reverse Export
+class ExportReverse extends StatefulWidget {
+  const ExportReverse({super.key});
 
-                                  // Kappas
-                                  GlobalRowCompareWidget2textfielsWithOnchanges(
-                                      title: 'Export Rate',
-                                      controller1: reverseinputkapas1,
-                                      subtitle: 'nothing',
-                                      height: 0,
-                                      width: 0,
-                                      controller2: reverseinputkapas2,
-                                      onchaned1: (string) {
-                                        // _reverseupdateValues_for_calculator1();
-                                      },
-                                      onchane2: (string) {
-                                        // _reverseupdateValues_for_calculator2();
-                                      }),
+  @override
+  State<ExportReverse> createState() => _ExportReverseState();
+}
 
-                                  // Nothing
-                                  GlobalRowCompareWidget2textfielsWithOnchanges(
-                                      title: 'Expense',
-                                      controller1: reverseinputkapas1,
-                                      subtitle: 'nothing',
-                                      height: 0,
-                                      width: 0,
-                                      controller2: reverseinputkapas2,
-                                      onchaned1: (string) {
-                                        // _reverseupdateValues_for_calculator1();
-                                      },
-                                      onchane2: (string) {
-                                        // _reverseupdateValues_for_calculator2();
-                                      }),
+class _ExportReverseState extends State<ExportReverse> {
+  void _exportReverse() {
+    double storeExportRateCents = double.tryParse(exportRateCents.text) ?? 0;
+    double storeExportRateUSD = double.tryParse(exportRateUSD.text) ?? 0;
+    double storeExpense = double.tryParse(expense.text) ?? 0;
+    double storeExchangeRate = double.tryParse(exchangeRate.text) ?? 0;
 
-                                  // Nothing
-                                  GlobalRowCompareWidget2textfielsWithOnchanges(
-                                      title: 'Exchange Rate',
-                                      controller1: reverseinputkapas1,
-                                      subtitle: 'nothing',
-                                      height: 0,
-                                      width: 0,
-                                      controller2: reverseinputkapas2,
-                                      onchaned1: (string) {
-                                        // _reverseupdateValues_for_calculator1();
-                                      },
-                                      onchane2: (string) {
-                                        // _reverseupdateValues_for_calculator2();
-                                      }),
+    if (compareReverseCalulateMix) {
+      double extra = storeExportRateUSD + storeExpense;
+      double a = storeExportRateUSD * storeExchangeRate;
+      double b = a * 355.60;
+      double c = b - storeExpense;
 
-                                  // Final Answer
-                                  GlobalRowCompareWidget2StreamBuilderWithAnswer(
-                                    result1: 0,
-                                    result2: reverseanswer2,
-                                    subtext1: '₹',
-                                    subtext2: '₹',
-                                    title1: 'Realisation',
-                                    title2: 'Realisation',
-                                  ),
+      if (storeExportRateCents != 0 &&
+          storeExpense == 0 &&
+          storeExchangeRate == 0) {
+        setState(() {
+          realizationUSD1 = double.parse(storeExportRateUSD.toStringAsFixed(2));
+          double temp = realizationUSD1 - realizationUSD2;
+          diffAnswerReverseUSD = double.parse(temp.toStringAsFixed(2));
+        });
+      } else if (storeExportRateCents != 0 &&
+          storeExpense != 0 &&
+          storeExchangeRate == 0) {
+        setState(() {
+          realizationUSD1 = double.parse(extra.toStringAsFixed(2));
+          double temp = realizationUSD1 - realizationUSD2;
+          diffAnswerReverseUSD = double.parse(temp.toStringAsFixed(2));
+        });
+      } else if (storeExportRateCents != 0 &&
+          storeExpense != 0 &&
+          storeExchangeRate != 0) {
+        setState(() {
+          realizationUSD1 = double.parse(c.toStringAsFixed(2));
+          double temp = realizationUSD1 - realizationUSD2;
+          diffAnswerReverseUSD = double.parse(temp.toStringAsFixed(2));
+        });
+      }
+    } else {
+      double a = storeExportRateCents / 100;
+      double b = a / 0.45359;
+      double c = b * storeExchangeRate;
+      double d = c * 355.60;
+      double e = d - storeExpense;
 
-                                  GlobalRowCompareWidget2Button(
-                                    onpressed1: () {
-                                      reverseinputkapas1.clear();
-                                      reverseinputexpense1.clear();
-                                      // reverseinputoilrate1.clear();
-                                      reverseinputkapasia1.clear();
-                                      reverseinpututaro1.clear();
-                                      reverseinputghati1.clear();
-                                      // reverseanswer = 0;
-                                    },
-                                    onpressed2: () {
-                                      reverseinputkapas2.clear();
-                                      reverseinputexpense2.clear();
-                                      // reverseinputoilrate2.clear();
-                                      reverseinputkapasia2.clear();
-                                      reverseinpututaro2.clear();
-                                      reverseinputghati2.clear();
-                                      reverseanswer2 = 0;
-                                    },
-                                    text1: 'RESET 1',
-                                    text2: 'RESET 2',
-                                  ),
+      if (storeExportRateCents != 0 &&
+          storeExpense == 0 &&
+          storeExchangeRate == 0) {
+        setState(() {
+          realizationCents1 = double.parse(a.toStringAsFixed(2));
+          double temp = realizationCents1 - realizationCents2;
+          diffAnswerReverseCents = double.parse(temp.toStringAsFixed(2));
+        });
+      } else if (storeExportRateCents != 0 &&
+          storeExpense != 0 &&
+          storeExchangeRate == 0) {
+        setState(() {
+          realizationCents1 = double.parse(b.toStringAsFixed(2));
+          double temp = realizationCents1 - realizationCents2;
+          diffAnswerReverseCents = double.parse(temp.toStringAsFixed(2));
+        });
+      } else if (storeExportRateCents != 0 &&
+          storeExpense != 0 &&
+          storeExchangeRate != 0) {
+        setState(() {
+          realizationCents1 = double.parse(e.toStringAsFixed(2));
+          double temp = realizationCents1 - realizationCents2;
+          diffAnswerReverseCents = double.parse(temp.toStringAsFixed(2));
+        });
+      }
+    }
+  }
 
-                                  // Khandi Diffrnce or Stram result
-                                  SizedBox(height: 20.h),
-                                  GlobalResultBuilderForResults(
-                                    substreamtext: '₹/Candy',
-                                    streamtitletext: 'Realisation Difference',
-                                    result: reversediff,
-                                  ),
+  void _exportReverse2() {
+    double storeExportRateCents = double.tryParse(exportRateCents2.text) ?? 0;
+    double storeExportRateUSD = double.tryParse(exportRateUSD2.text) ?? 0;
+    double storeExpense = double.tryParse(expense2.text) ?? 0;
+    double storeExchangeRate = double.tryParse(exchangeRate2.text) ?? 0;
 
-                                  // Reset All Button
-                                  SizedBox(
-                                    height: 20.h,
-                                  ),
-                                  GlobalButtonSimpleText(
-                                    onPressed: () {
-                                      reverseinputkapas1.clear();
-                                      reverseinputexpense1.clear();
-                                      // reverseinputoilrate1.clear();
-                                      reverseinputkapasia1.clear();
-                                      reverseinpututaro1.clear();
-                                      reverseinputghati1.clear();
-                                      reverseinputkapas2.clear();
-                                      reverseinputexpense2.clear();
-                                      // reverseinputoilrate2.clear();
-                                      reverseinputkapasia2.clear();
-                                      reverseinpututaro2.clear();
-                                      reverseinputghati2.clear();
+    if (compareReverseCalulateMix) {
+      double extra = storeExportRateUSD + storeExpense;
+      double a = storeExportRateUSD * storeExchangeRate;
+      double b = a * 355.60;
+      double c = b - storeExpense;
 
-                                      reversediff = 0;
-                                      // reverseanswer = 0;
-                                      // reversedubanswer = 0;
-                                      reverseanswer2 = 0;
-                                      reversedubanswer2 = 0;
-                                      reversedubdiff = 0;
-                                    },
-                                    buttontext: 'Reset All',
-                                    height: globalSingalResetButtonHeight,
-                                    width: globalSingalResetButtonWidth,
-                                  ),
-                                ],
-                              )
-                            : ListView(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'Cents/LB',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 70.sp),
-                                      ),
-                                      Switch(
-                                        // This bool value toggles the switch.
-                                        value: compare_reverse_calulateMix,
-                                        // overlayColor: overlayColor,
-                                        // trackColor: trackColor,
-                                        thumbColor:
-                                            const MaterialStatePropertyAll<
-                                                Color>(Colors.black),
-                                        onChanged: (bool value) {
-                                          // This is called when the user toggles the switch.
-                                          setState(() {
-                                            compare_reverse_calulateMix = value;
-                                          });
-                                        },
-                                      ),
-                                      Text(
-                                        'USD/Kg',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 70.sp),
-                                      ),
-                                    ],
-                                  ),
-                                  //Heading of Calculator
-                                  const GlobalRowCompareWidget2TEXT(
-                                    title1: 'Calc1 ',
-                                    title2: 'Calc2 ',
-                                  ),
+      if (storeExportRateCents != 0 &&
+          storeExpense == 0 &&
+          storeExchangeRate == 0) {
+        setState(() {
+          realizationUSD2 = double.parse(storeExportRateUSD.toStringAsFixed(2));
+          double temp = realizationUSD1 - realizationUSD2;
+          diffAnswerReverseUSD = double.parse(temp.toStringAsFixed(2));
+        });
+      } else if (storeExportRateCents != 0 &&
+          storeExpense != 0 &&
+          storeExchangeRate == 0) {
+        setState(() {
+          realizationUSD2 = double.parse(extra.toStringAsFixed(2));
+          double temp = realizationUSD1 - realizationUSD2;
+          diffAnswerReverseUSD = double.parse(temp.toStringAsFixed(2));
+        });
+      } else if (storeExportRateCents != 0 &&
+          storeExpense != 0 &&
+          storeExchangeRate != 0) {
+        setState(() {
+          realizationUSD2 = double.parse(c.toStringAsFixed(2));
+          double temp = realizationUSD1 - realizationUSD2;
+          diffAnswerReverseUSD = double.parse(temp.toStringAsFixed(2));
+        });
+      }
+    } else {
+      double a = storeExportRateCents / 100;
+      double b = a / 0.45359;
+      double c = b * storeExchangeRate;
+      double d = c * 355.60;
+      double e = d - storeExpense;
 
-                                  //Content Of Calculator
+      if (storeExportRateCents != 0 &&
+          storeExpense == 0 &&
+          storeExchangeRate == 0) {
+        setState(() {
+          realizationCents2 = double.parse(a.toStringAsFixed(2));
+        });
+      } else if (storeExportRateCents != 0 &&
+          storeExpense != 0 &&
+          storeExchangeRate == 0) {
+        setState(() {
+          realizationCents2 = double.parse(b.toStringAsFixed(2));
+        });
+      } else if (storeExportRateCents != 0 &&
+          storeExpense != 0 &&
+          storeExchangeRate != 0) {
+        setState(() {
+          realizationCents2 = double.parse(e.toStringAsFixed(2));
+        });
+      }
+    }
+  }
 
-                                  // Kappas
-                                  GlobalRowCompareWidget2textfielsWithOnchanges(
-                                      title: 'Export Rate',
-                                      controller1: reverseinputkapas1,
-                                      subtitle: 'nothing',
-                                      height: 0,
-                                      width: 0,
-                                      controller2: reverseinputkapas2,
-                                      onchaned1: (string) {
-                                        // _reverseupdateValues_for_calculator1();
-                                      },
-                                      onchane2: (string) {
-                                        // _reverseupdateValues_for_calculator2();
-                                      }),
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: [
+        SwitchWithTwoText(
+            frontText: 'Cents/LB',
+            backText: 'USD/Kg',
+            onChange: (bool value) {
+              // This is called when the user toggles the switch.
+              setState(() {
+                compareReverseCalulateMix = value;
+              });
+            },
+            switchValue: compareReverseCalulateMix,
+            bigText: true),
+        compareReverseCalulateMix
+            ?
+            // USD/Kg
+            ListView(
+                shrinkWrap: true,
+                children: [
+                  //Heading of Calculator
+                  const GlobalRowCompareWidget2TEXT(
+                    title1: 'Calc1',
+                    title2: 'Calc2',
+                  ),
 
-                                  // Nothing
-                                  GlobalRowCompareWidget2textfielsWithOnchanges(
-                                      title: 'Expense',
-                                      controller1: reverseinputkapas1,
-                                      subtitle: 'nothing',
-                                      height: 0,
-                                      width: 0,
-                                      controller2: reverseinputkapas2,
-                                      onchaned1: (string) {
-                                        // _reverseupdateValues_for_calculator1();
-                                      },
-                                      onchane2: (string) {
-                                        // _reverseupdateValues_for_calculator2();
-                                      }),
+                  //Content Of Calculator
 
-                                  // Nothing
-                                  GlobalRowCompareWidget2textfielsWithOnchanges(
-                                      title: 'Exchange Rate',
-                                      controller1: reverseinputkapas1,
-                                      subtitle: 'nothing',
-                                      height: 0,
-                                      width: 0,
-                                      controller2: reverseinputkapas2,
-                                      onchaned1: (string) {
-                                        // _reverseupdateValues_for_calculator1();
-                                      },
-                                      onchane2: (string) {
-                                        // _reverseupdateValues_for_calculator2();
-                                      }),
+                  // Kappas
+                  GlobalRowCompareWidget2textfielsWithOnchanges(
+                      title: 'Export Rate USD',
+                      controller1: exportRateUSD,
+                      subtitle: 'USD/Kg',
+                      height: 0,
+                      width: 0,
+                      controller2: exportRateUSD2,
+                      onchaned1: (string) {
+                        _exportReverse();
+                      },
+                      onchane2: (string) {
+                        _exportReverse2();
+                      }),
 
-                                  // Final Answer
-                                  GlobalRowCompareWidget2StreamBuilderWithAnswer(
-                                    result1: 0,
-                                    result2: reverseanswer2,
-                                    subtext1: '₹',
-                                    subtext2: '₹',
-                                    title1: 'Realisation',
-                                    title2: 'Realisation',
-                                  ),
+                  // Nothing
+                  GlobalRowCompareWidget2textfielsWithOnchanges(
+                      title: 'Expenses',
+                      controller1: expense,
+                      subtitle: '₹/Candy',
+                      height: 0,
+                      width: 0,
+                      controller2: expense2,
+                      onchaned1: (string) {
+                        _exportReverse();
+                      },
+                      onchane2: (string) {
+                        _exportReverse2();
+                      }),
 
-                                  GlobalRowCompareWidget2Button(
-                                    onpressed1: () {
-                                      reverseinputkapas1.clear();
-                                      reverseinputexpense1.clear();
-                                      // reverseinputoilrate1.clear();
-                                      reverseinputkapasia1.clear();
-                                      reverseinpututaro1.clear();
-                                      reverseinputghati1.clear();
-                                      // reverseanswer = 0;
-                                    },
-                                    onpressed2: () {
-                                      reverseinputkapas2.clear();
-                                      reverseinputexpense2.clear();
-                                      // reverseinputoilrate2.clear();
-                                      reverseinputkapasia2.clear();
-                                      reverseinpututaro2.clear();
-                                      reverseinputghati2.clear();
-                                      reverseanswer2 = 0;
-                                    },
-                                    text1: 'RESET 1',
-                                    text2: 'RESET 2',
-                                  ),
+                  // Nothing
+                  GlobalRowCompareWidget2textfielsWithOnchanges(
+                      title: 'Exchange Rate',
+                      controller1: exchangeRate,
+                      subtitle: 'USD/INR',
+                      height: 0,
+                      width: 0,
+                      controller2: exchangeRate2,
+                      onchaned1: (string) {
+                        _exportReverse();
+                      },
+                      onchane2: (string) {
+                        _exportReverse2();
+                      }),
 
-                                  // Khandi Diffrnce or Stram result
-                                  SizedBox(height: 20.h),
-                                  GlobalResultBuilderForResults(
-                                    substreamtext: '₹/Candy',
-                                    streamtitletext:
-                                        'Reaonlisation  Difference',
-                                    result: reversediff,
-                                  ),
+                  // Final Answer
+                  GlobalRowCompareWidget2StreamBuilderWithAnswer(
+                    result1: realizationUSD1,
+                    result2: realizationUSD2,
+                    subtext1: '₹/Candy',
+                    subtext2: '₹/Candy',
+                    title1: 'Realisation',
+                    title2: 'Realisation',
+                  ),
 
-                                  // Reset All Button
-                                  SizedBox(
-                                    height: 20.h,
-                                  ),
-                                  GlobalButtonSimpleText(
-                                    onPressed: () {
-                                      reverseinputkapas1.clear();
-                                      reverseinputexpense1.clear();
-                                      // reverseinputoilrate1.clear();
-                                      reverseinputkapasia1.clear();
-                                      reverseinpututaro1.clear();
-                                      reverseinputghati1.clear();
-                                      reverseinputkapas2.clear();
-                                      reverseinputexpense2.clear();
-                                      // reverseinputoilrate2.clear();
-                                      reverseinputkapasia2.clear();
-                                      reverseinpututaro2.clear();
-                                      reverseinputghati2.clear();
-                                      reversediff = 0;
-                                      // reverseanswer = 0;
-                                      // reversedubanswer = 0;
-                                      reverseanswer2 = 0;
-                                      reversedubanswer2 = 0;
-                                      reversedubdiff = 0;
-                                    },
-                                    buttontext: 'Reset All',
-                                    height: globalSingalResetButtonHeight,
-                                    width: globalSingalResetButtonWidth,
-                                  ),
-                                ],
-                              ),
-                      )),
-            floatingActionButton: FloatingButton(
-              screenshotController: screenshotController,
-            )));
+                  GlobalRowCompareWidget2Button(
+                    onpressed1: () {
+                      exportRateUSD.clear();
+                      expense.clear();
+                      exchangeRate.clear();
+                      setState(() {
+                        realizationUSD1 = 0;
+                      });
+                    },
+                    onpressed2: () {
+                      exportRateUSD2.clear();
+                      expense2.clear();
+                      exchangeRate2.clear();
+                      setState(() {
+                        realizationUSD2 = 0;
+                      });
+                    },
+                    text1: 'RESET 1',
+                    text2: 'RESET 2',
+                  ),
+
+                  // Khandi Diffrnce or Stram result
+                  SizedBox(height: 20.h),
+                  GlobalResultBuilderForResults(
+                    substreamtext: '₹/Candy',
+                    streamtitletext: 'Realisation Difference',
+                    result: diffAnswerReverseUSD.abs(),
+                  ),
+
+                  // Reset All Button
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  GlobalButtonSimpleText(
+                    onPressed: () {
+                      exportRateUSD.clear();
+                      expense.clear();
+                      exchangeRate.clear();
+                      exportRateUSD2.clear();
+                      expense2.clear();
+                      exchangeRate2.clear();
+
+                      setState(() {
+                        realizationUSD1 = 0;
+                        realizationUSD2 = 0;
+                        diffAnswerReverseUSD = 0;
+                      });
+                    },
+                    buttontext: 'Reset All',
+                    height: globalSingalResetButtonHeight,
+                    width: globalSingalResetButtonWidth,
+                  ),
+                ],
+              )
+
+            //Cents/LB
+            : ListView(
+                shrinkWrap: true,
+                children: [
+                  //Heading of Calculator
+                  const GlobalRowCompareWidget2TEXT(
+                    title1: 'Calc1',
+                    title2: 'Calc2',
+                  ),
+
+                  //Content Of Calculator
+
+                  // Kappas
+                  GlobalRowCompareWidget2textfielsWithOnchanges(
+                      title: 'Export Rate Cents',
+                      controller1: exportRateCents,
+                      subtitle: 'Cents/LB',
+                      height: 0,
+                      width: 0,
+                      controller2: exportRateCents2,
+                      onchaned1: (string) {
+                        _exportReverse();
+                      },
+                      onchane2: (string) {
+                        _exportReverse2();
+                      }),
+
+                  // Nothing
+                  GlobalRowCompareWidget2textfielsWithOnchanges(
+                      title: 'Expenses',
+                      controller1: expense,
+                      subtitle: '₹/Candy',
+                      height: 0,
+                      width: 0,
+                      controller2: expense2,
+                      onchaned1: (string) {
+                        _exportReverse();
+                      },
+                      onchane2: (string) {
+                        _exportReverse2();
+                      }),
+
+                  // Nothing
+                  GlobalRowCompareWidget2textfielsWithOnchanges(
+                      title: 'Exchange Rate',
+                      controller1: exchangeRate,
+                      subtitle: 'USD/INR',
+                      height: 0,
+                      width: 0,
+                      controller2: exchangeRate2,
+                      onchaned1: (string) {
+                        _exportReverse();
+                      },
+                      onchane2: (string) {
+                        _exportReverse2();
+                      }),
+
+                  // Final Answer
+                  GlobalRowCompareWidget2StreamBuilderWithAnswer(
+                    result1: realizationCents1,
+                    result2: realizationCents2,
+                    subtext1: '₹/Candy',
+                    subtext2: '₹/Candy',
+                    title1: 'Realisation',
+                    title2: 'Realisation',
+                  ),
+
+                  GlobalRowCompareWidget2Button(
+                    onpressed1: () {
+                      exportRateCents.clear();
+                      expense.clear();
+                      exchangeRate.clear();
+                      setState(() {
+                        realizationCents1 = 0;
+                      });
+                    },
+                    onpressed2: () {
+                      exportRateCents2.clear();
+                      expense2.clear();
+                      exchangeRate2.clear();
+                      setState(() {
+                        realizationCents2 = 0;
+                      });
+                    },
+                    text1: 'RESET 1',
+                    text2: 'RESET 2',
+                  ),
+
+                  // Khandi Diffrnce or Stram result
+                  SizedBox(height: 20.h),
+                  GlobalResultBuilderForResults(
+                    substreamtext: '₹/Candy',
+                    streamtitletext: 'Realisation Difference',
+                    result: diffAnswerReverseCents.abs(),
+                  ),
+
+                  // Reset All Button
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  GlobalButtonSimpleText(
+                    onPressed: () {
+                      exportRateCents.clear();
+                      expense.clear();
+                      exchangeRate.clear();
+                      exportRateCents2.clear();
+                      expense2.clear();
+                      exchangeRate2.clear();
+                      setState(() {
+                        realizationCents1 = 0;
+                        realizationCents2 = 0;
+                        diffAnswerReverseCents = 0;
+                      });
+                    },
+                    buttontext: 'Reset All',
+                    height: globalSingalResetButtonHeight,
+                    width: globalSingalResetButtonWidth,
+                  ),
+                ],
+              ),
+      ],
+    );
   }
 }

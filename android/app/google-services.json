@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "625365097680",
+    "firebase_url": "https://textile-calculator-80988-default-rtdb.firebaseio.com",
     "project_id": "textile-calculator-80988",
     "storage_bucket": "textile-calculator-80988.appspot.com"
   },
@@ -19,6 +20,22 @@
           "android_info": {
             "package_name": "mg.kingtechnology.in.kt1_textile_calculation",
             "certificate_hash": "4f717023ca711a8beeed22ba5f197dadd06f05d0"
+          }
+        },
+        {
+          "client_id": "625365097680-eelh9g8ds8fhmj64ir9tvv56mij81ou5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mg.kingtechnology.in.kt1_textile_calculation",
+            "certificate_hash": "757113c9d0bf0013ee7dd9c876202ff7bdfcf32d"
+          }
+        },
+        {
+          "client_id": "625365097680-jv9m8jgnba3vq2u1th9qcmsev810bbpd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mg.kingtechnology.in.kt1_textile_calculation",
+            "certificate_hash": "5a78c9fb1bcbb56314e05ac9f3620d60ddc75512"
           }
         },
         {

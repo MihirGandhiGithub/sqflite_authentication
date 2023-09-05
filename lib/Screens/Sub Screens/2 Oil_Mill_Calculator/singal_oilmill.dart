@@ -2,14 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:screenshot/screenshot.dart';
 
-import '../../../Constants/Global_Variables/Sizes/Sizes.dart';
+import '../../../Constants/Global_Variables/Sizes/global_sizes.dart';
 import '../../../Constants/Global_Widgets/Appbar/appbar_slider.dart';
 import '../../../Constants/Global_Widgets/Buttons/floating_share.dart';
 import '../../../Constants/Global_Widgets/Buttons/gradient_text.dart';
 import '../../../Constants/Global_Widgets/Buttons/simple_text.dart';
+import '../../../Constants/Global_Widgets/navigate_page_with_animation.dart';
 import '../../../Constants/Global_Widgets/Result_Text/bigresult_text.dart';
 import '../../../Constants/Global_Widgets/Row/three_content.dart';
 import 'compare_oilmill.dart';
+
+double answer = 0;
+bool forwardCalulateMix = false;
+final inputkapas1 = TextEditingController();
+final inputexpense1 = TextEditingController();
+final inputoilrate1 = TextEditingController();
+final inputkapasia1 = TextEditingController();
+final inpututaro1 = TextEditingController();
+final inputghati1 = TextEditingController();
+
+double reverseanswer = 0;
+
+bool reverseCalulateMix = false;
+
+final reverseinputkapas1 = TextEditingController();
+final revereseinputexpense1 = TextEditingController();
+final reverseinputoilrate1 = TextEditingController();
+final reverseinputkapasia1 = TextEditingController();
+final reverseinpututaro1 = TextEditingController();
+final reverseinputghati1 = TextEditingController();
 
 class HomeSingalOilMillCalculator extends StatefulWidget {
   const HomeSingalOilMillCalculator({Key? key}) : super(key: key);
@@ -23,17 +44,43 @@ class _HomeSingalOilMillCalculatorState
     extends State<HomeSingalOilMillCalculator>
     with SingleTickerProviderStateMixin {
   ScreenshotController screenshotController = ScreenshotController();
-  double answer = 0;
-  double reverseanswer = 0;
-  bool forwardCalulateMix = false;
-  bool reverseCalulateMix = false;
+  @override
+  Widget build(BuildContext context) {
+    bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
+    return DefaultTabController(
+      initialIndex: 0,
+      length: 2,
+      child: Screenshot(
+        controller: screenshotController,
+        child: Scaffold(
+            appBar: const AppBarWithSlider(
+              titleText: 'Oil Mill Calculator',
+              sliderText1: 'Forward Oil Mill',
+              sliderText2: 'Reverse Oil Mill',
+            ),
+            body: const TabBarView(
+              children: [
+                OilmillForward(),
+                OilmillReverse(),
+              ],
+            ),
+            floatingActionButton: FloatingButton(
+              screenshotController: screenshotController,
+              isVisible: keyboardIsOpened,
+            )),
+      ),
+    );
+  }
+}
 
-  final inputkapas1 = TextEditingController();
-  final inputexpense1 = TextEditingController();
-  final inputoilrate1 = TextEditingController();
-  final inputkapasia1 = TextEditingController();
-  final inpututaro1 = TextEditingController();
-  final inputghati1 = TextEditingController();
+class OilmillForward extends StatefulWidget {
+  const OilmillForward({super.key});
+
+  @override
+  State<OilmillForward> createState() => _OilmillForwardState();
+}
+
+class _OilmillForwardState extends State<OilmillForward> {
   void _updateValuesForCalculator1() {
     double storeInputKapas1 = double.tryParse(inputkapas1.text) ?? 0;
     double storeInputExpense1 = double.tryParse(inputexpense1.text) ?? 0;
@@ -116,13 +163,355 @@ class _HomeSingalOilMillCalculatorState
     }
   }
 
-  final reverseinputkapas1 = TextEditingController();
-  final revereseinputexpense1 = TextEditingController();
-  final reverseinputoilrate1 = TextEditingController();
-  final reverseinputkapasia1 = TextEditingController();
-  final reverseinpututaro1 = TextEditingController();
-  final reverseinputghati1 = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: forwardCalulateMix
+          ? ListView(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Pure',
+                      style: TextStyle(color: Colors.black, fontSize: 70.sp),
+                    ),
+                    Switch(
+                      // This bool value toggles the switch.
+                      value: forwardCalulateMix,
+                      // overlayColor: overlayColor,
+                      // trackColor: trackColor,
+                      thumbColor:
+                          const MaterialStatePropertyAll<Color>(Colors.black),
+                      onChanged: (bool value) {
+                        // This is called when the user toggles the switch.
+                        setState(() {
+                          forwardCalulateMix = value;
+                        });
+                      },
+                    ),
+                    Text(
+                      'Mix',
+                      style: TextStyle(color: Colors.black, fontSize: 70.sp),
+                    ),
+                  ],
+                ),
+                Center(
+                  child: Text(
+                    'Soon...',
+                    style: TextStyle(color: Colors.black, fontSize: 60.sp),
+                  ),
+                ),
+                // GlobalRowWidgetWithOnchanged(
+                //   height: globalSingalTextfiedHeight,
+                //   width: globalSingalTextfiedWidth,
+                //   title: 'Cotton Seed',
+                //   controller: inputkapas1,
+                //   subtitle: '₹/20kg',
+                //   onchaned: (string) {
+                //     _updateValuesForCalculator1();
+                //   },
+                // ),
+                //
+                // //NOTHING
+                // GlobalRowWidgetWithOnchanged(
+                //   height: globalSingalTextfiedHeight,
+                //   width: globalSingalTextfiedWidth,
+                //   title: 'Hull Rate',
+                //   controller: inputkapas1,
+                //   subtitle: 'Kgs.',
+                //   onchaned: (string) {
+                //     _updateValuesForCalculator1();
+                //   },
+                // ),
+                // //NOTHING
+                // GlobalRowWidgetWithOnchanged(
+                //   height: globalSingalTextfiedHeight,
+                //   width: globalSingalTextfiedWidth,
+                //   title: 'Cotton Seed Qty.',
+                //   controller: inputkapas1,
+                //   subtitle: 'Kgs.',
+                //   onchaned: (string) {
+                //     _updateValuesForCalculator1();
+                //   },
+                // ),
+                // //NOTHING
+                // GlobalRowWidgetWithOnchanged(
+                //   height: globalSingalTextfiedHeight,
+                //   width: globalSingalTextfiedWidth,
+                //   title: 'Hull Qty.',
+                //   controller: inputkapas1,
+                //   subtitle: 'Kgs.',
+                //   onchaned: (string) {
+                //     _updateValuesForCalculator1();
+                //   },
+                // ),
+                //
+                // // Expense
+                //
+                // GlobalRowWidgetWithOnchanged(
+                //   height: globalSingalTextfiedHeight,
+                //   width: globalSingalTextfiedWidth,
+                //   title: 'Expense',
+                //   controller: inputexpense1,
+                //   subtitle: '₹/20kg',
+                //   onchaned: (string) {
+                //     _updateValuesForCalculator1();
+                //   },
+                // ),
+                //
+                // //Oil Rate
+                //
+                // GlobalRowWidgetWithOnchanged(
+                //   height: globalSingalTextfiedHeight,
+                //   width: globalSingalTextfiedWidth,
+                //   title: 'Oil Rate',
+                //   controller: inputoilrate1,
+                //   subtitle: '₹/20kg',
+                //   onchaned: (string) {
+                //     _updateValuesForCalculator1();
+                //   },
+                // ),
+                //
+                // // Out Turn / Utaro
+                //
+                // GlobalRowWidgetWithOnchanged(
+                //   height: globalSingalTextfiedHeight,
+                //   width: globalSingalTextfiedWidth,
+                //   title: 'Oil',
+                //   controller: inputkapasia1,
+                //   subtitle: 'Percentage %',
+                //   onchaned: (string) {
+                //     _updateValuesForCalculator1();
+                //   },
+                // ),
+                //
+                // //NOTHING
+                // GlobalRowWidgetWithOnchanged(
+                //   height: globalSingalTextfiedHeight,
+                //   width: globalSingalTextfiedWidth,
+                //   title: 'Shortage',
+                //   controller: inputkapas1,
+                //   subtitle: '%',
+                //   onchaned: (string) {
+                //     _updateValuesForCalculator1();
+                //   },
+                // ),
+                //
+                // //Packing Size
+                // GlobalRowWidgetWithOnchanged(
+                //   height: globalSingalTextfiedHeight,
+                //   width: globalSingalTextfiedWidth,
+                //   title: 'Packing Size',
+                //   controller: inputghati1,
+                //   subtitle: 'Kgs.',
+                //   onchaned: (string) {
+                //     _updateValuesForCalculator1();
+                //   },
+                // ),
+                //
+                // SizedBox(height: 30.h),
+                //
+                // // Stram result
+                // GlobalResultBuilderForResults(
+                //   substreamtext: '₹/20Kg',
+                //   streamtitletext: 'Oil Cake Cost',
+                //   result: answer,
+                // ),
+                //
+                // // Reset Button
+                // GlobalButtonSimpleText(
+                //   onPressed: () {
+                //     inputkapas1.clear();
+                //     inputexpense1.clear();
+                //     inputkapasia1.clear();
+                //     inpututaro1.clear();
+                //     inputghati1.clear();
+                //     answer = 0;
+                //   },
+                //   buttontext: 'Reset',
+                //   height: globalSingalResetButtonHeight,
+                //   width: globalSingalResetButtonWidth,
+                // ),
+                //
+                // //Compare Button
+                // GlobalButtonGradientText(
+                //   onPressed: () {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //         builder: (context) => HomeCompareOilMillCalculator(
+                //           compareReverseCalculatemix: reverseCalulateMix,
+                //           compareForwardCalculatemix: forwardCalulateMix,
+                //           isReverse: 0,
+                //         ),
+                //       ),
+                //     );
+                //   },
+                //   buttontext: 'Compare',
+                //   height: globalSingalComareButtonHeight,
+                //   width: globalSingalComareButtonWidth,
+                // ),
+              ],
+            )
+          : ListView(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Pure',
+                      style: TextStyle(color: Colors.black, fontSize: 70.sp),
+                    ),
+                    Switch(
+                      // This bool value toggles the switch.
+                      value: forwardCalulateMix,
+                      // overlayColor: overlayColor,
+                      // trackColor: trackColor,
+                      thumbColor:
+                          const MaterialStatePropertyAll<Color>(Colors.black),
+                      onChanged: (bool value) {
+                        // This is called when the user toggles the switch.
+                        setState(() {
+                          forwardCalulateMix = value;
+                        });
+                      },
+                    ),
+                    Text(
+                      'Mix',
+                      style: TextStyle(color: Colors.black, fontSize: 70.sp),
+                    ),
+                  ],
+                ),
+                GlobalRowWidgetWithOnchanged(
+                  height: globalSingalTextfiedHeight,
+                  width: globalSingalTextfiedWidth,
+                  title: 'Cotton Seed',
+                  controller: inputkapas1,
+                  subtitle: '₹/20kg',
+                  onchaned: (string) {
+                    _updateValuesForCalculator1();
+                  },
+                ),
 
+                // Expense
+
+                GlobalRowWidgetWithOnchanged(
+                  height: globalSingalTextfiedHeight,
+                  width: globalSingalTextfiedWidth,
+                  title: 'Expenses',
+                  controller: inputexpense1,
+                  subtitle: '₹/20kg',
+                  onchaned: (string) {
+                    _updateValuesForCalculator1();
+                  },
+                ),
+
+                // Cotton Seed
+
+                //Oil Rate
+
+                GlobalRowWidgetWithOnchanged(
+                  height: globalSingalTextfiedHeight,
+                  width: globalSingalTextfiedWidth,
+                  title: 'Oil Rate',
+                  controller: inputoilrate1,
+                  subtitle: '₹/10kg',
+                  onchaned: (string) {
+                    _updateValuesForCalculator1();
+                  },
+                ),
+
+                // Out Turn / Utaro
+
+                GlobalRowWidgetWithOnchanged(
+                  height: globalSingalTextfiedHeight,
+                  width: globalSingalTextfiedWidth,
+                  title: 'Oil',
+                  controller: inputkapasia1,
+                  subtitle: '%',
+                  onchaned: (string) {
+                    _updateValuesForCalculator1();
+                  },
+                ),
+
+                // Shortage / Ghati
+                GlobalRowWidgetWithOnchanged(
+                  height: globalSingalTextfiedHeight,
+                  width: globalSingalTextfiedWidth,
+                  title: 'Oil Cake',
+                  controller: inpututaro1,
+                  subtitle: '%',
+                  onchaned: (string) {
+                    _updateValuesForCalculator1();
+                  },
+                ),
+
+                //Packing Size
+                GlobalRowWidgetWithOnchanged(
+                  height: globalSingalTextfiedHeight,
+                  width: globalSingalTextfiedWidth,
+                  title: 'Packing Size',
+                  controller: inputghati1,
+                  subtitle: 'Kg',
+                  onchaned: (string) {
+                    _updateValuesForCalculator1();
+                  },
+                ),
+
+                // Stram result
+                GlobalResultBuilderForResults(
+                  substreamtext: '₹/20Kg',
+                  streamtitletext: 'Oil Cake Cost',
+                  result: answer,
+                ),
+
+                // Reset Button
+                GlobalButtonSimpleText(
+                  onPressed: () {
+                    inputkapas1.clear();
+                    inputexpense1.clear();
+                    inputoilrate1.clear();
+                    inputkapasia1.clear();
+                    inpututaro1.clear();
+                    inputghati1.clear();
+                    setState(() {
+                      answer = 0;
+                    });
+                  },
+                  buttontext: 'Reset',
+                  height: globalSingalResetButtonHeight,
+                  width: globalSingalResetButtonWidth,
+                ),
+
+                //Compare Button
+                GlobalButtonGradientText(
+                  onPressed: () => CustomNavigator().navigateToPage(
+                    context,
+                    HomeCompareOilMillCalculator(
+                      isReverse: 0,
+                      compareReverseCalculatemix: reverseCalulateMix,
+                      compareForwardCalculatemix: forwardCalulateMix,
+                    ),
+                  ),
+                  buttontext: 'Compare',
+                  height: globalSingalComareButtonHeight,
+                  width: globalSingalComareButtonWidth,
+                ),
+              ],
+            ),
+    );
+  }
+}
+
+class OilmillReverse extends StatefulWidget {
+  const OilmillReverse({super.key});
+
+  @override
+  State<OilmillReverse> createState() => _OilmillReverseState();
+}
+
+class _OilmillReverseState extends State<OilmillReverse> {
   void _reverseUpdateValuesForCalculator1() {
     double storeInputKapas1 = double.tryParse(reverseinputkapas1.text) ?? 0;
     double storeInputExpense1 =
@@ -214,723 +603,339 @@ class _HomeSingalOilMillCalculatorState
     }
   }
 
-  // for focusing  a node
-  FocusNode focusnodekapas1 = FocusNode();
-
-  bool _isForwardGinning = true;
-
   @override
   Widget build(BuildContext context) {
-    return Screenshot(
-        controller: screenshotController,
-        child: Scaffold(
-            appBar: GlobalCustomAppBar(
-              sliderText1: 'Forward Oil Mill',
-              sliderText2: 'Reverse Oil Mill',
-              appbarText: 'Oil Mill Calculator',
-              isFirstButtonSelected: _isForwardGinning,
-              onButtonPressed: (bool isFirstButton) {
-                setState(() {
-                  _isForwardGinning = isFirstButton;
-                });
-              },
-            ),
-            body: GestureDetector(
-              onHorizontalDragEnd: (DragEndDetails details) {
-                if (details.primaryVelocity! > 0) {
-                  // Swiped from left to right
-                  setState(() {
-                    _isForwardGinning = true;
-                  });
-                } else if (details.primaryVelocity! < 0) {
-                  // Swiped from right to left
-                  setState(() {
-                    _isForwardGinning = false;
-                  });
-                }
-              },
-              child: _isForwardGinning
-                  ? Container(
-                      child: forwardCalulateMix
-                          ? ListView(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Calculate Pure',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 70.sp),
-                                    ),
-                                    Switch(
-                                      // This bool value toggles the switch.
-                                      value: forwardCalulateMix,
-                                      // overlayColor: overlayColor,
-                                      // trackColor: trackColor,
-                                      thumbColor:
-                                          const MaterialStatePropertyAll<Color>(
-                                              Colors.black),
-                                      onChanged: (bool value) {
-                                        // This is called when the user toggles the switch.
-                                        setState(() {
-                                          forwardCalulateMix = value;
-                                        });
-                                      },
-                                    ),
-                                    Text(
-                                      'Calculate Mix',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 70.sp),
-                                    ),
-                                  ],
-                                ),
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Cotton Seed',
-                                  controller: inputkapas1,
-                                  subtitle: '₹/20kg',
-                                  onchaned: (string) {
-                                    _updateValuesForCalculator1();
-                                  },
-                                ),
+    return Container(
+        child: reverseCalulateMix
+            ? ListView(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Pure',
+                        style: TextStyle(color: Colors.black, fontSize: 70.sp),
+                      ),
+                      Switch(
+                        // This bool value toggles the switch.
+                        value: reverseCalulateMix,
+                        // overlayColor: overlayColor,
+                        // trackColor: trackColor,
+                        thumbColor:
+                            const MaterialStatePropertyAll<Color>(Colors.black),
+                        onChanged: (bool value) {
+                          // This is called when the user toggles the switch.
+                          setState(() {
+                            reverseCalulateMix = value;
+                          });
+                        },
+                      ),
+                      Text(
+                        'Mix',
+                        style: TextStyle(color: Colors.black, fontSize: 70.sp),
+                      ),
+                    ],
+                  ),
 
-                                //NOTHING
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Hull Rate',
-                                  controller: inputkapas1,
-                                  subtitle: 'Kgs.',
-                                  onchaned: (string) {
-                                    _updateValuesForCalculator1();
-                                  },
-                                ),
-                                //NOTHING
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Cotton Seed Qty.',
-                                  controller: inputkapas1,
-                                  subtitle: 'Kgs.',
-                                  onchaned: (string) {
-                                    _updateValuesForCalculator1();
-                                  },
-                                ),
-                                //NOTHING
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Hull Qty.',
-                                  controller: inputkapas1,
-                                  subtitle: 'Kgs.',
-                                  onchaned: (string) {
-                                    _updateValuesForCalculator1();
-                                  },
-                                ),
+                  Center(
+                    child: Text(
+                      'Soon...',
+                      style: TextStyle(color: Colors.black, fontSize: 60.sp),
+                    ),
+                  )
+                  // //kapas
+                  // GlobalRowWidgetWithOnchanged(
+                  //   height: globalSingalTextfiedHeight,
+                  //   width: globalSingalTextfiedWidth,
+                  //   title: 'Oil Cake Cost',
+                  //   controller: reverseinputkapas1,
+                  //   subtitle: '₹/Bale',
+                  //   onchaned: (string) {
+                  //     _reverseUpdateValuesForCalculator1();
+                  //   },
+                  // ),
+                  // GlobalRowWidgetWithOnchanged(
+                  //   height: globalSingalTextfiedHeight,
+                  //   width: globalSingalTextfiedWidth,
+                  //   title: 'Hull Rate',
+                  //   controller: inputkapas1,
+                  //   subtitle: 'Kgs.',
+                  //   onchaned: (string) {
+                  //     _reverseUpdateValuesForCalculator1();
+                  //   },
+                  // ),
+                  // //NOTHING
+                  // GlobalRowWidgetWithOnchanged(
+                  //   height: globalSingalTextfiedHeight,
+                  //   width: globalSingalTextfiedWidth,
+                  //   title: 'Cotton Seed Qty.',
+                  //   controller: inputkapas1,
+                  //   subtitle: 'Kgs.',
+                  //   onchaned: (string) {
+                  //     _reverseUpdateValuesForCalculator1();
+                  //   },
+                  // ),
+                  // //NOTHING
+                  // GlobalRowWidgetWithOnchanged(
+                  //   height: globalSingalTextfiedHeight,
+                  //   width: globalSingalTextfiedWidth,
+                  //   title: 'Hull Qty.',
+                  //   controller: inputkapas1,
+                  //   subtitle: 'Kgs.',
+                  //   onchaned: (string) {
+                  //     _reverseUpdateValuesForCalculator1();
+                  //   },
+                  // ),
+                  //
+                  // // Expense
+                  //
+                  // GlobalRowWidgetWithOnchanged(
+                  //   height: globalSingalTextfiedHeight,
+                  //   width: globalSingalTextfiedWidth,
+                  //   title: 'Expense',
+                  //   controller: inputexpense1,
+                  //   subtitle: '₹/20kg',
+                  //   onchaned: (string) {
+                  //     _reverseUpdateValuesForCalculator1();
+                  //   },
+                  // ),
+                  //
+                  // // Cotton Seed
+                  // GlobalRowWidgetWithOnchanged(
+                  //   height: globalSingalTextfiedHeight,
+                  //   width: globalSingalTextfiedWidth,
+                  //   title: 'Oil Rate',
+                  //   controller: reverseinputoilrate1,
+                  //   subtitle: '₹/20kg',
+                  //   onchaned: (string) {
+                  //     _reverseUpdateValuesForCalculator1();
+                  //   },
+                  // ),
+                  //
+                  // // Out Turn / Utaro
+                  // GlobalRowWidgetWithOnchanged(
+                  //   height: globalSingalTextfiedHeight,
+                  //   width: globalSingalTextfiedWidth,
+                  //   title: 'Oil',
+                  //   controller: reverseinputkapasia1,
+                  //   subtitle: 'Percentage %',
+                  //   onchaned: (string) {
+                  //     _reverseUpdateValuesForCalculator1();
+                  //   },
+                  // ),
+                  //
+                  // // Shortage / Ghati
+                  // GlobalRowWidgetWithOnchanged(
+                  //   height: globalSingalTextfiedHeight,
+                  //   width: globalSingalTextfiedWidth,
+                  //   title: 'Shortage',
+                  //   controller: reverseinpututaro1,
+                  //   subtitle: 'Percentage %',
+                  //   onchaned: (string) {
+                  //     _reverseUpdateValuesForCalculator1();
+                  //   },
+                  // ),
+                  //
+                  // // PAckaging Size
+                  // GlobalRowWidgetWithOnchanged(
+                  //   height: globalSingalTextfiedHeight,
+                  //   width: globalSingalTextfiedWidth,
+                  //   title: 'Packing Size',
+                  //   controller: reverseinputghati1,
+                  //   subtitle: 'Kg',
+                  //   onchaned: (string) {
+                  //     _reverseUpdateValuesForCalculator1();
+                  //   },
+                  // ),
+                  //
+                  // // Dispaly Stream Text
+                  // GlobalResultBuilderForResults(
+                  //   substreamtext: '₹/20Kg',
+                  //   streamtitletext: 'Cotton Seed',
+                  //   result: reverseanswer,
+                  // ),
+                  //
+                  // // Reset Button
+                  // GlobalButtonSimpleText(
+                  //   onPressed: () {
+                  //     reverseinputkapas1.clear();
+                  //     revereseinputexpense1.clear();
+                  //     reverseinputkapasia1.clear();
+                  //     reverseinpututaro1.clear();
+                  //     reverseinputghati1.clear();
+                  //   },
+                  //   buttontext: 'Reset',
+                  //   height: globalSingalResetButtonHeight,
+                  //   width: globalSingalResetButtonWidth,
+                  // ),
+                  //
+                  // //Compare Button
+                  // GlobalButtonGradientText(
+                  //   onPressed: () {
+                  //     Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //         builder: (context) => HomeCompareOilMillCalculator(
+                  //           isReverse: 1,
+                  //           compareReverseCalculatemix: reverseCalulateMix,
+                  //           compareForwardCalculatemix: forwardCalulateMix,
+                  //         ),
+                  //       ),
+                  //     );
+                  //   },
+                  //   buttontext: 'Compare',
+                  //   height: globalSingalComareButtonHeight,
+                  //   width: globalSingalComareButtonWidth,
+                  // ),
+                ],
+              )
+            : ListView(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            'Pure',
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 70.sp),
+                          ),
+                          Switch(
+                            // This bool value toggles the switch.
+                            value: reverseCalulateMix,
+                            // overlayColor: overlayColor,
+                            // trackColor: trackColor,
+                            thumbColor: const MaterialStatePropertyAll<Color>(
+                                Colors.black),
+                            onChanged: (bool value) {
+                              // This is called when the user toggles the switch.
+                              setState(() {
+                                reverseCalulateMix = value;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Mix',
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 70.sp),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  //kapas
+                  GlobalRowWidgetWithOnchanged(
+                    height: globalSingalTextfiedHeight,
+                    width: globalSingalTextfiedWidth,
+                    title: 'Oil Cake Cost',
+                    controller: reverseinputkapas1,
+                    subtitle: '₹/Bag',
+                    onchaned: (string) {
+                      _reverseUpdateValuesForCalculator1();
+                    },
+                  ),
 
-                                // Expense
+                  // Expense
+                  GlobalRowWidgetWithOnchanged(
+                    height: globalSingalTextfiedHeight,
+                    width: globalSingalTextfiedWidth,
+                    title: 'Expenses',
+                    controller: revereseinputexpense1,
+                    subtitle: '₹/20kg',
+                    onchaned: (string) {
+                      _reverseUpdateValuesForCalculator1();
+                    },
+                  ),
 
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Expense',
-                                  controller: inputexpense1,
-                                  subtitle: '₹/20kg',
-                                  onchaned: (string) {
-                                    _updateValuesForCalculator1();
-                                  },
-                                ),
+                  // Cotton Seed
+                  GlobalRowWidgetWithOnchanged(
+                    height: globalSingalTextfiedHeight,
+                    width: globalSingalTextfiedWidth,
+                    title: 'Oil Rate',
+                    controller: reverseinputoilrate1,
+                    subtitle: '₹/10kg',
+                    onchaned: (string) {
+                      _reverseUpdateValuesForCalculator1();
+                    },
+                  ),
 
-                                //Oil Rate
+                  // Out Turn / Utaro
+                  GlobalRowWidgetWithOnchanged(
+                    height: globalSingalTextfiedHeight,
+                    width: globalSingalTextfiedWidth,
+                    title: 'Oil',
+                    controller: reverseinputkapasia1,
+                    subtitle: '%',
+                    onchaned: (string) {
+                      _reverseUpdateValuesForCalculator1();
+                    },
+                  ),
 
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Oil Rate',
-                                  controller: inputoilrate1,
-                                  subtitle: '₹/20kg',
-                                  onchaned: (string) {
-                                    _updateValuesForCalculator1();
-                                  },
-                                ),
+                  // Shortage / Ghati
+                  GlobalRowWidgetWithOnchanged(
+                    height: globalSingalTextfiedHeight,
+                    width: globalSingalTextfiedWidth,
+                    title: 'Oil Cake',
+                    controller: reverseinpututaro1,
+                    subtitle: '%',
+                    onchaned: (string) {
+                      _reverseUpdateValuesForCalculator1();
+                    },
+                  ),
 
-                                // Out Turn / Utaro
+                  // PAckaging Size
+                  GlobalRowWidgetWithOnchanged(
+                    height: globalSingalTextfiedHeight,
+                    width: globalSingalTextfiedWidth,
+                    title: 'Packing Size',
+                    controller: reverseinputghati1,
+                    subtitle: 'Kg',
+                    onchaned: (string) {
+                      _reverseUpdateValuesForCalculator1();
+                    },
+                  ),
 
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Oil',
-                                  controller: inputkapasia1,
-                                  subtitle: 'Percentage %',
-                                  onchaned: (string) {
-                                    _updateValuesForCalculator1();
-                                  },
-                                ),
+                  // Dispaly Stream Text
+                  GlobalResultBuilderForResults(
+                    substreamtext: '₹/20Kg',
+                    streamtitletext: 'Cotton Seed',
+                    result: reverseanswer,
+                  ),
 
-                                //NOTHING
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Shortage',
-                                  controller: inputkapas1,
-                                  subtitle: '%',
-                                  onchaned: (string) {
-                                    _updateValuesForCalculator1();
-                                  },
-                                ),
+                  // Reset Button
+                  GlobalButtonSimpleText(
+                    onPressed: () {
+                      reverseinputkapas1.clear();
+                      revereseinputexpense1.clear();
+                      reverseinputoilrate1.clear();
+                      reverseinputkapasia1.clear();
+                      reverseinpututaro1.clear();
+                      reverseinputghati1.clear();
+                      setState(() {
+                        reverseanswer = 0;
+                      });
+                    },
+                    buttontext: 'Reset',
+                    height: globalSingalResetButtonHeight,
+                    width: globalSingalResetButtonWidth,
+                  ),
 
-                                //Packing Size
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Packing Size',
-                                  controller: inputghati1,
-                                  subtitle: 'Kgs.',
-                                  onchaned: (string) {
-                                    _updateValuesForCalculator1();
-                                  },
-                                ),
-
-                                SizedBox(height: 30.h),
-
-                                // Stram result
-                                GlobalResultBuilderForResults(
-                                  substreamtext: '₹/20Kg',
-                                  streamtitletext: 'Oil Cake Cost',
-                                  result: answer,
-                                ),
-
-                                // Reset Button
-                                GlobalButtonSimpleText(
-                                  onPressed: () {
-                                    inputkapas1.clear();
-                                    inputexpense1.clear();
-                                    inputkapasia1.clear();
-                                    inpututaro1.clear();
-                                    inputghati1.clear();
-                                    answer = 0;
-
-                                    focusnodekapas1.requestFocus();
-                                  },
-                                  buttontext: 'Reset',
-                                  height: globalSingalResetButtonHeight,
-                                  width: globalSingalResetButtonWidth,
-                                ),
-
-                                //Compare Button
-                                GlobalButtonGradientText(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            HomeCompareOilMillCalculator(
-                                          forOrReverse: true,
-                                          compareReverseCalculatemix:
-                                              reverseCalulateMix,
-                                          compareForwardCalculatemix:
-                                              forwardCalulateMix,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  buttontext: 'Compare',
-                                  height: globalSingalComareButtonHeight,
-                                  width: globalSingalComareButtonWidth,
-                                ),
-                              ],
-                            )
-                          : ListView(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Calculate Pure',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 70.sp),
-                                    ),
-                                    Switch(
-                                      // This bool value toggles the switch.
-                                      value: forwardCalulateMix,
-                                      // overlayColor: overlayColor,
-                                      // trackColor: trackColor,
-                                      thumbColor:
-                                          const MaterialStatePropertyAll<Color>(
-                                              Colors.black),
-                                      onChanged: (bool value) {
-                                        // This is called when the user toggles the switch.
-                                        setState(() {
-                                          forwardCalulateMix = value;
-                                        });
-                                      },
-                                    ),
-                                    Text(
-                                      'Calculate Mix',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 70.sp),
-                                    ),
-                                  ],
-                                ),
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Cotton Seed',
-                                  controller: inputkapas1,
-                                  subtitle: '₹/20kg',
-                                  onchaned: (string) {
-                                    _updateValuesForCalculator1();
-                                  },
-                                ),
-
-                                // Expense
-
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Expense',
-                                  controller: inputexpense1,
-                                  subtitle: '₹/20kg',
-                                  onchaned: (string) {
-                                    _updateValuesForCalculator1();
-                                  },
-                                ),
-
-                                // Cotton Seed
-
-                                //Oil Rate
-
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Oil Rate',
-                                  controller: inputoilrate1,
-                                  subtitle: '₹/20kg',
-                                  onchaned: (string) {
-                                    _updateValuesForCalculator1();
-                                  },
-                                ),
-
-                                // Out Turn / Utaro
-
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Oil',
-                                  controller: inputkapasia1,
-                                  subtitle: 'Percentage %',
-                                  onchaned: (string) {
-                                    _updateValuesForCalculator1();
-                                  },
-                                ),
-
-                                // Shortage / Ghati
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Oil Cake',
-                                  controller: inpututaro1,
-                                  subtitle: 'Percentage %',
-                                  onchaned: (string) {
-                                    _updateValuesForCalculator1();
-                                  },
-                                ),
-
-                                //Packing Size
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Packing Size',
-                                  controller: inputghati1,
-                                  subtitle: 'Kgs.',
-                                  onchaned: (string) {
-                                    _updateValuesForCalculator1();
-                                  },
-                                ),
-
-                                // Stram result
-                                GlobalResultBuilderForResults(
-                                  substreamtext: '₹/20Kg',
-                                  streamtitletext: 'Oil Cake Cost',
-                                  result: answer,
-                                ),
-
-                                // Reset Button
-                                GlobalButtonSimpleText(
-                                  onPressed: () {
-                                    inputkapas1.clear();
-                                    inputexpense1.clear();
-                                    inputkapasia1.clear();
-                                    inpututaro1.clear();
-                                    inputghati1.clear();
-                                    answer = 0;
-
-                                    focusnodekapas1.requestFocus();
-                                  },
-                                  buttontext: 'Reset',
-                                  height: globalSingalResetButtonHeight,
-                                  width: globalSingalResetButtonWidth,
-                                ),
-
-                                //Compare Button
-                                GlobalButtonGradientText(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            HomeCompareOilMillCalculator(
-                                          forOrReverse: true,
-                                          compareReverseCalculatemix:
-                                              reverseCalulateMix,
-                                          compareForwardCalculatemix:
-                                              forwardCalulateMix,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  buttontext: 'Compare',
-                                  height: globalSingalComareButtonHeight,
-                                  width: globalSingalComareButtonWidth,
-                                ),
-                              ],
-                            ),
-                    )
-                  : Container(
-                      child: reverseCalulateMix
-                          ? ListView(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Calculate Pure',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 70.sp),
-                                    ),
-                                    Switch(
-                                      // This bool value toggles the switch.
-                                      value: reverseCalulateMix,
-                                      // overlayColor: overlayColor,
-                                      // trackColor: trackColor,
-                                      thumbColor:
-                                          const MaterialStatePropertyAll<Color>(
-                                              Colors.black),
-                                      onChanged: (bool value) {
-                                        // This is called when the user toggles the switch.
-                                        setState(() {
-                                          reverseCalulateMix = value;
-                                        });
-                                      },
-                                    ),
-                                    Text(
-                                      'Calculate Mix',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 70.sp),
-                                    ),
-                                  ],
-                                ),
-                                //kapas
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Oil Cake Cost',
-                                  controller: reverseinputkapas1,
-                                  subtitle: '₹/Bale',
-                                  onchaned: (string) {
-                                    _reverseUpdateValuesForCalculator1();
-                                  },
-                                ),
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Hull Rate',
-                                  controller: inputkapas1,
-                                  subtitle: 'Kgs.',
-                                  onchaned: (string) {
-                                    _updateValuesForCalculator1();
-                                  },
-                                ),
-                                //NOTHING
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Cotton Seed Qty.',
-                                  controller: inputkapas1,
-                                  subtitle: 'Kgs.',
-                                  onchaned: (string) {
-                                    _updateValuesForCalculator1();
-                                  },
-                                ),
-                                //NOTHING
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Hull Qty.',
-                                  controller: inputkapas1,
-                                  subtitle: 'Kgs.',
-                                  onchaned: (string) {
-                                    _updateValuesForCalculator1();
-                                  },
-                                ),
-
-                                // Expense
-
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Expense',
-                                  controller: inputexpense1,
-                                  subtitle: '₹/20kg',
-                                  onchaned: (string) {
-                                    _updateValuesForCalculator1();
-                                  },
-                                ),
-
-                                // Cotton Seed
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Oil Rate',
-                                  controller: reverseinputoilrate1,
-                                  subtitle: '₹/20kg',
-                                  onchaned: (string) {
-                                    _reverseUpdateValuesForCalculator1();
-                                  },
-                                ),
-
-                                // Out Turn / Utaro
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Oil',
-                                  controller: reverseinputkapasia1,
-                                  subtitle: 'Percentage %',
-                                  onchaned: (string) {
-                                    _reverseUpdateValuesForCalculator1();
-                                  },
-                                ),
-
-                                // Shortage / Ghati
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Shortage',
-                                  controller: reverseinpututaro1,
-                                  subtitle: 'Percentage %',
-                                  onchaned: (string) {
-                                    _reverseUpdateValuesForCalculator1();
-                                  },
-                                ),
-
-                                // PAckaging Size
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Packing Size',
-                                  controller: reverseinputghati1,
-                                  subtitle: 'Kg',
-                                  onchaned: (string) {
-                                    _reverseUpdateValuesForCalculator1();
-                                  },
-                                ),
-
-                                // Dispaly Stream Text
-                                GlobalResultBuilderForResults(
-                                  substreamtext: '₹/20Kg',
-                                  streamtitletext: 'Cotton Seed',
-                                  result: reverseanswer,
-                                ),
-
-                                // Reset Button
-                                GlobalButtonSimpleText(
-                                  onPressed: () {
-                                    reverseinputkapas1.clear();
-                                    revereseinputexpense1.clear();
-                                    reverseinputkapasia1.clear();
-                                    reverseinpututaro1.clear();
-                                    reverseinputghati1.clear();
-                                  },
-                                  buttontext: 'Reset',
-                                  height: globalSingalResetButtonHeight,
-                                  width: globalSingalResetButtonWidth,
-                                ),
-
-                                //Compare Button
-                                GlobalButtonGradientText(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            HomeCompareOilMillCalculator(
-                                          forOrReverse: false,
-                                          compareReverseCalculatemix:
-                                              reverseCalulateMix,
-                                          compareForwardCalculatemix:
-                                              forwardCalulateMix,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  buttontext: 'Compare',
-                                  height: globalSingalComareButtonHeight,
-                                  width: globalSingalComareButtonWidth,
-                                ),
-                              ],
-                            )
-                          : ListView(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Calculate Pure',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 70.sp),
-                                    ),
-                                    Switch(
-                                      // This bool value toggles the switch.
-                                      value: reverseCalulateMix,
-                                      // overlayColor: overlayColor,
-                                      // trackColor: trackColor,
-                                      thumbColor:
-                                          const MaterialStatePropertyAll<Color>(
-                                              Colors.black),
-                                      onChanged: (bool value) {
-                                        // This is called when the user toggles the switch.
-                                        setState(() {
-                                          reverseCalulateMix = value;
-                                        });
-                                      },
-                                    ),
-                                    Text(
-                                      'Calculate Mix',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 70.sp),
-                                    ),
-                                  ],
-                                ),
-                                //kapas
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Oil Cake Cost',
-                                  controller: reverseinputkapas1,
-                                  subtitle: '₹/Bale',
-                                  onchaned: (string) {
-                                    _reverseUpdateValuesForCalculator1();
-                                  },
-                                ),
-
-                                // Expense
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Expense',
-                                  controller: revereseinputexpense1,
-                                  subtitle: '₹/20kg',
-                                  onchaned: (string) {
-                                    _reverseUpdateValuesForCalculator1();
-                                  },
-                                ),
-
-                                // Cotton Seed
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Oil Rate',
-                                  controller: reverseinputoilrate1,
-                                  subtitle: '₹/20kg',
-                                  onchaned: (string) {
-                                    _reverseUpdateValuesForCalculator1();
-                                  },
-                                ),
-
-                                // Out Turn / Utaro
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Oil',
-                                  controller: reverseinputkapasia1,
-                                  subtitle: 'Percentage %',
-                                  onchaned: (string) {
-                                    _reverseUpdateValuesForCalculator1();
-                                  },
-                                ),
-
-                                // Shortage / Ghati
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Oil Cake',
-                                  controller: reverseinpututaro1,
-                                  subtitle: 'Percentage %',
-                                  onchaned: (string) {
-                                    _reverseUpdateValuesForCalculator1();
-                                  },
-                                ),
-
-                                // PAckaging Size
-                                GlobalRowWidgetWithOnchanged(
-                                  height: globalSingalTextfiedHeight,
-                                  width: globalSingalTextfiedWidth,
-                                  title: 'Packing Size',
-                                  controller: reverseinputghati1,
-                                  subtitle: 'Kg',
-                                  onchaned: (string) {
-                                    _reverseUpdateValuesForCalculator1();
-                                  },
-                                ),
-
-                                // Dispaly Stream Text
-                                GlobalResultBuilderForResults(
-                                  substreamtext: '₹/20Kg',
-                                  streamtitletext: 'Cotton Seed',
-                                  result: reverseanswer,
-                                ),
-
-                                // Reset Button
-                                GlobalButtonSimpleText(
-                                  onPressed: () {
-                                    reverseinputkapas1.clear();
-                                    revereseinputexpense1.clear();
-                                    reverseinputkapasia1.clear();
-                                    reverseinpututaro1.clear();
-                                    reverseinputghati1.clear();
-                                  },
-                                  buttontext: 'Reset',
-                                  height: globalSingalResetButtonHeight,
-                                  width: globalSingalResetButtonWidth,
-                                ),
-
-                                //Compare Button
-                                GlobalButtonGradientText(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            HomeCompareOilMillCalculator(
-                                          forOrReverse: false,
-                                          compareReverseCalculatemix:
-                                              reverseCalulateMix,
-                                          compareForwardCalculatemix:
-                                              forwardCalulateMix,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  buttontext: 'Compare',
-                                  height: globalSingalComareButtonHeight,
-                                  width: globalSingalComareButtonWidth,
-                                ),
-                              ],
-                            )),
-            ),
-            floatingActionButton: FloatingButton(
-              screenshotController: screenshotController,
-            )));
+                  //Compare Button
+                  GlobalButtonGradientText(
+                    onPressed: () => CustomNavigator().navigateToPage(
+                      context,
+                      HomeCompareOilMillCalculator(
+                        isReverse: 1,
+                        compareReverseCalculatemix: reverseCalulateMix,
+                        compareForwardCalculatemix: forwardCalulateMix,
+                      ),
+                    ),
+                    buttontext: 'Compare',
+                    height: globalSingalComareButtonHeight,
+                    width: globalSingalComareButtonWidth,
+                  ),
+                ],
+              ));
   }
 }

@@ -15,11 +15,11 @@ final double globalSingalComareButtonWidth = 0.5.sw;
 
 // Appbar Sizes
 
-class Widgets_Size {
+class WidgetsSize {
   //App bar with slider
   static final appbarWithSliderelevation = 5.sp;
   static final appbarWithSliderHeight = 350.h;
-  static final appbarWithSliderTitleFontSize = 70.sp;
+  static final appbarWithSliderTitleFontSize = 60.sp;
   static final appbarWithSliderBottomRadius = 150.sp;
 
   static final appbarWithSliderInsideSliderHeight = 130.h;

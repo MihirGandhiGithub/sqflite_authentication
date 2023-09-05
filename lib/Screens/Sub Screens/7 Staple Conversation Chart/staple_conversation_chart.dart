@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../Constants/Global_Variables/colors/colors.dart';
+import '../../../Constants/Global_Widgets/Appbar/appbar_with_text.dart';
 import '../../../Constants/Global_Widgets/List Tile/ssc_expanstion.dart';
 
 class StapleConversationChart extends StatefulWidget {
   const StapleConversationChart({super.key});
 
   @override
-  _StapleConversationChartState createState() =>
+  State<StapleConversationChart> createState() =>
       _StapleConversationChartState();
 }
 
@@ -17,19 +16,9 @@ class _StapleConversationChartState extends State<StapleConversationChart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Staple Conversation Chart',
-            style: TextStyle(
-                fontSize: 70.sp,
-                fontWeight: FontWeight.bold,
-                color: Colors.black)),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(150.sp),
-          ),
-        ),
-        backgroundColor: universalGray,
-        elevation: 2,
+      appBar: const AppbarWithText(
+        appbarText: 'Staple Conversation Chart',
+        centerTitle: false,
       ),
       body: Column(
         children: [

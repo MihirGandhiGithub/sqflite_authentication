@@ -54,6 +54,10 @@ dependencies:
   new_version_plus: ^0.0.11
   url_launcher: ^6.1.11
   permission_handler: ^10.4.3
+  carousel_slider: ^4.2.1
+  webview_flutter: ^4.2.2
+  shared_preferences: ^2.0.8
+
 
 
 

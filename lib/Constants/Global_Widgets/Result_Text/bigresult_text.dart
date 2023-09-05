@@ -16,7 +16,7 @@ class GlobalResultBuilderForResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(100.w, 20.h, 100.w, 0),
+      margin: EdgeInsets.fromLTRB(50.w, 20.h, 50.w, 0),
       padding: EdgeInsets.fromLTRB(20.w, 10.h, 10.w, 10.h),
       width: double.infinity,
       decoration: BoxDecoration(
@@ -34,7 +34,7 @@ class GlobalResultBuilderForResults extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-                fontSize: 50.sp,
+                fontSize: 40.sp,
                 fontWeight: FontWeight.bold,
                 color: Colors.black),
           ),
@@ -50,7 +50,7 @@ class GlobalResultBuilderForResults extends StatelessWidget {
                   color: Colors.black,
                   width: 1.0,
                 ),
-                color: Colors.grey[350],
+                color: Colors.grey[100],
                 borderRadius: BorderRadius.circular(40.sp),
               ),
               child: Tooltip(
@@ -61,7 +61,7 @@ class GlobalResultBuilderForResults extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 70.sp,
+                    fontSize: 55.sp,
                     fontWeight: FontWeight.bold,
                   ),
                   colors: const [

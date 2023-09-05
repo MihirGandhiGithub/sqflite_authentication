@@ -1,109 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../Global_Variables/Sizes/Sizes.dart';
-import '../../Global_Variables/colors/colors.dart';
-
-class GlobalCustomAppBar extends StatelessWidget
-    implements PreferredSizeWidget {
-  final String appbarText;
+class AppBarWithSlider extends StatelessWidget implements PreferredSizeWidget {
+  final String titleText;
   final String sliderText1;
   final String sliderText2;
-  final bool isFirstButtonSelected;
-  final Function(bool) onButtonPressed;
-
-  const GlobalCustomAppBar({
-    super.key,
-    required this.sliderText1,
-    required this.sliderText2,
-    required this.appbarText,
-    required this.isFirstButtonSelected,
-    required this.onButtonPressed,
-  });
-
+  const AppBarWithSlider(
+      {super.key,
+      required this.titleText,
+      required this.sliderText1,
+      required this.sliderText2});
   @override
-  Size get preferredSize =>
-      Size.fromHeight(Widgets_Size.appbarWithSliderHeight);
+  Size get preferredSize => Size.fromHeight(350.sp);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(
-        appbarText,
+        titleText,
         style: TextStyle(
-          fontSize: Widgets_Size.appbarWithSliderTitleFontSize,
+          fontSize: 60.sp,
           fontWeight: FontWeight.bold,
-          color: appbarWithSliderTitleColor,
+          color: Colors.white,
         ),
       ),
-      backgroundColor: universalGray,
-      elevation: Widgets_Size.appbarWithSliderelevation,
-      shape: RoundedRectangleBorder(
+      backgroundColor: Colors.blue,
+      elevation: 2,
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(Widgets_Size.appbarWithSliderBottomRadius),
+          bottom: Radius.circular(50),
         ),
       ),
       flexibleSpace: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
-            margin: EdgeInsets.fromLTRB(100.w, 0, 100.w, 30.h),
-            height: Widgets_Size.appbarWithSliderInsideSliderHeight,
+            margin: EdgeInsets.fromLTRB(120.sp, 0, 120.sp, 30.sp),
+            padding: EdgeInsets.all(10.sp),
+            height: 120.sp,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24),
-              color: Colors.grey[300],
+              borderRadius: BorderRadius.circular(30),
+              color: Colors.white,
             ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(5.w, 5.h, 5.w, 5.h),
-                    child: TextButton(
-                      onPressed: () => onButtonPressed(true),
-                      style: TextButton.styleFrom(
-                        backgroundColor: isFirstButtonSelected
-                            ? const Color.fromRGBO(35, 35, 35, 1)
-                            : Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(80.sp),
-                        ),
-                      ),
-                      child: Text(
-                        sliderText1,
-                        style: TextStyle(
-                          color: isFirstButtonSelected
-                              ? Colors.white
-                              : Colors.grey[800],
-                          fontSize: 50.sp,
-                        ),
-                      ),
-                    ),
-                  ),
+            child: TabBar(
+              indicator: BoxDecoration(
+                border: Border.all(color: Colors.black12, width: 0.5),
+                gradient: const LinearGradient(
+                    begin: Alignment.centerRight,
+                    end: Alignment.centerLeft,
+                    colors: [
+                      Colors.blue,
+                      Colors.blue,
+                    ]),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              labelColor: Colors.white,
+              unselectedLabelColor: Colors.black,
+              tabs: [
+                Tab(
+                  text: sliderText1,
                 ),
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(5.w, 5.h, 5.w, 5.h),
-                    child: TextButton(
-                      onPressed: () => onButtonPressed(false),
-                      style: TextButton.styleFrom(
-                        backgroundColor: isFirstButtonSelected
-                            ? Colors.transparent
-                            : const Color.fromRGBO(35, 35, 35, 1),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(80.sp),
-                        ),
-                      ),
-                      child: Text(
-                        sliderText2,
-                        style: TextStyle(
-                          color: isFirstButtonSelected
-                              ? Colors.grey[800]
-                              : Colors.white,
-                          fontSize: 50.sp,
-                        ),
-                      ),
-                    ),
-                  ),
+                Tab(
+                  text: sliderText2,
                 ),
               ],
             ),

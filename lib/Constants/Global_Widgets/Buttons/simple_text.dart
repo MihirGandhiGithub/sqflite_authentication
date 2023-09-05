@@ -20,7 +20,8 @@ class GlobalButtonSimpleText extends StatelessWidget {
       margin: EdgeInsets.fromLTRB(400.w, 0, 400.w, 0),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromRGBO(35, 35, 35, 0.9),
+          backgroundColor: Colors.blue,
+          // backgroundColor: const Color.fromRGBO(23, 35, 255, 1.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50.sp),
           ),
