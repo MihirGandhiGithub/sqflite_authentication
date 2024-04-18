@@ -21,12 +21,29 @@ import 'Screens/User_Profile/profile.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
 
-  SystemChrome.setPreferredOrientations([
+  // Initialize Firebase with the provided configuration
+  await Firebase.initializeApp(
+      // options: FirebaseOptions(
+      //   apiKey: "AIzaSyBypTGGDxYN9kDATEco2NSMLHsfRsjXyrc",
+      //   authDomain: "textile-calculator-80988.firebaseapp.com",
+      //   databaseURL:
+      //       "https://textile-calculator-80988-default-rtdb.firebaseio.com",
+      //   projectId: "textile-calculator-80988",
+      //   storageBucket: "textile-calculator-80988.appspot.com",
+      //   messagingSenderId: "625365097680",
+      //   appId: "1:625365097680:web:130105795bf563a3a012d5",
+      //   measurementId: "G-01R92KRRP4",
+      // ),
+      );
+
+  // Set preferred orientations
+  await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
-  ]).then((value) => runApp(const MyApp()));
+  ]);
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

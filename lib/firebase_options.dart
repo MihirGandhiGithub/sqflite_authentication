@@ -27,10 +27,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -49,6 +46,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '625365097680',
     projectId: 'textile-calculator-80988',
     authDomain: 'textile-calculator-80988.firebaseapp.com',
+    databaseURL: 'https://textile-calculator-80988-default-rtdb.firebaseio.com',
     storageBucket: 'textile-calculator-80988.appspot.com',
     measurementId: 'G-01R92KRRP4',
   );
@@ -58,6 +56,7 @@ class DefaultFirebaseOptions {
     appId: '1:625365097680:android:cf1a2a60cc8dd3e9a012d5',
     messagingSenderId: '625365097680',
     projectId: 'textile-calculator-80988',
+    databaseURL: 'https://textile-calculator-80988-default-rtdb.firebaseio.com',
     storageBucket: 'textile-calculator-80988.appspot.com',
   );
 
@@ -66,18 +65,34 @@ class DefaultFirebaseOptions {
     appId: '1:625365097680:ios:9438483634bf2ed9a012d5',
     messagingSenderId: '625365097680',
     projectId: 'textile-calculator-80988',
+    databaseURL: 'https://textile-calculator-80988-default-rtdb.firebaseio.com',
     storageBucket: 'textile-calculator-80988.appspot.com',
+    androidClientId: '625365097680-d6pf7625k7dg0jqscsabeucsq242ugrs.apps.googleusercontent.com',
     iosClientId: '625365097680-81sr2p6m2kfq9kgeg1aicp19oh0tqvd5.apps.googleusercontent.com',
     iosBundleId: 'mg.kingtechnology.in.kt1TextileCalculation',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyBCBIHuCXZ2afu8vmG2oX-aQmPkarceZxQ',
-    appId: '1:625365097680:ios:4362375ce7f0e238a012d5',
+    appId: '1:625365097680:ios:9438483634bf2ed9a012d5',
     messagingSenderId: '625365097680',
     projectId: 'textile-calculator-80988',
+    databaseURL: 'https://textile-calculator-80988-default-rtdb.firebaseio.com',
     storageBucket: 'textile-calculator-80988.appspot.com',
-    iosClientId: '625365097680-2bdde456duti773chqff1bt4g8cqdeog.apps.googleusercontent.com',
-    iosBundleId: 'mg.kingtechnology.in.kt1TextileCalculation.RunnerTests',
+    androidClientId: '625365097680-d6pf7625k7dg0jqscsabeucsq242ugrs.apps.googleusercontent.com',
+    iosClientId: '625365097680-81sr2p6m2kfq9kgeg1aicp19oh0tqvd5.apps.googleusercontent.com',
+    iosBundleId: 'mg.kingtechnology.in.kt1TextileCalculation',
   );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyBypTGGDxYN9kDATEco2NSMLHsfRsjXyrc',
+    appId: '1:625365097680:web:5ad908764db22be9a012d5',
+    messagingSenderId: '625365097680',
+    projectId: 'textile-calculator-80988',
+    authDomain: 'textile-calculator-80988.firebaseapp.com',
+    databaseURL: 'https://textile-calculator-80988-default-rtdb.firebaseio.com',
+    storageBucket: 'textile-calculator-80988.appspot.com',
+    measurementId: 'G-FJ514JV3RC',
+  );
+
 }

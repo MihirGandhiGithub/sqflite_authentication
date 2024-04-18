@@ -16,9 +16,9 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0
-versionCode: 1
-versionName: 1
+version: 1.0.0+1
+#versionCode: 1
+#versionName: 1
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
@@ -32,46 +32,36 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_screenutil: ^5.8.1
-  simple_gradient_text: ^1.2.4
-#
-#  expansion_tile_group: ^1.2.1
-  screenshot: ^2.1.0
-  share_plus: ^7.0.2
-#  share_files_and_screenshot_widgets: ^1.0.6
-  path_provider: ^2.0.15
-  firebase_core: ^2.16.0
-  firebase_auth: ^4.10.0
-  cloud_firestore: ^4.9.2
-  google_sign_in: ^6.1.5
-  lottie: ^2.6.0
-  card_swiper: ^3.0.1
-  cupertino_tabbar: ^2.0.0
-  google_mobile_ads: ^4.0.0
-
-
-
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  new_version_plus: ^0.0.11
-  url_launcher: ^6.1.11
-  permission_handler: ^10.4.3
-  carousel_slider: ^4.2.1
-  webview_flutter: ^4.2.2
-  shared_preferences: ^2.0.8
-  intl: ^0.18.1
-
-  animated_login: ^1.7.2
-
-
-
-
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  flutter_screenutil: ^5.9.0
+  simple_gradient_text: ^1.3.0
+  screenshot: ^2.3.0
+  path_provider: ^2.1.2
+  firebase_core: ^2.27.2
+  firebase_auth: ^4.19.1
+  cloud_firestore: ^4.15.10
+  google_sign_in: ^6.2.1
+  lottie: ^3.1.0
+  card_swiper: ^3.0.1
+  cupertino_tabbar: ^2.0.0
+  cupertino_icons: ^1.0.6
+  new_version_plus: ^0.0.11
+  url_launcher: ^6.2.5
+  permission_handler: ^11.3.1
+  carousel_slider: ^4.2.1
+  webview_flutter: ^4.7.0
+  shared_preferences: ^2.2.2
+  intl: ^0.19.0
+  animated_login: ^1.7.2
+  share_plus: ^7.0.2
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

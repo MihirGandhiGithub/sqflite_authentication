@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>625365097680-2bdde456duti773chqff1bt4g8cqdeog.apps.googleusercontent.com</string>
+	<string>625365097680-81sr2p6m2kfq9kgeg1aicp19oh0tqvd5.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.625365097680-2bdde456duti773chqff1bt4g8cqdeog</string>
+	<string>com.googleusercontent.apps.625365097680-81sr2p6m2kfq9kgeg1aicp19oh0tqvd5</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>625365097680-d6pf7625k7dg0jqscsabeucsq242ugrs.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBCBIHuCXZ2afu8vmG2oX-aQmPkarceZxQ</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>mg.kingtechnology.in.kt1TextileCalculation.RunnerTests</string>
+	<string>mg.kingtechnology.in.kt1TextileCalculation</string>
 	<key>PROJECT_ID</key>
 	<string>textile-calculator-80988</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:625365097680:ios:4362375ce7f0e238a012d5</string>
+	<string>1:625365097680:ios:9438483634bf2ed9a012d5</string>
+	<key>DATABASE_URL</key>
+	<string>https://textile-calculator-80988-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

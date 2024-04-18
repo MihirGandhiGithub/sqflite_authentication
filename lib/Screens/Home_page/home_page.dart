@@ -154,42 +154,43 @@ class _HomePageState extends State<HomePage> {
               Navigator.of(context).pushNamed('/profile_screen'),
           centerTitle: true,
         ),
-        body: Column(
-          children: [
-            // Image Advertise
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(width: 2, color: Colors.black),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: CarouselSliderWidget(
-                  imageList: imageList,
-                  carouselController: _controller,
-                  currentImageIndex: _currentImageIndex,
-                  onPageChangedCallback: onPageChangedCallback,
-                  doumentid: documentid,
-                  name: UserData.userName,
-                  email: UserData.userEmail,
-                  contact: UserData.userPhoneNumber,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Image Advertise
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 2, color: Colors.black),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: CarouselSliderWidget(
+                    imageList: imageList,
+                    carouselController: _controller,
+                    currentImageIndex: _currentImageIndex,
+                    onPageChangedCallback: onPageChangedCallback,
+                    doumentid: documentid,
+                    name: UserData.userName,
+                    email: UserData.userEmail,
+                    contact: UserData.userPhoneNumber,
+                  ),
                 ),
               ),
-            ),
 
-            // Welcome Text
-            CustomText(
-              text: 'Welcome ${UserData.userName}'.toUpperCase(),
-              color: Colors.black,
-              maxLine: 1,
-              bold: false,
-            ),
+              // Welcome Text
+              CustomText(
+                text: 'Welcome ${UserData.userName}'.toUpperCase(),
+                color: Colors.black,
+                maxLine: 1,
+                bold: false,
+              ),
 
-            // Space Between Text And Box
-            const SizedBox(height: 10),
+              // Space Between Text And Box
+              const SizedBox(height: 10),
 
-            Expanded(
-              child: ListView.builder(
+              ListView.builder(
+                shrinkWrap: true,
                 itemCount: liked.likedItems.length,
                 itemBuilder: (BuildContext context, int index) {
                   return CustomListTile(
@@ -204,9 +205,9 @@ class _HomePageState extends State<HomePage> {
                     showLikeIcon: index != 0,
                   );
                 },
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ));
   }
 }
